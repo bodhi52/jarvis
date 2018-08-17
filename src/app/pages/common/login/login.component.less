@@ -1,0 +1,58 @@
+.body{
+  background-color: #f1f1f1;
+  display: table;
+  position: absolute;
+  height:100%;
+  width: 100%;
+  .article{
+    background: url(../../../../assets/img/bg.jpeg) no-repeat center center fixed;
+    background-size: cover;
+    display: table-cell;
+    vertical-align: middle;
+    .login-section{
+      background: rgba(0, 0, 0, 0.5);
+      //box-shadow: 0 2px 3px rgba(213,213,213,0.2);
+      text-align: center;
+      padding: 20px 20px 10px 20px;
+      border-radius: 15px;
+      width:310px;
+      margin:auto;
+      border: 1px solid #ded5d5;
+      .head{
+        display: block;
+        font-size: 35px;
+        padding: 20px 0 10px 0;
+        font-weight:600;
+        border-bottom: 1px solid #ded5d5;
+        margin-bottom: 30px;
+        text-align: center;
+        color:#6d6464;
+        img{
+          width: 180px;
+        }
+        p{
+          padding: 0;
+          margin: 0;
+          font-size: 18px;
+          line-height: 2em;
+          color: #eee;
+        }
+      }
+      .login-form-button{
+        width: 100%;
+      }
+      .login-form-remeber-me{
+        float: left;
+      }
+      .login-form-forgot{
+        float:right;
+      }
+
+      .ant-form-item:last-child{
+        //margin-bottom: 0;
+      }
+
+    }
+  }
+
+}
