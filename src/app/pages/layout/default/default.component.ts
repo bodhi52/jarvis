@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CommonApiService} from '../../../core/api/common-api.service';
 
 @Component({
   selector: 'app-default',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DefaultComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private api: CommonApiService,
+  ) {
+  }
 
   ngOnInit() {
+    this.api.login().subscribe(data => {
+      console.log('data', data);
+    });
   }
 
 }

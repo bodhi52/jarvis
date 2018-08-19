@@ -12,8 +12,6 @@ export class CommonApiService {
     }
     
     login(params?) {
-        return this.apiUnit.post('/admin/login', params);
+        return this.apiUnit.get('/assets/data/user.json');
     }
-    
-    
 }
