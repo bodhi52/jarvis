@@ -1,0 +1,7 @@
+{
+  "Hello": "hello, {{value}}",
+  "Introduce": {
+    "Name": "my name is <strong>{{name}}<strong>.",
+    "Today": "today is {{date}}, and now time is {{time}}"
+  }
+}

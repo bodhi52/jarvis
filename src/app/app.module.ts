@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import { RouterModule } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {NgZorroAntdModule, NZ_I18N, zh_CN} from 'ng-zorro-antd';
 import {registerLocaleData} from '@angular/common';
 import zh from '@angular/common/locales/zh';
@@ -13,8 +13,14 @@ import {ApiUntilService} from './core/api/api-until.service';
 import {ApiInterceptor} from './core/api/api-interceptor';
 import {PagesRoutingModule} from './pages/pages-routing.module';
 import {PagesModule} from './pages/pages.module';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 registerLocaleData(zh);
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
 
 @NgModule({
     declarations: [
@@ -27,6 +33,13 @@ registerLocaleData(zh);
         FormsModule,
         HttpClientModule,
         NgZorroAntdModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            }
+        }),
         RouterModule,
         PagesModule,
         PagesRoutingModule,

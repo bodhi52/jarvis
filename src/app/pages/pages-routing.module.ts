@@ -5,7 +5,7 @@ import {LoginComponent} from './common/login/login.component';
 const pagesRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'login',
+        redirectTo: 'd',
         pathMatch: 'prefix',
     },
     {
