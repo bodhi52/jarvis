@@ -9,7 +9,6 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/h
 import {NgZorroAntdModule, NZ_I18N, zh_CN} from 'ng-zorro-antd';
 import {registerLocaleData} from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import {ApiUntilService} from './core/api/api-until.service';
 import {ApiInterceptor} from './core/api/api-interceptor';
 import {PagesRoutingModule} from './pages/pages-routing.module';
 import {PagesModule} from './pages/pages.module';
@@ -45,8 +44,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         PagesRoutingModule,
     ],
     providers: [
-        //
-        ApiUntilService,
         // 应用拦截器
         {
             provide: HTTP_INTERCEPTORS,
