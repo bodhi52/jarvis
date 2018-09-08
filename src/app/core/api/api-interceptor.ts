@@ -9,7 +9,6 @@ export class ApiInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req).pipe(
             tap(event => {
-                console.log('tap event', event);
                 if (event instanceof HttpResponse) {
                     // 未登录
                     if (event.body.code === 2) {

@@ -8,8 +8,6 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title = 'jarvis';
-
   constructor(
       public translate: TranslateService,
   ) {

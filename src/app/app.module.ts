@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { ReactiveFormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
 import { RouterModule } from '@angular/router';
@@ -55,7 +55,8 @@ export function HttpLoaderFactory(http: HttpClient) {
             useValue: zh_CN
         }
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {
 }
