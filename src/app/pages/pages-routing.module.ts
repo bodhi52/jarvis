@@ -2,13 +2,12 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './common/login/login.component';
 import {DefaultComponent} from './layout/default/default.component';
-import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {TrainingComponent} from './layout/training/training.component';
 
 const pagesRoutes: Routes = [
     {
         path: '',
-        redirectTo: 't',
+        redirectTo: 'd',
         pathMatch: 'prefix',
     },
     {
@@ -18,15 +17,7 @@ const pagesRoutes: Routes = [
     {
         path: 'd',
         component: DefaultComponent,
-        children: [
-            {
-                path: '',
-                component: DashboardComponent,
-                data: {
-                    breadcrumb: 'dashboard',
-                }
-            }
-        ]
+        loadChildren: './components/main/main.module#MainModule',
     },
     {
         path: 't',

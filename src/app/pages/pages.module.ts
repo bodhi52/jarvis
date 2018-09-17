@@ -6,7 +6,6 @@ import { ReactiveFormsModule} from '@angular/forms';
 
 import {LoginComponent} from './common/login/login.component';
 import {DefaultComponent} from './layout/default/default.component';
-import {ComponentsModule} from './components/components.module';
 import {RouterModule} from '@angular/router';
 import {TrainingComponent} from './layout/training/training.component';
 import {ModalModule} from '../modal/modal.module';
@@ -18,7 +17,6 @@ import {ModalModule} from '../modal/modal.module';
         ReactiveFormsModule,
         FormsModule,
         NgZorroAntdModule,
-        ComponentsModule,
         ModalModule,
     ],
     declarations: [
