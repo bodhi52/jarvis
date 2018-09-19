@@ -7,7 +7,7 @@ import {TrainingComponent} from './layout/training/training.component';
 const pagesRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'd',
+        redirectTo: 'login',
         pathMatch: 'prefix',
     },
     {
@@ -23,6 +23,10 @@ const pagesRoutes: Routes = [
         path: 't',
         component: TrainingComponent,
         loadChildren: './components/hero/hero.module#HeroModule',
+    },
+    {
+        path: 'r',
+        loadChildren: './components/rxjs/rxjs.module#RxjsModule',
     }
 ];
 
