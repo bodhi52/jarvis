@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {HEROES} from '../../../../const/heroes.const';
-import {HeroInterface} from '../../../../core/interfaces/hero.interface';
-import {HeroService} from '../../../../service/hero.service';
+import {HeroInterface} from '../../../../core/interface/hero.interface';
+import {HeroService} from '../../../../core/service/hero.service';
 
 @Component({
     selector: 'app-hero-list',
