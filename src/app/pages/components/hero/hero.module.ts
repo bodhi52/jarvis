@@ -1,13 +1,14 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HeroListComponent} from './hero-list/hero-list.component';
-import {Router, RouterModule, Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {HeroDetailComponent} from './hero-detail/hero-detail.component';
 import {ModalModule} from '../../../modal/modal.module';
 import {MessagesComponent} from '../../../modal/messages/messages.component';
 import {ShareModule} from '../../../share.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
+import {HttpClientModule} from '@angular/common/http';
 
 const routes: Routes = [
     {
@@ -26,7 +27,11 @@ const routes: Routes = [
     {
         path: 'detail/:id',
         component: HeroDetailComponent,
-    }
+    },
+    {
+        path: '**',
+        redirectTo: '/404',
+    },
 ];
 
 @NgModule({
@@ -36,6 +41,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         ModalModule,
         ShareModule,
+        HttpClientModule,
     ],
     declarations: [
         HeroListComponent,

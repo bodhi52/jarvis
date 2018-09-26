@@ -27,15 +27,16 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 目录一览：
 - app 应用目录
   - core 核心功能目录
-  - enum 所有枚举类型文件夹
+      - service 所有服务文件夹
+      - interface 所有接口文件夹
+      - pipe 所有管道文件夹
+      - enum 所有枚举类型文件夹
   - modal 所有弹窗文件夹
   - pages 所有页面文件夹
     - common 公共页面文件夹
     - components 所有业务组件，按照业务模块分层
     - layout 所有母版文件
-  - service 所有服务文件夹
-  - interface 所有接口文件夹
-  - pipe 所有管道文件夹
+
 
 ### core目录
 项目核心功能目录，包括：
