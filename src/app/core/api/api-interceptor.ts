@@ -10,13 +10,16 @@ export class ApiInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(
             tap(event => {
                 if (event instanceof HttpResponse) {
-                    // 未登录
-                    if (event.body.code === 2) {
-                        // 未登录逻辑。
-                    } else if (event.body.code === 1) {
-                        // 不需要特意接收的错误。
-                        console.log(event.body.msg);
+                    if (event.body && event.body.code !== undefined) {
+                        // 未登录
+                        if (event.body.code === 2) {
+                            // 未登录逻辑。
+                        } else if (event.body.code === 1) {
+                            // 不需要特意接收的错误。
+                            console.log(event.body.msg);
+                        }
                     }
+                    
                 }
             })
         );

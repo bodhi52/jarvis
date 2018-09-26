@@ -1,4 +1,4 @@
-<div *ngIf="hero">
+<div *ngIf="hero" class="hero">
   <div>
     <span>id: </span>{{hero.id}}
   </div>
@@ -6,6 +6,8 @@
     <label>name:</label>
     <input [(ngModel)]="hero.name" placeholder="name"/>
   </div>
-  <button (click)="save()">save</button>
-  <button (click)="goBack()">go back</button>
+  <div class="operation">
+    <button nz-button [nzType]="'primary'" (click)="save()">save</button>
+    <button nz-button (click)="goBack()">go back</button>
+  </div>
 </div>

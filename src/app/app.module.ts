@@ -14,8 +14,6 @@ import {PagesRoutingModule} from './pages/pages-routing.module';
 import {PagesModule} from './pages/pages.module';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
-import {InMemoryDataService} from './core/service/in-memory-data.service';
 
 registerLocaleData(zh);
 
@@ -34,16 +32,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         FormsModule,
         HttpClientModule,
         NgZorroAntdModule,
-        // TranslateModule.forRoot({
-        //     loader: {
-        //         provide: TranslateLoader,
-        //         useFactory: HttpLoaderFactory,
-        //         deps: [HttpClient],
-        //     }
-        // }),
-        HttpClientInMemoryWebApiModule.forRoot(
-            InMemoryDataService, {dataEncapsulation: false},
-        ),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            }
+        }),
         RouterModule,
         PagesModule,
         PagesRoutingModule,

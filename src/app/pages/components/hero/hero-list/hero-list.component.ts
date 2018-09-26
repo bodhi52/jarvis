@@ -22,17 +22,27 @@ export class HeroListComponent implements OnInit {
         this.getHeores();
     }
     
-    /**
-     * 选中
-     * @param hero
-     */
-    onSelect(hero) {
-        this.selectHero = hero;
-    }
-    
     getHeores(): void {
-        this.heroService.getHeroes().subscribe(heroes => {
-            this.heroes = heroes;
+        this.heroService.getHeroes().subscribe(res => {
+            if (res.code === 0) {
+                this.heroes = res.data;
+            }
         });
     }
+    
+    add(name: string): void {
+        name = name.trim();
+        if (!name) {
+            return;
+        }
+        this.heroService.addHero({name} as HeroInterface).subscribe(hero => {
+            this.heroes.push(hero);
+        });
+    }
+    
+    delete(hero: HeroInterface): void {
+        this.heroes = this.heroes.filter(h => h !== hero);
+        this.heroService.deleteHero(hero).subscribe();
+    }
+ 
 }

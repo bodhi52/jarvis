@@ -9,6 +9,7 @@ import {MessagesComponent} from '../../../modal/messages/messages.component';
 import {ShareModule} from '../../../share.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
+import {NgZorroAntdModule} from 'ng-zorro-antd';
 
 const routes: Routes = [
     {
@@ -42,6 +43,7 @@ const routes: Routes = [
         ModalModule,
         ShareModule,
         HttpClientModule,
+        NgZorroAntdModule,
     ],
     declarations: [
         HeroListComponent,
