@@ -12,6 +12,10 @@ export class ApiUrlService {
     api = {
         hero: {
             list: '/hero/list',
+            detail: '/hero/detail',
+            update: '/hero/update',
+            add: '/hero/add',
+            delete: '/hero/delete',
         }
     };
     

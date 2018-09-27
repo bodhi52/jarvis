@@ -35,8 +35,10 @@ export class HeroListComponent implements OnInit {
         if (!name) {
             return;
         }
-        this.heroService.addHero({name} as HeroInterface).subscribe(hero => {
-            this.heroes.push(hero);
+        this.heroService.addHero({name} as HeroInterface).subscribe(res => {
+            if (res.code === 0) {
+                this.heroes.push(res.data);
+            }
         });
     }
     

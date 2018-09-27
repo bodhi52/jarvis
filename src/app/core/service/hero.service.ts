@@ -39,50 +39,35 @@ export class HeroService {
         return this.apiUnit.get(this.apiUrl.api.hero.list);
     }
     
-    // getHeroes(): Observable<HeroInterface[]> {
-    //     return this.http.get<HeroInterface[]>(this.heroesUrl).pipe(
-    //         tap(heroes => this.log('fetched heroes')),
-    //         catchError(this.handleError('getHeroes', []))
-    //     );
-    // }
-    
-    getHero(id: number): Observable<HeroInterface> {
-        const url = `${this.heroesUrl}/${id}`;
-        return this.http.get<HeroInterface>(url).pipe(
-            tap(_ => this.log(`fetched hero id = ${id}`)),
-            catchError(this.handleError<HeroInterface>('getHeroes'))
-        );
+    /**
+     * 获取详情
+     * @param id
+     */
+    getHero(id: number) {
+        return this.apiUnit.get(this.apiUrl.api.hero.detail, {id: id});
     }
     
-    updateHero(hero: HeroInterface): Observable<any> {
-        
-        return this.http.put(this.heroesUrl, hero, httpOptions).pipe(
-            tap(_ => this.log(`updated hero id= ${hero.id}`)),
-            catchError(this.handleError<any>('updateHero')),
-        );
+    /**
+     * 更新英雄
+     * @param params
+     */
+    updateHero(params) {
+        return this.apiUnit.post(this.apiUrl.api.hero.update, params);
     }
     
-    addHero(hero: HeroInterface): Observable<HeroInterface> {
-        return this.http.post<HeroInterface>(this.heroesUrl, hero, httpOptions).pipe(
-            tap((newHero: HeroInterface) => this.log(`added hero w/ id=${newHero.id}`)),
-            catchError(this.handleError<HeroInterface>('addHero')),
-        );
+    /**
+     * 添加英雄
+     * @param params
+     */
+    addHero(params) {
+        return this.apiUnit.post(this.apiUrl.api.hero.add, params);
     }
     
-    deleteHero(hero: HeroInterface | number): Observable<HeroInterface> {
-        const id = typeof hero === 'number' ? hero : hero.id;
-        const url = `${this.heroesUrl}/${id}`;
-        return this.http.delete<HeroInterface>(url, httpOptions).pipe(
-            tap(_ => this.log(`deleted hero id = ${id}`)),
-            catchError(this.handleError<HeroInterface>('deleteHero')),
-        );
-    }
-    
-    private handleError<T> (operation = 'operation', result?: T) {
-        return (error: any): Observable<T> => {
-            console.error(error);
-            this.log(`${operation} failed: ${error.message}`);
-            return of(result as T);
-        };
+    /**
+     * 删除英雄
+     * @param params
+     */
+    deleteHero(params) {
+        return this.apiUnit.post(this.apiUrl.api.hero.delete, params);
     }
 }
