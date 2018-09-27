@@ -9,9 +9,9 @@ import {HeroService} from '../../../../core/service/hero.service';
 })
 export class HeroListComponent implements OnInit {
     
-    heroes: HeroInterface[];
+    add = false;
     
-    selectHero: HeroInterface;
+    heroes: HeroInterface[];
     
     constructor(
         private heroService: HeroService,
@@ -30,21 +30,14 @@ export class HeroListComponent implements OnInit {
         });
     }
     
-    add(name: string): void {
-        name = name.trim();
-        if (!name) {
-            return;
-        }
-        this.heroService.addHero({name} as HeroInterface).subscribe(res => {
-            if (res.code === 0) {
-                this.heroes.push(res.data);
-            }
-        });
-    }
-    
     delete(hero: HeroInterface): void {
         this.heroes = this.heroes.filter(h => h !== hero);
         this.heroService.deleteHero(hero).subscribe();
     }
- 
+    
+    addSuccess($event) {
+        console.log('$event', $event);
+        this.heroes = [...this.heroes, $event];
+        console.log('heroes', this.heroes);
+    }
 }

@@ -10,6 +10,7 @@ import {ShareModule} from '../../../share.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
+import { AddHeroComponent } from './add-hero/add-hero.component';
 
 const routes: Routes = [
     {
@@ -49,6 +50,7 @@ const routes: Routes = [
         HeroListComponent,
         HeroDetailComponent,
         DashboardComponent,
+        AddHeroComponent,
     ],
     entryComponents: [MessagesComponent],
 })
