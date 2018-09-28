@@ -16,6 +16,7 @@ export class ApiUrlService {
             update: '/hero/update',
             add: '/hero/add',
             delete: '/hero/delete',
+            search: '/hero/search',
         }
     };
     

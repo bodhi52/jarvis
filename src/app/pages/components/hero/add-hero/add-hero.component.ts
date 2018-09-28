@@ -30,8 +30,7 @@ export class AddHeroComponent implements OnInit {
         this.heroService.addHero(this.hero).subscribe(res => {
             if (res.code === 0) {
                 this.hero.name = null;
-                // TODO 添加成功后需要通知父组件
-                // this.heroes.push(res.data);
+                // 添加成功后需要通知父组件
                 this.success.emit(res.data);
             }
         });

@@ -1,15 +1,21 @@
 <div>
-  <button nz-button [nzType]="'primary'" (click)="add = !add;">Add</button>
+  <button nz-button (click)="add = !add;"><i class="anticon anticon-plus"></i></button>
   <app-add-hero [style.display]="add ? 'block' : 'none' " (success)="addSuccess($event)"></app-add-hero>
 </div>
 
-<nz-list [nzDataSource]="heroes" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+<nz-list
+        [nzDataSource]="heroes"
+        [nzRenderItem]="item"
+        [nzBordered]="true"
+        [nzItemLayout]="'horizontal'">
   <ng-template #item let-item>
-    <nz-list-item>
+    <nz-list-item [nzActions]="[deleteAction]">
       <nz-list-item-meta
               [nzTitle]="nzTitle"
               nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
               [nzDescription]="nzContent">
+        <ng-template #deleteAction><i class="anticon anticon-delete" (click)="delete(item)"></i></ng-template>
+
         <ng-template #nzTitle>
           <a href="https://ng.ant.design">{{item.name}}</a>
         </ng-template>

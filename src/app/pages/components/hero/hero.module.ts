@@ -11,6 +11,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import { AddHeroComponent } from './add-hero/add-hero.component';
+import { HeroSearchComponent } from './hero-search/hero-search.component';
 
 const routes: Routes = [
     {
@@ -51,6 +52,7 @@ const routes: Routes = [
         HeroDetailComponent,
         DashboardComponent,
         AddHeroComponent,
+        HeroSearchComponent,
     ],
     entryComponents: [MessagesComponent],
 })

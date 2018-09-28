@@ -70,4 +70,12 @@ export class HeroService {
     deleteHero(params) {
         return this.apiUnit.post(this.apiUrl.api.hero.delete, params);
     }
+    
+    /**
+     * 搜索英雄
+     * @param params
+     */
+    searchHero(params) {
+        return this.apiUnit.get(this.apiUrl.api.hero.search, params);
+    }
 }
