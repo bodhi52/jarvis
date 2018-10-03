@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'jarvis-api.tcs-y.com',
+    apiUrl: 'http://jarvis-api.tcs-y.com',
 };
