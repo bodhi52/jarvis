@@ -33,6 +33,11 @@ const pagesRoutes: Routes = [
         redirectTo: 't',
         pathMatch: 'full',
     },
+    {
+        path: '**',
+        redirectTo: '/404',
+    },
+    
 ];
 
 @NgModule({

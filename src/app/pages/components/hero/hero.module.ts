@@ -6,12 +6,13 @@ import {FormsModule} from '@angular/forms';
 import {HeroDetailComponent} from './hero-detail/hero-detail.component';
 import {ModalModule} from '../../../modal/modal.module';
 import {MessagesComponent} from '../../../modal/messages/messages.component';
-import {ShareModule} from '../../../share.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import { AddHeroComponent } from './add-hero/add-hero.component';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
+import {PageNoFoundComponent} from '../../common/page-no-found/page-no-found.component';
+import {ShareModule} from '../../share.module';
 
 const routes: Routes = [
     {
@@ -30,6 +31,10 @@ const routes: Routes = [
     {
         path: 'detail/:id',
         component: HeroDetailComponent,
+    },
+    {
+        path: '404',
+        component: PageNoFoundComponent,
     },
     {
         path: '**',
