@@ -4,6 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {PageNoFoundComponent} from '../../common/page-no-found/page-no-found.component';
+import {ShareModule} from '../../share.module';
 
 const mainRoutes: Routes = [
     {
@@ -24,6 +25,7 @@ const mainRoutes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
+        ShareModule,
         RouterModule.forChild(mainRoutes),
         NgZorroAntdModule,
     ],

@@ -1,4 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+
+import * as THREE from 'three';
+import {animate} from '@angular/animations';
 
 @Component({
     selector: 'app-dashboard',
@@ -7,11 +10,13 @@ import {Component, OnInit} from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
     
-    
     constructor() {
+    
     }
     
     ngOnInit() {
+    
     }
+    
     
 }

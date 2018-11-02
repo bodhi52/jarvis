@@ -25,12 +25,16 @@ const pagesRoutes: Routes = [
         loadChildren: './components/rxjs/rxjs.module#RxjsModule',
     },
     {
+        path: 'three',
+        loadChildren: './components/three-js/three-js.module#ThreeJsModule',
+    },
+    {
         path: '404',
         component: PageNoFoundComponent,
     },
     {
         path: '',
-        redirectTo: 't',
+        redirectTo: 'd',
         pathMatch: 'full',
     },
     {
