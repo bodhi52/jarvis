@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {FirstComponent} from './first/first.component';
 import {RouterModule, Routes} from '@angular/router';
 import {PageNoFoundComponent} from '../../common/page-no-found/page-no-found.component';
+import {ShareModule} from '../../share.module';
+import { DragDropComponent } from './drag-drop/drag-drop.component';
 
 const routes: Routes = [
     {
@@ -15,6 +17,10 @@ const routes: Routes = [
         component: FirstComponent,
     },
     {
+        path: 'drag',
+        component: DragDropComponent,
+    },
+    {
         path: '404',
         component: PageNoFoundComponent,
     },
@@ -23,10 +29,12 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
+        ShareModule,
         RouterModule.forChild(routes),
     ],
     declarations: [
         FirstComponent,
+        DragDropComponent,
     ]
 })
 export class RxjsModule {
