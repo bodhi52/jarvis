@@ -4,6 +4,8 @@ import {LoginComponent} from './common/login/login.component';
 import {DefaultComponent} from './layout/default/default.component';
 import {TrainingComponent} from './layout/training/training.component';
 import {PageNoFoundComponent} from './common/page-no-found/page-no-found.component';
+import {RxjsModule} from './components/rxjs/rxjs.module';
+import {RxjsComponent} from './layout/rxjs/rxjs.component';
 
 const pagesRoutes: Routes = [
     {
@@ -22,6 +24,7 @@ const pagesRoutes: Routes = [
     },
     {
         path: 'r',
+        component: RxjsComponent,
         loadChildren: './components/rxjs/rxjs.module#RxjsModule',
     },
     {

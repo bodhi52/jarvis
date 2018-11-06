@@ -5,6 +5,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {PageNoFoundComponent} from '../../common/page-no-found/page-no-found.component';
 import {ShareModule} from '../../share.module';
+import { BillRecordComponent } from './bill-record/bill-record.component';
 
 const mainRoutes: Routes = [
     {
@@ -15,6 +16,10 @@ const mainRoutes: Routes = [
     {
         path: 'dashboard',
         component: DashboardComponent,
+    },
+    {
+        path: 'bill-record',
+        component: BillRecordComponent,
     },
     {
         path: '404',
@@ -29,7 +34,7 @@ const mainRoutes: Routes = [
         RouterModule.forChild(mainRoutes),
         NgZorroAntdModule,
     ],
-    declarations: [DashboardComponent]
+    declarations: [DashboardComponent, BillRecordComponent]
 })
 export class MainModule {
 }

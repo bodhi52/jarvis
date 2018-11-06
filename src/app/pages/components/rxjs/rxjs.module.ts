@@ -5,6 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {PageNoFoundComponent} from '../../common/page-no-found/page-no-found.component';
 import {ShareModule} from '../../share.module';
 import { DragDropComponent } from './drag-drop/drag-drop.component';
+import { SwitchMapComponent } from './switch-map/switch-map.component';
 
 const routes: Routes = [
     {
@@ -21,6 +22,10 @@ const routes: Routes = [
         component: DragDropComponent,
     },
     {
+        path: 'switch-map',
+        component: SwitchMapComponent,
+    },
+    {
         path: '404',
         component: PageNoFoundComponent,
     },
@@ -35,6 +40,7 @@ const routes: Routes = [
     declarations: [
         FirstComponent,
         DragDropComponent,
+        SwitchMapComponent,
     ]
 })
 export class RxjsModule {

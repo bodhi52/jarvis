@@ -1,0 +1,18 @@
+<div class="content">
+  <h2><span class="title">>1000元的单子</span><span class="total">总计：{{chartData[0].total}}￥</span></h2>
+  <div id="c1"></div>
+
+  <h2><span class="title">500元~1000元的单子</span><span class="total">总计：{{chartData[1].total}}￥</span></h2>
+  <div id="c2"></div>
+
+  <h2><span class="title">100元~500元的单子</span><span class="total">总计：{{chartData[2].total}}￥</span></h2>
+  <div id="c3"></div>
+
+  <h2><span class="title">50元~100元的单子</span><span class="total">总计：{{chartData[3].total}}￥</span></h2>
+  <div id="c4"></div>
+
+  <h2><span class="title"><50元的单子</span><span class="total">总计：{{chartData[4].total}}￥</span></h2>
+  <div id="c5"></div>
+
+  <h2>花呗总计：{{chartData[0].total}} + {{chartData[1].total}} + {{chartData[2].total}} + {{chartData[3].total}} + {{chartData[4].total}} = {{getTotal()}} 元 </h2>
+</div>

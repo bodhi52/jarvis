@@ -10,6 +10,7 @@ import {RouterModule} from '@angular/router';
 import {TrainingComponent} from './layout/training/training.component';
 import {ModalModule} from '../modal/modal.module';
 import {ShareModule} from './share.module';
+import {RxjsComponent} from './layout/rxjs/rxjs.component';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {ShareModule} from './share.module';
         LoginComponent,
         DefaultComponent,
         TrainingComponent,
+        RxjsComponent,
     ]
 })
 export class PagesModule {
