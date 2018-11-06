@@ -10,10 +10,10 @@ import {HighLightDirective} from '../core/directive/high-light.directive';
         CommonModule,
         ReactiveFormsModule,
         ModalModule,
-        HighLightDirective,
     ],
     declarations: [
         PageNoFoundComponent,
+        HighLightDirective,
     ],
     exports: [
         HighLightDirective,
