@@ -6,6 +6,7 @@ import {PageNoFoundComponent} from '../../common/page-no-found/page-no-found.com
 import {ShareModule} from '../../share.module';
 import { DragDropComponent } from './drag-drop/drag-drop.component';
 import { SwitchMapComponent } from './switch-map/switch-map.component';
+import { CreateComponent } from './create/create.component';
 
 const routes: Routes = [
     {
@@ -26,6 +27,10 @@ const routes: Routes = [
         component: SwitchMapComponent,
     },
     {
+        path: 'create',
+        component: CreateComponent,
+    },
+    {
         path: '404',
         component: PageNoFoundComponent,
     },
@@ -41,6 +46,7 @@ const routes: Routes = [
         FirstComponent,
         DragDropComponent,
         SwitchMapComponent,
+        CreateComponent,
     ]
 })
 export class RxjsModule {

@@ -21,6 +21,10 @@ export class RxjsComponent implements OnInit {
         {
             name: 'switch-map',
             url: '/r/switch-map',
+        },
+        {
+            name: 'create',
+            url: '/r/create',
         }
     ];
     
