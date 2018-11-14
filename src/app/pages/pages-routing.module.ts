@@ -37,7 +37,7 @@ const pagesRoutes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'd',
+        redirectTo: 't',
         pathMatch: 'full',
     },
     {

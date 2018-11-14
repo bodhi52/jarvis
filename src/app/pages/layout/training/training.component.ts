@@ -22,6 +22,11 @@ export class TrainingComponent implements OnInit, OnDestroy {
             url: '/t/list',
             icon: 'anticon-appstore',
             name: 'Hero List',
+        },
+        {
+            url: '/t/animations',
+            icon: 'anticon-appstore',
+            name: 'Animations',
         }
     ];
     

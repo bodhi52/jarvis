@@ -13,6 +13,7 @@ import { AddHeroComponent } from './add-hero/add-hero.component';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import {PageNoFoundComponent} from '../../common/page-no-found/page-no-found.component';
 import {ShareModule} from '../../share.module';
+import { AnimationsComponent } from './animations/animations.component';
 
 const routes: Routes = [
     {
@@ -31,6 +32,10 @@ const routes: Routes = [
     {
         path: 'detail/:id',
         component: HeroDetailComponent,
+    },
+    {
+        path: 'animations',
+        component: AnimationsComponent,
     },
     {
         path: '404',
@@ -58,6 +63,7 @@ const routes: Routes = [
         DashboardComponent,
         AddHeroComponent,
         HeroSearchComponent,
+        AnimationsComponent,
     ],
     entryComponents: [MessagesComponent],
 })
