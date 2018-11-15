@@ -1,1 +1,18 @@
-<router-outlet></router-outlet>
+<nz-layout>
+  <app-sider></app-sider>
+  <nz-layout class="right-body">
+    <nz-header>
+      <div class="nav">
+        <ul nz-menu [nzMode]="'horizontal'">
+          <li nz-menu-item><i nz-icon type="bars" theme="outline"></i>TODO</li>
+          <li nz-menu-item><i nz-icon type="message" theme="outline"></i>Say Say</li>
+          <li nz-menu-item><i nz-icon type="code" theme="outline"></i>Code</li>
+        </ul>
+      </div>
+    </nz-header>
+    <nz-content class="content">
+      <router-outlet></router-outlet>
+    </nz-content>
+    <nz-footer>Footer</nz-footer>
+  </nz-layout>
+</nz-layout>

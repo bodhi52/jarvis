@@ -1,0 +1,27 @@
+<div class="todo-form">
+  <textarea rows="4"
+            nz-input
+            [(ngModel)]="inputValue"
+            [nzAutosize]="false"
+            cols="3"
+            rows="4"
+            placeHolder="需要做啥？"
+  ></textarea>
+  <div class="form-btn">
+    <span></span>
+    <button nz-button [nzType]="'primary'">提交</button>
+  </div>
+</div>
+
+<div class="todo-list">
+  <div class="todo-item" *ngFor="let item of todoList">
+    <!--<div class="tag"></div>-->
+    <div class="content">{{item.content}}</div>
+    <div class="todo-footer">
+      <span class="created-at"><span class="text">创建于：</span>{{item.created_at | date: 'yyyy/MM/dd H:m'}}</span>
+      <span class="updated-at"><span class="text">更新于：</span>{{item.updated_at | date: 'yyyy/MM/dd H:m'}}</span>
+      <label class="done" nz-checkbox>完成</label>
+      <span class="delete"><i nz-icon type="close" theme="outline"></i>移除</span>
+    </div>
+  </div>
+</div>

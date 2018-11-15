@@ -32,12 +32,17 @@ const pagesRoutes: Routes = [
         loadChildren: './components/three-js/three-js.module#ThreeJsModule',
     },
     {
+        path: 'todo',
+        component: DefaultComponent,
+        loadChildren: './components/to-do/to-do.module#ToDoModule'
+    },
+    {
         path: '404',
         component: PageNoFoundComponent,
     },
     {
         path: '',
-        redirectTo: 't',
+        redirectTo: 'todo',
         pathMatch: 'full',
     },
     {

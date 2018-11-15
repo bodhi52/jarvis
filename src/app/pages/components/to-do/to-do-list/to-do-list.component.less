@@ -1,0 +1,57 @@
+.todo-form{
+  width: 500px;
+  textarea{
+    height: 80px;
+    max-height: 80px;
+    min-height: 80px;
+    resize: none;
+  }
+  .form-btn{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.todo-list{
+  margin-top: 20px;
+  .todo-item{
+    padding: 10px;
+    margin-bottom: 15px;
+    position: relative;
+    .tag{
+      width: 20px;
+      height: 50px;
+      position: absolute;
+      left: 0;
+      top:-30px;
+      background: #33cc99;
+    }
+    .content{
+      font-size: 16px;
+    }
+    .todo-footer{
+      display: inline-block;
+      border-top: 1px solid #e8e8e8;
+      margin-top: 10px;
+      padding-top: 10px;
+      .created-at{
+        margin-right: 15px;
+      }
+      .updated-at{
+        margin-right: 15px;
+      }
+      .text{
+        color: #888888;
+      }
+      .done{
+        margin-right: 15px;
+      }
+      .delete{
+        i{
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}

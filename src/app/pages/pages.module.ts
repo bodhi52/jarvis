@@ -11,6 +11,7 @@ import {TrainingComponent} from './layout/training/training.component';
 import {ModalModule} from '../modal/modal.module';
 import {ShareModule} from './share.module';
 import {RxjsComponent} from './layout/rxjs/rxjs.component';
+import {SiderComponent} from './common/sider/sider.component';
 
 @NgModule({
     imports: [
@@ -24,6 +25,7 @@ import {RxjsComponent} from './layout/rxjs/rxjs.component';
     ],
     declarations: [
         LoginComponent,
+        SiderComponent,
         DefaultComponent,
         TrainingComponent,
         RxjsComponent,
