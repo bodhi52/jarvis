@@ -12,6 +12,7 @@ import {ModalModule} from '../modal/modal.module';
 import {ShareModule} from './share.module';
 import {RxjsComponent} from './layout/rxjs/rxjs.component';
 import {SiderComponent} from './common/sider/sider.component';
+import {ThreeComponent} from './layout/three/three.component';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import {SiderComponent} from './common/sider/sider.component';
         DefaultComponent,
         TrainingComponent,
         RxjsComponent,
+        ThreeComponent,
     ]
 })
 export class PagesModule {

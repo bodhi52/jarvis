@@ -26,9 +26,11 @@
     "angular-in-memory-web-api": "^0.6.1",
     "core-js": "^2.5.4",
     "echarts": "^4.2.0-rc.2",
+    "giojs": "^2.0.0",
     "moment": "^2.22.2",
     "ng-zorro-antd": "1.8.0",
     "rxjs": "^6.0.0",
+    "stats-js": "^1.0.0-alpha1",
     "three": "^0.98.0",
     "zone.js": "~0.8.26"
   },

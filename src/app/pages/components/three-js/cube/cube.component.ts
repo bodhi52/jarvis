@@ -1,8 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 import * as THREE from 'three';
-import {current} from '../../../../../../node_modules/codelyzer/util/syntaxKind';
-import {P} from '../../../../../../node_modules/@angular/core/src/render3';
 
 @Component({
     selector: 'app-cube',
@@ -90,8 +88,8 @@ export class CubeComponent implements OnInit, AfterViewInit {
         const deltat = now - this.currentTime;
         this.currentTime = now;
         const fract = deltat / this.duration;
-        const angle = Math.PI * 2 * fract;
-        this.cube.rotation.y += angle;
+        this.cube.rotation.y += Math.PI * 2 * fract;
+       
     }
     
     

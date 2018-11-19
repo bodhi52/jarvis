@@ -2,11 +2,14 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CubeComponent} from './cube/cube.component';
 import {RouterModule, Routes} from '@angular/router';
-import { LineComponent } from './line/line.component';
+import {LineComponent} from './line/line.component';
+import {EarthComponent} from './earth/earth.component';
+import {ThreeDimensionalSenceComponent} from './three-dimensional-sence/three-dimensional-sence.component';
+import { GeometryShapeComponent } from './geometry-shape/geometry-shape.component';
 
 const routes: Routes = [
     {
-        path: 'cube',
+        path: 'addCube',
         component: CubeComponent,
     },
     {
@@ -14,8 +17,20 @@ const routes: Routes = [
         component: LineComponent,
     },
     {
+        path: 'earth',
+        component: EarthComponent,
+    },
+    {
+        path: '3d-sence',
+        component: ThreeDimensionalSenceComponent,
+    },
+    {
+        path: 'geometry-shape',
+        component: GeometryShapeComponent,
+    },
+    {
         path: '',
-        redirectTo: 'cube',
+        redirectTo: 'earth',
         pathMatch: 'full',
     },
 ];
@@ -25,7 +40,7 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
     ],
-    declarations: [CubeComponent, LineComponent]
+    declarations: [CubeComponent, LineComponent, EarthComponent, ThreeDimensionalSenceComponent, GeometryShapeComponent]
 })
 export class ThreeJsModule {
 }

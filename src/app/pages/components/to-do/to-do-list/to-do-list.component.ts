@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {TodoInterface} from '../../../../core/interface/todo.interface';
 import * as moment from 'moment';
 
@@ -8,6 +8,8 @@ import * as moment from 'moment';
     styleUrls: ['./to-do-list.component.less']
 })
 export class ToDoListComponent implements OnInit {
+    
+    @HostListener('mouseenter')
     
     todoList: TodoInterface[] = [];
     

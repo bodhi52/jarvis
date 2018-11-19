@@ -6,6 +6,7 @@ import {TrainingComponent} from './layout/training/training.component';
 import {PageNoFoundComponent} from './common/page-no-found/page-no-found.component';
 import {RxjsModule} from './components/rxjs/rxjs.module';
 import {RxjsComponent} from './layout/rxjs/rxjs.component';
+import {ThreeComponent} from './layout/three/three.component';
 
 const pagesRoutes: Routes = [
     {
@@ -29,6 +30,7 @@ const pagesRoutes: Routes = [
     },
     {
         path: 'three',
+        component: ThreeComponent,
         loadChildren: './components/three-js/three-js.module#ThreeJsModule',
     },
     {
@@ -46,7 +48,7 @@ const pagesRoutes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'todo',
+        redirectTo: 'three',
         pathMatch: 'full',
     },
     {
