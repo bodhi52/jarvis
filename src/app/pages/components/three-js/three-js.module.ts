@@ -9,7 +9,7 @@ import { GeometryShapeComponent } from './geometry-shape/geometry-shape.componen
 
 const routes: Routes = [
     {
-        path: 'addCube',
+        path: 'cube',
         component: CubeComponent,
     },
     {

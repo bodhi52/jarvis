@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 
 import * as THREE from 'three';
 import * as Stats from 'stats-js';
+import * as DAT from 'dat.gui';
 
 @Component({
     selector: 'app-three-dimensional-sence',
@@ -20,7 +21,18 @@ export class ThreeDimensionalSenceComponent implements OnInit, AfterViewInit {
     camera: THREE.PerspectiveCamera;
 
     cube: THREE.Mesh;
-    
+
+    sphere: THREE.Mesh;
+
+    step = 0;
+
+    gui: DAT.GUI;
+
+    controls = {
+        rotationSpeed: 0.02,
+        bouncingSpeed: 0.03,
+    };
+
     stats: Stats;
     
     private get canvas(): HTMLCanvasElement {
@@ -35,9 +47,13 @@ export class ThreeDimensionalSenceComponent implements OnInit, AfterViewInit {
     }
     
     ngAfterViewInit() {
+        this.gui = new DAT.GUI();
+        this.gui.add(this.controls, 'rotationSpeed', 0, 0.5);
+        this.gui.add(this.controls, 'bouncingSpeed', 0, 0.5);
         this.init();
         this.initStats();
         this.render();
+
     }
     
     init() {
@@ -54,7 +70,7 @@ export class ThreeDimensionalSenceComponent implements OnInit, AfterViewInit {
         this.axes();
         this.plane();
         this.addCube();
-        this.sphere();
+        this.addSphere();
         this.light();
         
         this.camera.position.set(-50, 40, 30);
@@ -114,7 +130,7 @@ export class ThreeDimensionalSenceComponent implements OnInit, AfterViewInit {
     /**
      * 球体
      */
-    sphere() {
+    addSphere() {
         const sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
         // const sphereMaterial = new THREE.MeshBasicMaterial({
         //     color: 0x777777,
@@ -124,10 +140,11 @@ export class ThreeDimensionalSenceComponent implements OnInit, AfterViewInit {
         const sphereMaterial = new THREE.MeshLambertMaterial({
             color: 0x7777ff
         });
-        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        sphere.castShadow = true;
-        sphere.position.set(-30, 40, 30);
-        this.scene.add(sphere);
+        this.sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        this.sphere.castShadow = true;
+        this.sphere.position.set(20, 4, 2);
+        console.log('sphere');
+        this.scene.add(this.sphere);
     }
     
     /**
@@ -156,9 +173,13 @@ export class ThreeDimensionalSenceComponent implements OnInit, AfterViewInit {
     
     private animate() {
         this.stats.update();
-        this.cube.rotation.x += 0.02;
-        this.cube.rotation.y += 0.02;
-        this.cube.rotation.z += 0.02;
+        this.cube.rotation.x += this.controls.rotationSpeed;
+        this.cube.rotation.y += this.controls.rotationSpeed;
+        this.cube.rotation.z += this.controls.rotationSpeed;
+
+        this.step += this.controls.bouncingSpeed;
+        this.sphere.position.x = 20 + (10 * (Math.cos(this.step)));
+        this.sphere.position.y = 2 + (10 * (Math.abs((Math.sin(this.step)))));
     }
     
 }

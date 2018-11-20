@@ -25,6 +25,7 @@
     "@ngx-translate/http-loader": "^3.0.1",
     "angular-in-memory-web-api": "^0.6.1",
     "core-js": "^2.5.4",
+    "dat.gui": "^0.7.3",
     "echarts": "^4.2.0-rc.2",
     "giojs": "^2.0.0",
     "moment": "^2.22.2",
