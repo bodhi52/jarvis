@@ -4,7 +4,7 @@ import {CubeComponent} from './cube/cube.component';
 import {RouterModule, Routes} from '@angular/router';
 import {LineComponent} from './line/line.component';
 import {EarthComponent} from './earth/earth.component';
-import {ThreeDimensionalSenceComponent} from './three-dimensional-sence/three-dimensional-sence.component';
+import {ThreeDimensionalSceneComponent} from './three-dimensional-scene/three-dimensional-scene.component';
 import { GeometryShapeComponent } from './geometry-shape/geometry-shape.component';
 import { SceneComponent } from './scene/scene.component';
 
@@ -22,8 +22,8 @@ const routes: Routes = [
         component: EarthComponent,
     },
     {
-        path: '3d-sence',
-        component: ThreeDimensionalSenceComponent,
+        path: '3d-scene',
+        component: ThreeDimensionalSceneComponent,
     },
     {
         path: 'scene',
@@ -45,7 +45,7 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
     ],
-    declarations: [CubeComponent, LineComponent, EarthComponent, ThreeDimensionalSenceComponent, GeometryShapeComponent, SceneComponent]
+    declarations: [CubeComponent, LineComponent, EarthComponent, ThreeDimensionalSceneComponent, GeometryShapeComponent, SceneComponent]
 })
 export class ThreeJsModule {
 }

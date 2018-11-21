@@ -5,11 +5,11 @@ import * as Stats from 'stats-js';
 import * as DAT from 'dat.gui';
 
 @Component({
-    selector: 'app-three-dimensional-sence',
-    templateUrl: './three-dimensional-sence.component.html',
-    styleUrls: ['./three-dimensional-sence.component.less']
+    selector: 'app-three-dimensional-scene',
+    templateUrl: './three-dimensional-scene.component.html',
+    styleUrls: ['./three-dimensional-scene.component.less']
 })
-export class ThreeDimensionalSenceComponent implements OnInit, AfterViewInit {
+export class ThreeDimensionalSceneComponent implements OnInit, AfterViewInit {
     
     @ViewChild('canvas')
     private canvasRef: ElementRef;
@@ -96,7 +96,6 @@ export class ThreeDimensionalSenceComponent implements OnInit, AfterViewInit {
     axes() {
         const axes = new THREE.AxesHelper(100);
         this.scene.add(axes);
-        
     }
     
     /**
