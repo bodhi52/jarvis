@@ -6,6 +6,7 @@ import {LineComponent} from './line/line.component';
 import {EarthComponent} from './earth/earth.component';
 import {ThreeDimensionalSenceComponent} from './three-dimensional-sence/three-dimensional-sence.component';
 import { GeometryShapeComponent } from './geometry-shape/geometry-shape.component';
+import { SceneComponent } from './scene/scene.component';
 
 const routes: Routes = [
     {
@@ -25,6 +26,10 @@ const routes: Routes = [
         component: ThreeDimensionalSenceComponent,
     },
     {
+        path: 'scene',
+        component: SceneComponent,
+    },
+    {
         path: 'geometry-shape',
         component: GeometryShapeComponent,
     },
@@ -40,7 +45,7 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
     ],
-    declarations: [CubeComponent, LineComponent, EarthComponent, ThreeDimensionalSenceComponent, GeometryShapeComponent]
+    declarations: [CubeComponent, LineComponent, EarthComponent, ThreeDimensionalSenceComponent, GeometryShapeComponent, SceneComponent]
 })
 export class ThreeJsModule {
 }
