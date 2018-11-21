@@ -43,13 +43,14 @@ export class GeometryShapeComponent implements OnInit, AfterViewInit {
             canvas: this.canvas,
             antialias: true
         });
-        // this.renderer.setClearColorHex(0xEEEEEE);
+        this.renderer.setClearColor(new THREE.Color(0xEEEEEE));
         this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
         
         this.axis();
         this.plane();
         this.addCube();
         this.sphere();
+        this.circle();
         
         this.camera.position.set(-50, 40, 30);
         this.camera.lookAt(this.scene.position);
@@ -60,7 +61,7 @@ export class GeometryShapeComponent implements OnInit, AfterViewInit {
      * 坐标轴
      */
     axis() {
-        const axis = new THREE.AxisHelper(100);
+        const axis = new THREE.AxesHelper(20);
         this.scene.add(axis);
         
     }
@@ -69,14 +70,42 @@ export class GeometryShapeComponent implements OnInit, AfterViewInit {
      * 平面
      */
     plane() {
-        const planeGeometry = new THREE.PlaneGeometry(60, 20);
-        const planeMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
+        const planeGeometry = new THREE.PlaneGeometry(60, 40, 16, 16);
+        const planeMaterial = new THREE.MeshBasicMaterial({
+            color: 0x333333,
+            wireframe: true,
+        });
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = -0.5 * Math.PI;
-        plane.position.x = 15;
+        plane.position.x = 0;
         plane.position.y = 0;
         plane.position.z = 0;
         this.scene.add(plane);
+    }
+    
+    /**
+     * 圆
+     */
+    circle() {
+        const circleGeometry = new THREE.CircleGeometry(3);
+        const circleMaterial = new THREE.MeshBasicMaterial({
+            color: 0x333333,
+        });
+        const circle = new THREE.Mesh(circleGeometry, circleMaterial);
+        circle.position.set(-30, 10, 0);
+        circle.rotation.x = -0.5 * Math.PI;
+        this.scene.add(circle);
+        
+        const halfCircleGeometry = new THREE.CircleGeometry(3, 12, 0, Math.PI);
+        const halfCircle = new THREE.Mesh(halfCircleGeometry, circleMaterial);
+        halfCircle.position.set(-20, 10, 0);
+        halfCircle.rotation.x = -0.5 * Math.PI;
+        this.scene.add(halfCircle);
+        
+    }
+    
+    shape() {
+        const shape = new THREE.Shape();
     }
     
     /**
@@ -84,9 +113,8 @@ export class GeometryShapeComponent implements OnInit, AfterViewInit {
      */
     addCube() {
         const cubeGeometry = new THREE.CubeGeometry(4, 4, 4);
-        const cubeMaterial = new THREE.MeshBasicMaterial({
+        const cubeMaterial = new THREE.MeshLambertMaterial({
             color: 0x333333,
-            wireframe: true,
         });
         this.cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
         this.cube.position.set(-4, 3, 0);
