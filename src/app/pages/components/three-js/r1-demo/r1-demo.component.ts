@@ -1,6 +1,17 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
+
 import * as THREE from 'three';
+import * as d3 from 'd3';
+import * as geo from 'd3-geo';
+import {feature as topojsonFeature} from 'topojson';
+
+const width = 2048;
+const height = 1024;
+
+const projection = geo.geoNaturalEarth1()
+    .scale(325)
+    .translate([width / 2, height / 2]);
 
 @Component({
     selector: 'app-r1-demo',
@@ -22,6 +33,14 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
     camera: THREE.PerspectiveCamera;
     renderer: THREE.WebGLRenderer;
     
+    plane: THREE.Mesh;
+    
+    planeWidth = 1200;
+    planeHeight = 600;
+    
+    // 地图上定位的点
+    pointArr = [];
+    
     constructor() {
     }
     
@@ -34,7 +53,6 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
         this.addPlane();
         this.axes();
         this.addText();
-        this.addLine();
         this.render();
     }
     
@@ -46,7 +64,7 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
             canvas: this.canvas,
             antialias: true
         });
-        this.camera.position.set(0, 0, 200);
+        this.camera.position.set(0, 0, 1000);
         this.camera.lookAt(this.scene.position);
         this.renderer.setClearColor(new THREE.Color(0x333333));
         this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
@@ -56,26 +74,85 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
      * 坐标轴
      */
     axes() {
-        const axes = new THREE.AxesHelper(30);
+        const axes = new THREE.AxesHelper(80);
         this.scene.add(axes);
     }
     
     
     addPlane() {
-        const planeGeometry = new THREE.PlaneGeometry(220, 110);
-        const texture = new THREE.TextureLoader().load('/assets/img/world-50m-countries.png');
-        // const bumpMap = THREE.ImageUtils.loadTexture('/assets/img/earth4.jpg');
+        const planeGeometry = new THREE.PlaneGeometry(this.planeWidth, this.planeHeight);
+        this.getJson().then(data => {
+            const countries = topojsonFeature(data, data['objects']['countries']);
+            const worldTexture = this.mapTexture(countries, '#000000');
+            const planeMaterial = new THREE.MeshBasicMaterial({
+                map: worldTexture,
+                transparent: true,
+                color: 0xffffff,
+                // wireframe: true,
+            
+            });
+            this.plane = new THREE.Mesh(planeGeometry, planeMaterial);
+            // this.plane.rotation.x = 0.1 * Math.PI;
+            this.plane.position.set(0, -160, 0);
+            this.scene.add(this.plane);
+            this.addCircle();
+            this.addLine();
         
-        const planeMaterial = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
-            map: texture
         });
-        const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-        // plane.rotation.x = -0.5 * Math.PI;
-        plane.rotation.x = -0.2 * Math.PI;
-        plane.position.set(0, -40, 0);
-        console.log(plane);
-        this.scene.add(plane);
+    }
+    
+    /**
+     * 获得地图的json
+     */
+    async getJson() {
+        const data = d3.json('/assets/data/world.json');
+        return data;
+    }
+    
+    addCircle() {
+        
+        const circleMaterial = new THREE.MeshBasicMaterial({
+            color: 0xFF0000,
+        });
+        
+        const citys = [
+            {
+                name: '北京',
+                lat: 39.9075,   // 经纬度查询请到 http://www.gpsspg.com/maps.htm
+                lon: 116.39723
+            },
+            {
+                name: '东京',
+                lat: 35.6895,
+                lon: 139.69171,
+            },
+            {
+                name: 'New York',
+                lat: 40.71427,
+                lon: -74.0059
+            },
+            {
+                name: 'Moscow',
+                lat: 55.75222,
+                lon: 37.61556
+            }
+        ];
+        
+        for (const item of citys) {
+            const circleGeometry = new THREE.CircleGeometry(3, 20);
+            
+            const peking = [item.lon, item.lat];
+            const proPeking = projection(peking);
+            const x = ((this.planeWidth / width) * proPeking[0]) - (this.planeWidth / 2) + this.plane.position.x;
+            const y = this.planeHeight / 2 - ((this.planeWidth / width) * proPeking[1]) + this.plane.position.y;
+            console.log('x, y', x, y);
+            const circle = new THREE.Mesh(circleGeometry, circleMaterial);
+            circle.position.set(x, y, 1);
+            circle.name = 'p' + String(this.pointArr.length);
+            this.pointArr.push(circle.name);
+            this.scene.add(circle);
+        }
+        
     }
     
     addText() {
@@ -86,7 +163,7 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
             
             const textGeo = new THREE.TextGeometry('R1 Protocol', {
                 font: font,
-                size: 10,
+                size: 20,
                 height: 0,
                 bevelThickness: 1,
                 bevelSize: 1,
@@ -104,7 +181,9 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
             const mesh = new THREE.Mesh(textGeo, textMaterial);
             // mesh.rotation.x = 0.2 * Math.PI;
             console.log('textGeo.parameters.width', textGeo);
-            mesh.position.set(-40, 40, 0);
+            mesh.position.set(-80, 200, 30);
+            mesh.name = 'r1';
+            
             
             this.scene.add(mesh);
             
@@ -112,82 +191,34 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
     }
     
     addLine() {
-        const lineArr = [
-            [
-                {
-                    x: 0,
-                    y: -40,
-                    z: 0
-                },
-                {
-                    x: 0,
-                    y: 40,
-                    z: 0
-                }
-            ],
-            [
-                {
-                    x: -30,
-                    y: -40,
-                    z: 0
-                },
-                {
-                    x: 0,
-                    y: 40,
-                    z: 0
-                }
-            ],
-            [
-                {
-                    x: 80,
-                    y: -40,
-                    z: 0
-                },
-                {
-                    x: 0,
-                    y: 40,
-                    z: 0
-                },
-            ]
-        ];
-        const curveMaterial = new THREE.LineBasicMaterial({color: 0xFFFF00});
+        const textR1 = this.scene.getObjectByName('r1');
         
-        for (const item of lineArr) {
-            const p = {
-                x: 0,
-                y: 0,
-                z: 0,
-            };
-            // p.y = Math.abs(item[0].x);
-            const middle = [
-                (item[0]['x'] + item[1]['x']) / 2 + p.x,
-                (item[0]['y'] + item[1]['y']) / 2 + p.y,
-                (item[0]['z'] + item[1]['z']) / 2 + p.z];
+        // 将点和文字连线
+        const endPoint = {
+            x: 0,
+            y: textR1.position.y,
+            z: textR1.position.z
+        };
+        const curveMaterial = new THREE.LineBasicMaterial({color: 0xFFFF00});
+    
+        const p = {
+            x: 0,
+            y: 0,
+            z: 0,
+        };
+        for (const name of this.pointArr) {
+            const point = this.scene.getObjectByName(name).position;
             const curve = new THREE.QuadraticBezierCurve3(
-                new THREE.Vector3(item[0]['x'], item[0]['y'], item[0]['z']),
-                // new THREE.Vector3(p.x, p.y, p.z),
-                new THREE.Vector3(middle[0], middle[1], middle[2]),
-                new THREE.Vector3(item[1]['x'], item[1]['y'], item[1]['z']));
-            // const path = new THREE.CurvePath();
-            // path.add(curve);
+                new THREE.Vector3(point.x, point.y, point.z),
+                new THREE.Vector3(p.x, p.y, p.z),
+                new THREE.Vector3(endPoint.x, endPoint.y, endPoint.z),
+            );
             const points = curve.getPoints( 50 );
-    
-    
             const geometry = new THREE.BufferGeometry().setFromPoints( points );
     
             const curvedLine = new THREE.Line(geometry, curveMaterial);
             this.scene.add(curvedLine);
-    
-            // const points = curve.getPoints(50);
-            // const geometry = new THREE.BufferGeometry().setFromPoints( points );
-            // const splineObject = new THREE.Line( geometry, material );
-            // this.scene.add(splineObject);
-            
         }
-        
-        // const pointLight = new THREE.PointLight(0xff0000, 1, 100, 1);
-        // pointLight.name = 'pointLight';
-        // this.scene.add(pointLight);
     }
     
     public render() {
@@ -197,6 +228,48 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
     }
     
     private animate() {
+    }
+    
+    /**
+     * 通过geo地图获取到canvas里面的地图
+     * @param geojson
+     * @param color
+     */
+    mapTexture(geojson, color) {
+        let texture, context, canvas;
+        
+        canvas = d3.select('body').append('canvas')
+        // .style('display', 'none')
+            .attr('width', width + 'px')
+            .attr('height', height + 'px');
+        
+        context = canvas.node().getContext('2d');
+        
+        const path = geo.geoPath(projection, context);
+        
+        context.strokeStyle = '#ffffff';
+        context.lineWidth = 2;
+        context.fillStyle = color || '#CDB380';
+        
+        context.beginPath();
+        
+        path(geojson);
+        
+        if (color) {
+            context.fill();
+        }
+        
+        context.stroke();
+        
+        // DEBUGGING - Really expensive, disable when done.
+        // console.log(canvas.node().toDataURL());
+        
+        texture = new THREE.Texture(canvas.node());
+        texture.needsUpdate = true;
+        
+        canvas.remove();
+        
+        return texture;
     }
     
 }
