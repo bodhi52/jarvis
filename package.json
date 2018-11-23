@@ -24,7 +24,10 @@
     "@ngx-translate/core": "^10.0.2",
     "@ngx-translate/http-loader": "^3.0.1",
     "angular-in-memory-web-api": "^0.6.1",
-    "core-js": "^2.5.4",
+    "cities.json": "^1.1.5",
+    "d3": "^5.7.0",
+    "d3-array": "^2.0.2",
+    "d3-geo": "^1.11.1",
     "dat.gui": "^0.7.3",
     "echarts": "^4.2.0-rc.2",
     "giojs": "^2.0.0",
@@ -33,6 +36,7 @@
     "rxjs": "^6.0.0",
     "stats-js": "^1.0.0-alpha1",
     "three": "^0.98.0",
+    "topojson": "^3.0.2",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

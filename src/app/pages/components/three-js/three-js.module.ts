@@ -8,6 +8,7 @@ import {ThreeDimensionalSceneComponent} from './three-dimensional-scene/three-di
 import {GeometryShapeComponent} from './geometry-shape/geometry-shape.component';
 import {SceneComponent} from './scene/scene.component';
 import {R1DemoComponent} from './r1-demo/r1-demo.component';
+import { GeoComponent } from './geo/geo.component';
 
 const routes: Routes = [
     {
@@ -39,6 +40,10 @@ const routes: Routes = [
         component: R1DemoComponent,
     },
     {
+        path: 'geo',
+        component: GeoComponent,
+    },
+    {
         path: '',
         redirectTo: 'earth',
         pathMatch: 'full',
@@ -58,6 +63,7 @@ const routes: Routes = [
         GeometryShapeComponent,
         SceneComponent,
         R1DemoComponent,
+        GeoComponent,
     ]
 })
 export class ThreeJsModule {

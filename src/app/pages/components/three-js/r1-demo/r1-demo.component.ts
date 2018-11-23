@@ -21,7 +21,6 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
     
     camera: THREE.PerspectiveCamera;
     renderer: THREE.WebGLRenderer;
-    context: CanvasRenderingContext2D;
     
     constructor() {
     }
@@ -35,6 +34,7 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
         this.addPlane();
         this.axes();
         this.addText();
+        this.addLine();
         this.render();
     }
     
@@ -62,55 +62,133 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
     
     
     addPlane() {
-        const planeGeometry = new THREE.PlaneGeometry(100, 40);
-        const texture = new THREE.TextureLoader().load('/assets/img/earth4.jpg');
+        const planeGeometry = new THREE.PlaneGeometry(220, 110);
+        const texture = new THREE.TextureLoader().load('/assets/img/world-50m-countries.png');
         // const bumpMap = THREE.ImageUtils.loadTexture('/assets/img/earth4.jpg');
         
         const planeMaterial = new THREE.MeshBasicMaterial({
-            map: texture,
+            color: 0xffffff,
+            map: texture
         });
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
         // plane.rotation.x = -0.5 * Math.PI;
         plane.rotation.x = -0.2 * Math.PI;
-        plane.position.set(0, -20, 0);
+        plane.position.set(0, -40, 0);
         console.log(plane);
         this.scene.add(plane);
     }
     
     addText() {
-    
-        const loader = new THREE.FontLoader();
-    
-        loader.load( '/assets/fonts/helvetiker_bold.typeface.json',  ( font ) => {
         
-            const textGeo = new THREE.TextGeometry( 'LABCDEF', {
+        const loader = new THREE.FontLoader();
+        
+        loader.load('/assets/fonts/helvetiker_bold.typeface.json', (font) => {
+            
+            const textGeo = new THREE.TextGeometry('R1 Protocol', {
                 font: font,
                 size: 10,
-                height: 2,
-                curveSegments: 1,
-    
-                bevelThickness: 2,
-                bevelSize: 5,
-                bevelEnabled: true
+                height: 0,
+                bevelThickness: 1,
+                bevelSize: 1,
+                bevelSegments: 1,
+                curveSegments: 50,
+                steps: 1
+            });
             
-            } );
             
-        
-            const textMaterial = new THREE.MeshBasicMaterial( {
+            const textMaterial = new THREE.MeshBasicMaterial({
                 color: 0xbbbbbb,
                 // wireframe: true,
-            } );
-        
-            const mesh = new THREE.Mesh( textGeo, textMaterial );
+            });
+            
+            const mesh = new THREE.Mesh(textGeo, textMaterial);
             // mesh.rotation.x = 0.2 * Math.PI;
-            mesh.position.set(10, 30, 10);
-        
-            this.scene.add( mesh );
-        
-        } );
+            console.log('textGeo.parameters.width', textGeo);
+            mesh.position.set(-40, 40, 0);
+            
+            this.scene.add(mesh);
+            
+        });
     }
     
-   
+    addLine() {
+        const lineArr = [
+            [
+                {
+                    x: 0,
+                    y: -40,
+                    z: 0
+                },
+                {
+                    x: 0,
+                    y: 40,
+                    z: 0
+                }
+            ],
+            [
+                {
+                    x: -30,
+                    y: -40,
+                    z: 0
+                },
+                {
+                    x: 0,
+                    y: 40,
+                    z: 0
+                }
+            ],
+            [
+                {
+                    x: 80,
+                    y: -40,
+                    z: 0
+                },
+                {
+                    x: 0,
+                    y: 40,
+                    z: 0
+                },
+            ]
+        ];
+        const curveMaterial = new THREE.LineBasicMaterial({color: 0xFFFF00});
+        
+        for (const item of lineArr) {
+            const p = {
+                x: 0,
+                y: 0,
+                z: 0,
+            };
+            // p.y = Math.abs(item[0].x);
+            const middle = [
+                (item[0]['x'] + item[1]['x']) / 2 + p.x,
+                (item[0]['y'] + item[1]['y']) / 2 + p.y,
+                (item[0]['z'] + item[1]['z']) / 2 + p.z];
+            const curve = new THREE.QuadraticBezierCurve3(
+                new THREE.Vector3(item[0]['x'], item[0]['y'], item[0]['z']),
+                // new THREE.Vector3(p.x, p.y, p.z),
+                new THREE.Vector3(middle[0], middle[1], middle[2]),
+                new THREE.Vector3(item[1]['x'], item[1]['y'], item[1]['z']));
+            // const path = new THREE.CurvePath();
+            // path.add(curve);
+            const points = curve.getPoints( 50 );
+    
+    
+            const geometry = new THREE.BufferGeometry().setFromPoints( points );
+    
+            const curvedLine = new THREE.Line(geometry, curveMaterial);
+            this.scene.add(curvedLine);
+    
+            // const points = curve.getPoints(50);
+            // const geometry = new THREE.BufferGeometry().setFromPoints( points );
+            // const splineObject = new THREE.Line( geometry, material );
+            // this.scene.add(splineObject);
+            
+        }
+        
+        // const pointLight = new THREE.PointLight(0xff0000, 1, 100, 1);
+        // pointLight.name = 'pointLight';
+        // this.scene.add(pointLight);
+    }
     
     public render() {
         window.requestAnimationFrame(this.render.bind(this));
