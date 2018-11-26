@@ -21,6 +21,8 @@ export class LineComponent implements OnInit, AfterViewInit {
     
     cube: THREE.Mesh;
     
+    i = 0;
+    
     private get canvas(): HTMLCanvasElement {
         return this.canvasRef.nativeElement;
     }
@@ -49,6 +51,7 @@ export class LineComponent implements OnInit, AfterViewInit {
         this.camera.lookAt(0, 0, 0);
         this.axes();
         this.drawLine();
+        this.circle();
         this.render();
     }
     
@@ -83,10 +86,11 @@ export class LineComponent implements OnInit, AfterViewInit {
             new THREE.Vector3(endPoint.x, endPoint.y, endPoint.z),
         );
         const points = curve.getPoints( 50 );
+        // const geometry = new THREE.BufferGeometry().setFromPoints( points );
         const geometry = new THREE.BufferGeometry().setFromPoints( points );
-        
         const curvedLine = this.createParticleSystem(geometry);
-        
+        curvedLine.name = 'line-1';
+        console.log('curvedLine', curvedLine);
         this.scene.add(curvedLine);
     }
     
@@ -95,6 +99,45 @@ export class LineComponent implements OnInit, AfterViewInit {
         this.renderer.render(this.scene, this.camera);
         
         window.requestAnimationFrame(this.render.bind(this));
+        this.animate();
+    }
+    
+    private animate() {
+        const line = this.scene.getObjectByName('line-1');
+        const circle = this.scene.getObjectByName('line-1-circle');
+        // 按照点的位置挪动圆
+        this.i ++;
+        if (this.i > line.geometry.attributes.position.count) {
+            this.i = 0;
+        }
+        const position = {
+            x: line.geometry.attributes.position.array[this.i * 3],
+            y: line.geometry.attributes.position.array[this.i * 3 + 1],
+            z: line.geometry.attributes.position.array[this.i * 3 + 2],
+        };
+        circle.position.set(position.x, position.y, position.z);
+    
+    }
+    
+    /**
+     * 圆
+     */
+    circle() {
+        const circleGeometry = new THREE.CircleGeometry(3);
+        const circleMaterial = new THREE.MeshBasicMaterial({
+            color: 0xFFFFFF,
+        });
+        const circle = new THREE.Mesh(circleGeometry, circleMaterial);
+        circle.name = 'line-1-circle';
+        const line = this.scene.getObjectByName('line-1');
+    
+        const position = {
+            x: line.geometry.attributes.position.array[this.i * 3],
+            y: line.geometry.attributes.position.array[this.i * 3 + 1],
+            z: line.geometry.attributes.position.array[this.i * 3 + 2] + 1,
+        };
+        circle.position.set(position.x, position.y, position.z);
+        this.scene.add(circle);
         
     }
     
@@ -132,6 +175,7 @@ export class LineComponent implements OnInit, AfterViewInit {
         context.fillStyle = gradient;
         context.fillRect(0, 0, canvas.node().width, canvas.node().height);
         const texture = new THREE.Texture(canvas.node());
+        canvas.remove();
         texture.needsUpdate = true;
         return texture;
         
