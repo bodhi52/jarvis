@@ -210,27 +210,27 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
     
     addLine() {
         const textR1 = this.scene.getObjectByName('r1');
-        
+        const heightLimit = textR1.position.y - 60;
         // 将点和文字连线
         const endPoint = {
             x: 0,
             y: textR1.position.y,
             z: textR1.position.z
         };
-        const curveMaterial = new THREE.LineBasicMaterial({color: 0xFFFF00});
-    
-        const p = {
-            x: 0,
-            y: 0,
-            z: 2,
-        };
+        const curveMaterial = new THREE.LineBasicMaterial({color: 0xFFFF00, linewidth: 10});
+        
+     
         for (const name of this.pointArr) {
             const point = this.scene.getObjectByName(name).position;
-            const curve = new THREE.QuadraticBezierCurve3(
+            
+            const middleCurvePositionX = (point.x + endPoint.x) / 2;
+            const middleCurvePositionY = heightLimit;
+            const middleCurvePositionZ = (point.z + endPoint.z) / 2;
+            const curve = new THREE.CatmullRomCurve3([
                 new THREE.Vector3(point.x, point.y, point.z),
-                new THREE.Vector3(p.x, p.y, p.z),
-                new THREE.Vector3(endPoint.x, endPoint.y, endPoint.z),
-            );
+                new THREE.Vector3(middleCurvePositionX, middleCurvePositionY, middleCurvePositionZ),
+                new THREE.Vector3(endPoint.x, endPoint.y, endPoint.z)
+            ]);
             const points = curve.getPoints( 50 );
             const geometry = new THREE.BufferGeometry().setFromPoints( points );
     

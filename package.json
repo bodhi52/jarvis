@@ -23,6 +23,7 @@
     "@antv/g2": "^3.3.4",
     "@ngx-translate/core": "^10.0.2",
     "@ngx-translate/http-loader": "^3.0.1",
+    "@tweenjs/tween.js": "^17.2.0",
     "angular-in-memory-web-api": "^0.6.1",
     "cities.json": "^1.1.5",
     "d3": "^5.7.0",
