@@ -9,6 +9,7 @@ import {GeometryShapeComponent} from './geometry-shape/geometry-shape.component'
 import {SceneComponent} from './scene/scene.component';
 import {R1DemoComponent} from './r1-demo/r1-demo.component';
 import { GeoComponent } from './geo/geo.component';
+import { TextComponent } from './text/text.component';
 
 const routes: Routes = [
     {
@@ -44,6 +45,10 @@ const routes: Routes = [
         component: GeoComponent,
     },
     {
+        path: 'text',
+        component: TextComponent,
+    },
+    {
         path: '',
         redirectTo: 'earth',
         pathMatch: 'full',
@@ -64,6 +69,7 @@ const routes: Routes = [
         SceneComponent,
         R1DemoComponent,
         GeoComponent,
+        TextComponent,
     ]
 })
 export class ThreeJsModule {

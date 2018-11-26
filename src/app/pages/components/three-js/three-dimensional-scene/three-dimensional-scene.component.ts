@@ -63,7 +63,6 @@ export class ThreeDimensionalSceneComponent implements OnInit, AfterViewInit {
             canvas: this.canvas,
             antialias: true
         });
-        // this.renderer.setClearColorHex(0xEEEEEE);
         this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
         this.renderer.shadowMap.enabled = true;
         

@@ -52,7 +52,6 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
         this.init();
         this.addPlane();
         this.axes();
-        this.addText();
         this.render();
     }
     
@@ -96,6 +95,9 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
             this.plane.position.set(0, -160, 0);
             this.scene.add(this.plane);
             this.addCircle();
+            const text = this.addText({x: 0, y: 200, z: 0}, 'r1', 'R1协议', {size: 40});
+            this.scene.add( text );
+    
             this.addLine();
         
         });
@@ -155,39 +157,55 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
         
     }
     
-    addText() {
+    /**
+     * 创建文本，
+     * @param position 文本的位置
+     * @param name 索引的名字
+     * @param text 文本内容
+     * @param font 字体设置相关
+     */
+    addText(
+        position: {x: number, y: number, z: number},
+        name: string,
+        text: string,
+        font: {
+            color?: string
+            size?: number
+            family?: string
+        } = {
+        },
+    ) {
+        const canvas = d3.select('body').append('canvas');
+        const context = canvas.node().getContext('2d');
+        const actualFontSize = font.size || 10;
         
-        const loader = new THREE.FontLoader();
+        const textHeight = 400;
+        context.font = textHeight + 'pt Arial';
+        // 2d duty
+        const textWidth = context.measureText(text).width;
+        canvas.node().width = textWidth;
+        canvas.node().height = textHeight;
+        context.font = 'normal ' + textHeight + 'px ' + font.family || 'Arial';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillStyle = font.color || '#ffffff';
+        context.fillText(text, textWidth / 2, textHeight / 2);
+        const texture = new THREE.Texture(canvas.node());
+        canvas.remove();
+        texture.needsUpdate = true;
+        const material = new THREE.SpriteMaterial({ map: texture, useScreenCoordinates: false });
+        const sprite = new THREE.Sprite( material );
         
-        loader.load('/assets/fonts/helvetiker_bold.typeface.json', (font) => {
-            
-            const textGeo = new THREE.TextGeometry('R1 Protocol', {
-                font: font,
-                size: 20,
-                height: 0,
-                bevelThickness: 1,
-                bevelSize: 1,
-                bevelSegments: 1,
-                curveSegments: 50,
-                steps: 1
-            });
-            
-            
-            const textMaterial = new THREE.MeshBasicMaterial({
-                color: 0xbbbbbb,
-                // wireframe: true,
-            });
-            
-            const mesh = new THREE.Mesh(textGeo, textMaterial);
-            // mesh.rotation.x = 0.2 * Math.PI;
-            console.log('textGeo.parameters.width', textGeo);
-            mesh.position.set(-80, 200, 30);
-            mesh.name = 'r1';
-            
-            
-            this.scene.add(mesh);
-            
-        });
+        const textObject = new THREE.Object3D();
+        textObject.textHeight = actualFontSize;
+        textObject.textWidth = (textWidth / textHeight) * textObject.textHeight;
+        sprite.scale.set(textWidth / textHeight * actualFontSize, actualFontSize, 1);
+    
+        textObject.position.set(position.x, position.y, position.z);
+        textObject.name = name;
+        textObject.add(sprite);
+        console.log('textObject', textObject);
+        return textObject;
     }
     
     addLine() {
@@ -204,7 +222,7 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
         const p = {
             x: 0,
             y: 0,
-            z: 0,
+            z: 2,
         };
         for (const name of this.pointArr) {
             const point = this.scene.getObjectByName(name).position;
