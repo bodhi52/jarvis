@@ -10,6 +10,7 @@ import {SceneComponent} from './scene/scene.component';
 import {R1DemoComponent} from './r1-demo/r1-demo.component';
 import { GeoComponent } from './geo/geo.component';
 import { TextComponent } from './text/text.component';
+import { ParticleComponent } from './particle/particle.component';
 
 const routes: Routes = [
     {
@@ -49,6 +50,10 @@ const routes: Routes = [
         component: TextComponent,
     },
     {
+        path: 'particle',
+        component: ParticleComponent,
+    },
+    {
         path: '',
         redirectTo: 'earth',
         pathMatch: 'full',
@@ -70,6 +75,7 @@ const routes: Routes = [
         R1DemoComponent,
         GeoComponent,
         TextComponent,
+        ParticleComponent,
     ]
 })
 export class ThreeJsModule {

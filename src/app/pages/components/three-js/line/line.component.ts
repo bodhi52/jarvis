@@ -85,10 +85,13 @@ export class LineComponent implements OnInit, AfterViewInit {
             new THREE.Vector3(p.x, p.y, p.z),
             new THREE.Vector3(endPoint.x, endPoint.y, endPoint.z),
         );
-        const points = curve.getPoints( 50 );
+        const points = curve.getPoints( 100 );
         // const geometry = new THREE.BufferGeometry().setFromPoints( points );
         const geometry = new THREE.BufferGeometry().setFromPoints( points );
-        const curvedLine = this.createParticleSystem(geometry);
+        const curveMaterial = new THREE.LineBasicMaterial({color: 0xFFFF00, linewidth: 10});
+        // const curvedLine = this.createParticleSystem(geometry);
+        const curvedLine = new THREE.Line(geometry, curveMaterial);
+    
         curvedLine.name = 'line-1';
         console.log('curvedLine', curvedLine);
         this.scene.add(curvedLine);
@@ -125,7 +128,7 @@ export class LineComponent implements OnInit, AfterViewInit {
     circle() {
         const circleGeometry = new THREE.CircleGeometry(3);
         const circleMaterial = new THREE.MeshBasicMaterial({
-            color: 0xFFFFFF,
+            map: this.generaterSprite(),
         });
         const circle = new THREE.Mesh(circleGeometry, circleMaterial);
         circle.name = 'line-1-circle';
