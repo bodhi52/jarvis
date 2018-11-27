@@ -48,6 +48,7 @@ export class ParticleComponent implements OnInit, AfterViewInit {
         this.camera.position.set(0, 0, 100);
         this.camera.lookAt(0, 0, 0);
         this.axes();
+        this.createParticle();
         this.render();
     }
     
@@ -57,6 +58,74 @@ export class ParticleComponent implements OnInit, AfterViewInit {
     axes() {
         const axes = new THREE.AxesHelper(20);
         this.scene.add(axes);
+    }
+    
+    createBasicParticle() {
+        const material = new THREE.PointsMaterial();
+        for (let x = -5; x < 5; x++) {
+            for (let y = -5; y < 5; y++) {
+                const particle = new THREE.Particle(material);
+                particle.position.set(x * 10, y * 10, 0);
+                this.scene.add(particle);
+            }
+        }
+    }
+    
+    createParticleSystem() {
+        const geom = new THREE.Geometry();
+        const material = new THREE.PointsMaterial({
+            size: 4,
+            vertexColors: true,
+            color: 0xffffff,
+        });
+        
+        for (let x = -5; x < 5; x ++) {
+            for (let y = -5; y < 5; y ++) {
+                const particle = new THREE.Vector3(x * 10, y * 10, 0);
+                geom.vertices.push(particle);
+                geom.colors.push(
+                    new THREE.Color(Math.random() * 0xFFFFFF)
+                );
+            }
+        }
+        
+        const system = new THREE.ParticleSystem(geom, material);
+        this.scene.add(system);
+    }
+    
+    createParticle() {
+         const geom = new THREE.Geometry();
+         const material = new THREE.PointsMaterial({
+             size: 4,
+             transparent: true,
+             opacity: 1,
+             vertexColors: 0xffffff,
+             sizeAttenuation: true,
+             color: 0xFFFFFF,
+         });
+         
+         const range = 50;
+         
+         for (let i = 0; i < 20; i ++) {
+             const particle = new THREE.Vector3(
+                 Math.random() * range - range / 2,
+                 Math.random() * range - range / 2,
+                 Math.random() * range - range / 2
+             );
+             geom.vertices.push(particle);
+             const color = new THREE.Color(0x00ff00);
+             const hsl = {
+                 h: 0,
+                 s: 0,
+                 l: 0,
+             };
+             color.getHSL(hsl);
+             
+             color.setHSL(hsl.h, hsl.s, Math.random() * hsl.l);
+             geom.colors.push(color);
+         }
+         const system = new THREE.Points(geom, material);
+         this.scene.add(system);
     }
     
     public render() {
