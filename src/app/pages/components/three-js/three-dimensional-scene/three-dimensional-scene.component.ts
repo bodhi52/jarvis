@@ -104,6 +104,7 @@ export class ThreeDimensionalSceneComponent implements OnInit, AfterViewInit {
         const planeGeometry = new THREE.PlaneGeometry(60, 20);
         const planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        plane.receiveShadow = true;
         plane.rotation.x = -0.5 * Math.PI;
         plane.position.x = 15;
         plane.position.y = 0;
@@ -170,14 +171,14 @@ export class ThreeDimensionalSceneComponent implements OnInit, AfterViewInit {
     }
     
     private animate() {
-        this.stats.update();
-        this.cube.rotation.x += this.controls.rotationSpeed;
-        this.cube.rotation.y += this.controls.rotationSpeed;
-        this.cube.rotation.z += this.controls.rotationSpeed;
-
-        this.step += this.controls.bouncingSpeed;
-        this.sphere.position.x = 20 + (10 * (Math.cos(this.step)));
-        this.sphere.position.y = 2 + (10 * (Math.abs((Math.sin(this.step)))));
+        // this.stats.update();
+        // this.cube.rotation.x += this.controls.rotationSpeed;
+        // this.cube.rotation.y += this.controls.rotationSpeed;
+        // this.cube.rotation.z += this.controls.rotationSpeed;
+        //
+        // this.step += this.controls.bouncingSpeed;
+        // this.sphere.position.x = 20 + (10 * (Math.cos(this.step)));
+        // this.sphere.position.y = 2 + (10 * (Math.abs((Math.sin(this.step)))));
     }
     
 }
