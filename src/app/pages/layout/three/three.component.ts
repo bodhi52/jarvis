@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-three',
@@ -7,10 +8,72 @@ import {Component, OnInit} from '@angular/core';
 })
 export class ThreeComponent implements OnInit {
     
-    constructor() {
+    menuList = [];
+    
+    constructor(
+        private router: Router,
+    ) {
     }
     
     ngOnInit() {
+        this.menuList = [
+            {
+                url: '',
+                text: 'Three JS 练习',
+                children: [
+                    {
+                        url: 'geometry-shape', text: '几何形状'
+                    },
+                    {
+                        url: 'cube', text: 'Cube',
+                    },
+                    {
+                        url: 'line', text: 'Line',
+                    },
+                    {
+                        url: 'earth', text: 'Earth',
+                    },
+                    {
+                        url: '3d-scene', text: '3DScene',
+                    },
+                    {
+                        url: 'scene', text: '场景',
+                    },
+                    {
+                        url: 'text', text: 'Text',
+                    },
+                    {
+                        url: 'particle', text: '粒子',
+                    },
+                ],
+            },
+            {
+                url: '',
+                text: '综合练习',
+                children: [
+                    {
+                        url: 'geo', text: '地图geo',
+                    },
+                    {
+                        url: 'aviator', text: '飞行员',
+                    },
+                    {
+                        url: 'airplane',
+                        text: '飞机',
+                    }
+                ],
+            },
+            {
+                url: 'r1-demo', text: 'r1demo',
+            }
+        
+        ];
+        
     }
     
+    goUrl(url) {
+        if (url) {
+            this.router.navigate(['/three/' + url]);
+        }
+    }
 }

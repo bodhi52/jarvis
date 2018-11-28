@@ -12,6 +12,7 @@ import { GeoComponent } from './geo/geo.component';
 import { TextComponent } from './text/text.component';
 import { ParticleComponent } from './particle/particle.component';
 import { AviatorComponent } from './aviator/aviator.component';
+import { AirplaneComponent } from './airplane/airplane.component';
 
 const routes: Routes = [
     {
@@ -59,6 +60,10 @@ const routes: Routes = [
         component: AviatorComponent,
     },
     {
+        path: 'airplane',
+        component: AirplaneComponent,
+    },
+    {
         path: '',
         redirectTo: 'earth',
         pathMatch: 'full',
@@ -82,6 +87,7 @@ const routes: Routes = [
         TextComponent,
         ParticleComponent,
         AviatorComponent,
+        AirplaneComponent,
     ]
 })
 export class ThreeJsModule {

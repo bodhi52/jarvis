@@ -1,16 +1,25 @@
 <div class="menu">
-  <ul>
-    <li routerLink="geometry-shape">几何形状</li>
-    <li routerLink="cube">Cube</li>
-    <li routerLink="line">Line</li>
-    <li routerLink="earth">Earth</li>
-    <li routerLink="3d-scene">3D Scene</li>
-    <li routerLink="scene">场景</li>
-    <li routerLink="text">Text</li>
-    <li routerLink="geo">地图geo</li>
-    <li routerLink="particle">粒子</li>
-    <li routerLink="aviator">飞行员</li>
-    <li routerLink="r1-demo">r1 demo</li>
+
+  <ul nz-menu [nzMode]="'horizontal'" [nzTheme]="'dark'">
+    <ng-container *ngFor="let menu of menuList">
+      <ng-container *ngIf="menu.children && menu.children.length">
+        <li nz-submenu>
+          <span title><i nz-icon type="setting"></i> {{menu.text}}</span>
+          <ul>
+            <li nz-menu-item *ngFor="let item of menu.children">
+              <a (click)="goUrl(item.url)">{{item.text}}</a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="!menu.children">
+        <li nz-menu-item>
+          <a (click)="goUrl(menu.url)">{{menu.text}}</a>
+        </li>
+      </ng-container>
+    </ng-container>
+
+
   </ul>
 </div>
 <router-outlet></router-outlet>

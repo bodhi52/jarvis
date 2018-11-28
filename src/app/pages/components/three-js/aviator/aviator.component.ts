@@ -271,7 +271,6 @@ export class AviatorComponent implements OnInit, AfterViewInit {
         mesh.name = 'air-plane';
         console.log('plane', mesh);
         this.scene.add(mesh);
-        
     }
     
     public render() {
