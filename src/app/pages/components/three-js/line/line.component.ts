@@ -21,6 +21,8 @@ export class LineComponent implements OnInit, AfterViewInit {
     
     cube: THREE.Mesh;
     
+    line: THREE.Points;
+    
     i = 0;
     
     private get canvas(): HTMLCanvasElement {
@@ -51,6 +53,7 @@ export class LineComponent implements OnInit, AfterViewInit {
         this.camera.lookAt(0, 0, 0);
         this.axes();
         this.drawLine();
+        this.drawParticleLine();
         this.circle();
         this.render();
     }
@@ -61,6 +64,35 @@ export class LineComponent implements OnInit, AfterViewInit {
     axes() {
         const axes = new THREE.AxesHelper(20);
         this.scene.add(axes);
+    }
+    
+    public drawParticleLine() {
+        const start = new THREE.Vector3(-20, -40, -10);
+        const end = new THREE.Vector3(40, 40, 10);
+    
+        const curve = new THREE.CatmullRomCurve3([
+            start,
+            end,
+        ]);
+        const points = curve.getPoints( 10 );
+        const geometry = new THREE.Geometry();
+        for (const point of points) {
+            geometry.vertices.push(point);
+        }
+        // const geometry = new THREE.BufferGeometry().setFromPoints( points );
+        this.line = this.createParticleSystem(geometry);
+        
+        this.scene.add(this.line);
+        
+    }
+    
+    private createLinePoint(start: THREE.Vector3, end: THREE.Vector3) {
+        const pointNum = 30;
+        const points: THREE.Vector3[] = [];
+        for (let i = 0; i < pointNum; i ++) {
+           points.push(start.clone().lerp(end, i / pointNum));
+        }
+        return points;
     }
     
     public drawLine() {
@@ -85,12 +117,11 @@ export class LineComponent implements OnInit, AfterViewInit {
             new THREE.Vector3(p.x, p.y, p.z),
             new THREE.Vector3(endPoint.x, endPoint.y, endPoint.z),
         );
-        const points = curve.getPoints( 100 );
-        // const geometry = new THREE.BufferGeometry().setFromPoints( points );
+        const points = curve.getPoints( 10 );
         const geometry = new THREE.BufferGeometry().setFromPoints( points );
-        const curveMaterial = new THREE.LineBasicMaterial({color: 0xFFFF00, linewidth: 10});
-        // const curvedLine = this.createParticleSystem(geometry);
-        const curvedLine = new THREE.Line(geometry, curveMaterial);
+        // const curveMaterial = new THREE.LineBasicMaterial({color: 0xFFFF00, linewidth: 10});
+        const curvedLine = this.createParticleSystem(geometry);
+        // const curvedLine = new THREE.Line(geometry, curveMaterial);
     
         curvedLine.name = 'line-1';
         console.log('curvedLine', curvedLine);
@@ -106,20 +137,21 @@ export class LineComponent implements OnInit, AfterViewInit {
     }
     
     private animate() {
-        const line = this.scene.getObjectByName('line-1');
-        const circle = this.scene.getObjectByName('line-1-circle');
-        // 按照点的位置挪动圆
-        this.i ++;
-        if (this.i > line.geometry.attributes.position.count) {
-            this.i = 0;
-        }
-        const position = {
-            x: line.geometry.attributes.position.array[this.i * 3],
-            y: line.geometry.attributes.position.array[this.i * 3 + 1],
-            z: line.geometry.attributes.position.array[this.i * 3 + 2],
-        };
-        circle.position.set(position.x, position.y, position.z);
-    
+        this.line.rotation.y += 0.01;
+        // const line = this.scene.getObjectByName('line-1');
+        // const circle = this.scene.getObjectByName('line-1-circle');
+        // // 按照点的位置挪动圆
+        // this.i ++;
+        // if (this.i > line.geometry.attributes.position.count) {
+        //     this.i = 0;
+        // }
+        // const position = {
+        //     x: line.geometry.attributes.position.array[this.i * 3],
+        //     y: line.geometry.attributes.position.array[this.i * 3 + 1],
+        //     z: line.geometry.attributes.position.array[this.i * 3 + 2],
+        // };
+        // circle.position.set(position.x, position.y, position.z);
+        //
     }
     
     /**
@@ -144,15 +176,15 @@ export class LineComponent implements OnInit, AfterViewInit {
         
     }
     
-    private createParticleSystem(geom) {
-        const material = new THREE.ParticleBasicMaterial({
+    private createParticleSystem(geom): THREE.Points {
+        const material = new THREE.PointsMaterial({
             color: 0xffffff,
             size: 3,
             transparent: true,
             blending: THREE.AdditiveBlending,
             map: this.generaterSprite(),
         });
-        const system = new THREE.ParticleSystem(geom, material);
+        const system = new THREE.Points(geom, material);
         system.sortParticles = true;
         return system;
     }
