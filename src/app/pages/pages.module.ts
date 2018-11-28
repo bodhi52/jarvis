@@ -13,6 +13,7 @@ import {ShareModule} from './share.module';
 import {RxjsComponent} from './layout/rxjs/rxjs.component';
 import {SiderComponent} from './common/sider/sider.component';
 import {ThreeComponent} from './layout/three/three.component';
+import {IndexComponent} from './common/index/index.component';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {ThreeComponent} from './layout/three/three.component';
         ModalModule,
     ],
     declarations: [
+        IndexComponent,
         LoginComponent,
         SiderComponent,
         DefaultComponent,

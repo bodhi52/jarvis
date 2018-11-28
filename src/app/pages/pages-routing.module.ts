@@ -7,6 +7,7 @@ import {PageNoFoundComponent} from './common/page-no-found/page-no-found.compone
 import {RxjsModule} from './components/rxjs/rxjs.module';
 import {RxjsComponent} from './layout/rxjs/rxjs.component';
 import {ThreeComponent} from './layout/three/three.component';
+import {IndexComponent} from './common/index/index.component';
 
 const pagesRoutes: Routes = [
     {
@@ -48,8 +49,7 @@ const pagesRoutes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'three',
-        pathMatch: 'full',
+        component: IndexComponent,
     },
     {
         path: '**',
