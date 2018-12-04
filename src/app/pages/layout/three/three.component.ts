@@ -31,9 +31,6 @@ export class ThreeComponent implements OnInit {
                         url: 'line', text: 'Line',
                     },
                     {
-                        url: 'earth', text: 'Earth',
-                    },
-                    {
                         url: '3d-scene', text: '3DScene',
                     },
                     {
