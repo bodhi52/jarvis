@@ -1,21 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 
-import * as G2 from '@antv/g2';
-
 import * as EChart from 'echarts/lib/echarts';
 
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
+import {ChartInterface} from '../../../../core/interface/echart.interface';
 
 import {HttpClient} from '@angular/common/http';
 
-export interface ChartInterface {
-    // x轴名称
-    xAxis: string[];
-    // y轴数据
-    series: number[];
-}
 @Component({
     selector: 'app-bill-record',
     templateUrl: './bill-record.component.html',

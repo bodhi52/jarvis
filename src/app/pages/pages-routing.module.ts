@@ -16,7 +16,7 @@ const pagesRoutes: Routes = [
     },
     {
         path: 'd',
-        component: DefaultComponent,
+        // component: DefaultComponent,
         loadChildren: './components/main/main.module#MainModule',
     },
     {
