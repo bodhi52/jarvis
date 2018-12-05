@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 
 import * as THREE from 'three';
 import * as d3 from 'd3';
+import * as TWEEN from '@tweenjs/tween.js';
 
 @Component({
     selector: 'app-line',
@@ -22,6 +23,8 @@ export class LineComponent implements OnInit, AfterViewInit {
     cube: THREE.Mesh;
     
     line: THREE.Points;
+    
+    tween: TWEEN;
     
     i = 0;
     
@@ -52,9 +55,10 @@ export class LineComponent implements OnInit, AfterViewInit {
         this.camera.position.set(0, 0, 100);
         this.camera.lookAt(0, 0, 0);
         this.axes();
-        this.drawLine();
-        this.drawParticleLine();
-        this.circle();
+        this.drawFlightLine();
+        // this.drawLine();
+        // this.drawParticleLine();
+        // this.circle();
         this.render();
     }
     
@@ -66,6 +70,9 @@ export class LineComponent implements OnInit, AfterViewInit {
         this.scene.add(axes);
     }
     
+    /**
+     * 画出粒子系统线段
+     */
     public drawParticleLine() {
         const start = new THREE.Vector3(-20, -40, -10);
         const end = new THREE.Vector3(40, 40, 10);
@@ -74,33 +81,90 @@ export class LineComponent implements OnInit, AfterViewInit {
             start,
             end,
         ]);
-        const points = curve.getPoints( 10 );
+        const points = curve.getPoints( 30 );
         const geometry = new THREE.Geometry();
         for (const point of points) {
             geometry.vertices.push(point);
         }
-        // const geometry = new THREE.BufferGeometry().setFromPoints( points );
         this.line = this.createParticleSystem(geometry);
         
         this.scene.add(this.line);
         
     }
     
-    private createLinePoint(start: THREE.Vector3, end: THREE.Vector3) {
-        const pointNum = 30;
-        const points: THREE.Vector3[] = [];
-        for (let i = 0; i < pointNum; i ++) {
-           points.push(start.clone().lerp(end, i / pointNum));
+    /**
+     * 飞线
+     */
+    public drawFlightLine() {
+        const start = new THREE.Vector3(-20, -40, -10);
+        const end = new THREE.Vector3(40, 40, 10);
+    
+        const curve = new THREE.CatmullRomCurve3([
+            start,
+            end,
+        ]);
+    
+        const points = curve.getPoints( 30 );
+        const geometry = new THREE.Geometry();
+        for (const point of points) {
+            geometry.vertices.push(point);
+            geometry.colors.push(
+                new THREE.Color(0xffffff)
+            );
         }
-        return points;
+        
+        const fligPointsMaterial = new THREE.PointsMaterial({
+            vertexColors: true,
+            color: 0xffffff,
+            size: 1,
+            depthWrite: false
+        });
+    
+        const flightPoints = new THREE.Points(geometry, fligPointsMaterial);
+        const number = flightPoints.geometry.colors.length;
+        this.tween = new TWEEN.Tween({num: 0})
+            .to({num: number}, 3500)
+            .easing(TWEEN.Easing.Linear.None)
+            .onUpdate(data => {
+                const n = Math.floor(data.num);
+
+                for (let index = 0; index < flightPoints.geometry.colors.length; index++) {
+                    if (index === n) {
+                        try {
+                            flightPoints.geometry.colors[index].set(new THREE.Color(0xff0000));
+                            flightPoints.geometry.colors[index + 1].set(new THREE.Color(0xaa0000));
+                            flightPoints.geometry.colors[index + 2].set(new THREE.Color(0x550000));
+                            flightPoints.geometry.colors[index + 3].set(new THREE.Color(0xaa0000));
+                            flightPoints.geometry.colors[index + 4].set(new THREE.Color(0xff0000));
+                            index += 4;
+                        } catch (e) {
+
+                        }
+                    } else {
+                        flightPoints.geometry.colors[index].set(new THREE.Color(0xffffff));
+                    }
+                }
+
+                flightPoints.geometry.colorsNeedUpdate = true;
+            });
+    
+        this.tween.repeat(Infinity);
+        this.tween.start();
+        this.scene.add(flightPoints);
+    
+    
     }
     
+    
+    /**
+     * 普通线段
+     */
     public drawLine() {
         
         const p = {
             x: 0,
             y: 0,
-            z: 2,
+            z: 0,
         };
         const point = {
             x: -40,
@@ -117,14 +181,17 @@ export class LineComponent implements OnInit, AfterViewInit {
             new THREE.Vector3(p.x, p.y, p.z),
             new THREE.Vector3(endPoint.x, endPoint.y, endPoint.z),
         );
-        const points = curve.getPoints( 10 );
+        const points = curve.getPoints( 100 );
         const geometry = new THREE.BufferGeometry().setFromPoints( points );
-        // const curveMaterial = new THREE.LineBasicMaterial({color: 0xFFFF00, linewidth: 10});
-        const curvedLine = this.createParticleSystem(geometry);
-        // const curvedLine = new THREE.Line(geometry, curveMaterial);
+        const curveMaterial = new THREE.LineBasicMaterial({
+            color: Math.random() * 0xffffff,
+            linewidth: 20
+        });
+        // const curvedLine = this.createParticleSystem(geometry);
+        const curvedLine = new THREE.Line(geometry, curveMaterial);
     
+        // curvedLine.scale.setScalar(2);
         curvedLine.name = 'line-1';
-        console.log('curvedLine', curvedLine);
         this.scene.add(curvedLine);
     }
     
@@ -137,21 +204,8 @@ export class LineComponent implements OnInit, AfterViewInit {
     }
     
     private animate() {
-        this.line.rotation.y += 0.01;
-        // const line = this.scene.getObjectByName('line-1');
-        // const circle = this.scene.getObjectByName('line-1-circle');
-        // // 按照点的位置挪动圆
-        // this.i ++;
-        // if (this.i > line.geometry.attributes.position.count) {
-        //     this.i = 0;
-        // }
-        // const position = {
-        //     x: line.geometry.attributes.position.array[this.i * 3],
-        //     y: line.geometry.attributes.position.array[this.i * 3 + 1],
-        //     z: line.geometry.attributes.position.array[this.i * 3 + 2],
-        // };
-        // circle.position.set(position.x, position.y, position.z);
-        //
+        TWEEN.update();
+
     }
     
     /**
@@ -161,6 +215,7 @@ export class LineComponent implements OnInit, AfterViewInit {
         const circleGeometry = new THREE.CircleGeometry(3);
         const circleMaterial = new THREE.MeshBasicMaterial({
             map: this.generaterSprite(),
+            transparent: true,
         });
         const circle = new THREE.Mesh(circleGeometry, circleMaterial);
         circle.name = 'line-1-circle';
@@ -205,7 +260,7 @@ export class LineComponent implements OnInit, AfterViewInit {
         gradient.addColorStop(0, 'rgba(255, 255, 255, 1');
         gradient.addColorStop(0.2, 'rgba(0, 255, 255, 1');
         gradient.addColorStop(0.4, 'rgba(0, 0, 64, 1');
-        gradient.addColorStop(0.1, 'rgba(0, 0, 0, 1');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 1');
         
         context.fillStyle = gradient;
         context.fillRect(0, 0, canvas.node().width, canvas.node().height);

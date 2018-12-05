@@ -4,6 +4,8 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import * as THREE from 'three';
 import * as d3 from 'd3';
 import * as geo from 'd3-geo';
+import * as TWEEN from '@tweenjs/tween.js';
+
 import {feature as topojsonFeature} from 'topojson';
 
 const width = 2048;
@@ -64,7 +66,7 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
             antialias: true
         });
         this.camera.position.set(0, 0, 1000);
-        this.camera.lookAt(this.scene.position);
+        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
         this.renderer.setClearColor(new THREE.Color(0x333333));
         this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
     }
@@ -91,11 +93,10 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
             
             });
             this.plane = new THREE.Mesh(planeGeometry, planeMaterial);
-            // this.plane.rotation.x = 0.1 * Math.PI;
             this.plane.position.set(0, -160, 0);
             this.scene.add(this.plane);
             this.addCircle();
-            const text = this.addText({x: 0, y: 200, z: 0}, 'r1', 'R1协议', {size: 40});
+            const text = this.addText({x: 0, y: 200, z: 40}, 'r1', 'R1协议', {size: 40});
             this.scene.add( text );
     
             this.addLine();
@@ -208,7 +209,7 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
         return textObject;
     }
     
-    addLine() {
+    addLineBak() {
         const textR1 = this.scene.getObjectByName('r1');
         const heightLimit = textR1.position.y - 60;
         // 将点和文字连线
@@ -239,6 +240,91 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
         }
     }
     
+    addLine() {
+        const textR1 = this.scene.getObjectByName('r1');
+        // 将点和文字连线
+        const endPoint: THREE.Vector3 = new THREE.Vector3(
+            0,
+            textR1.position.y,
+            textR1.position.z
+        );
+        
+        
+        for (const name of this.pointArr) {
+            const point = this.scene.getObjectByName(name).position;
+            this.drawFlightLine(new THREE.Vector3(point.x, point.y, point.z), endPoint);
+        }
+    }
+    
+    /**
+     * 飞线
+     */
+    public drawFlightLine(start: THREE.Vector3, end: THREE.Vector3) {
+        
+        const middle = new THREE.Vector3(
+            start.x,
+            end.y / 2,
+            (end.z + start.z) / 2
+        );
+        
+        const curve = new THREE.CatmullRomCurve3([
+            start,
+            middle,
+            end,
+        ]);
+        
+        const points = curve.getPoints( 30 );
+        const geometry = new THREE.Geometry();
+        for (const point of points) {
+            geometry.vertices.push(point);
+            geometry.colors.push(
+                new THREE.Color(0xffffff)
+            );
+        }
+        
+        const fligPointsMaterial = new THREE.PointsMaterial({
+            vertexColors: true,
+            color: 0xffffff,
+            size: 8,
+            depthWrite: false
+        });
+        
+        const flightPoints = new THREE.Points(geometry, fligPointsMaterial);
+        const number = flightPoints.geometry.colors.length;
+        const tween = new TWEEN.Tween({num: 0})
+            .to({num: number}, 3500)
+            .easing(TWEEN.Easing.Linear.None)
+            .onUpdate(data => {
+                const n = Math.floor(data.num);
+                
+                for (let index = 0; index < flightPoints.geometry.colors.length; index++) {
+                    if (index === n) {
+                        try {
+                            flightPoints.geometry.colors[index].set(new THREE.Color(0xff0000));
+                            flightPoints.geometry.colors[index + 1].set(new THREE.Color(0xaa0000));
+                            flightPoints.geometry.colors[index + 2].set(new THREE.Color(0x550000));
+                            flightPoints.geometry.colors[index + 3].set(new THREE.Color(0xaa0000));
+                            flightPoints.geometry.colors[index + 4].set(new THREE.Color(0xff0000));
+                            index += 4;
+                        } catch (e) {
+                        
+                        }
+                    } else {
+                        flightPoints.geometry.colors[index].set(new THREE.Color(0xffffff));
+                    }
+                }
+                
+                flightPoints.geometry.colorsNeedUpdate = true;
+            });
+        
+        tween.repeat(Infinity);
+        tween.start();
+        console.log('flight', flightPoints);
+        this.scene.add(flightPoints);
+        
+        
+    }
+    
     public render() {
         window.requestAnimationFrame(this.render.bind(this));
         this.renderer.render(this.scene, this.camera);
@@ -246,6 +332,7 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
     }
     
     private animate() {
+        TWEEN.update();
     }
     
     /**

@@ -60,7 +60,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'earth',
+        redirectTo: 'cube',
         pathMatch: 'full',
     },
 ];
