@@ -209,7 +209,7 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
         return textObject;
     }
     
-    addLineBak() {
+    addLineBAK() {
         const textR1 = this.scene.getObjectByName('r1');
         const heightLimit = textR1.position.y - 60;
         // 将点和文字连线
@@ -242,10 +242,11 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
     
     addLine() {
         const textR1 = this.scene.getObjectByName('r1');
+        console.log('textR1', textR1);
         // 将点和文字连线
         const endPoint: THREE.Vector3 = new THREE.Vector3(
             0,
-            textR1.position.y,
+            textR1.position.y - (textR1.textHeight / 2),
             textR1.position.z
         );
         
@@ -260,17 +261,16 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
      * 飞线
      */
     public drawFlightLine(start: THREE.Vector3, end: THREE.Vector3) {
-        
-        const middle = new THREE.Vector3(
-            start.x,
-            end.y / 2,
-            (end.z + start.z) / 2
-        );
-        
+        const heightLimit = end.y - 60;
+    
+    
+        const middleCurvePositionX = (start.x + end.x) / 2;
+        const middleCurvePositionY = heightLimit;
+        const middleCurvePositionZ = (start.z + end.z) / 2;
         const curve = new THREE.CatmullRomCurve3([
-            start,
-            middle,
-            end,
+            new THREE.Vector3(start.x, start.y, start.z),
+            new THREE.Vector3(middleCurvePositionX, middleCurvePositionY, middleCurvePositionZ),
+            new THREE.Vector3(end.x, end.y, end.z)
         ]);
         
         const points = curve.getPoints( 30 );
@@ -286,7 +286,6 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
             vertexColors: true,
             color: 0xffffff,
             size: 8,
-            depthWrite: false
         });
         
         const flightPoints = new THREE.Points(geometry, fligPointsMaterial);
