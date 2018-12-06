@@ -209,37 +209,6 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
         return textObject;
     }
     
-    addLineBAK() {
-        const textR1 = this.scene.getObjectByName('r1');
-        const heightLimit = textR1.position.y - 60;
-        // 将点和文字连线
-        const endPoint = {
-            x: 0,
-            y: textR1.position.y,
-            z: textR1.position.z
-        };
-        const curveMaterial = new THREE.LineBasicMaterial({color: 0xFFFF00, linewidth: 10});
-        
-     
-        for (const name of this.pointArr) {
-            const point = this.scene.getObjectByName(name).position;
-            
-            const middleCurvePositionX = (point.x + endPoint.x) / 2;
-            const middleCurvePositionY = heightLimit;
-            const middleCurvePositionZ = (point.z + endPoint.z) / 2;
-            const curve = new THREE.CatmullRomCurve3([
-                new THREE.Vector3(point.x, point.y, point.z),
-                new THREE.Vector3(middleCurvePositionX, middleCurvePositionY, middleCurvePositionZ),
-                new THREE.Vector3(endPoint.x, endPoint.y, endPoint.z)
-            ]);
-            const points = curve.getPoints( 50 );
-            const geometry = new THREE.BufferGeometry().setFromPoints( points );
-    
-            const curvedLine = new THREE.Line(geometry, curveMaterial);
-            this.scene.add(curvedLine);
-        }
-    }
-    
     addLine() {
         const textR1 = this.scene.getObjectByName('r1');
         console.log('textR1', textR1);

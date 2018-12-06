@@ -57,7 +57,8 @@ export class LineComponent implements OnInit, AfterViewInit {
         this.axes();
         this.drawFlightLine();
         // this.drawLine();
-        // this.drawParticleLine();
+        this.drawParticleLine();
+        this.drawFlowStar();
         // this.circle();
         this.render();
     }
@@ -71,23 +72,84 @@ export class LineComponent implements OnInit, AfterViewInit {
     }
     
     /**
-     * 画出粒子系统线段
+     * 画出流星效果
      */
-    public drawParticleLine() {
-        const start = new THREE.Vector3(-20, -40, -10);
-        const end = new THREE.Vector3(40, 40, 10);
-    
+    public drawFlowStar() {
+        const start = new THREE.Vector3(-100, -20, -10);
+        const end = new THREE.Vector3(0, 20, 20);
+        
         const curve = new THREE.CatmullRomCurve3([
             start,
             end,
         ]);
-        const points = curve.getPoints( 30 );
+        
+        const points = curve.getPoints(64);
+        
+        const spriteMaterial = new THREE.SpriteMaterial({map: this.generaterSprite(), color: 0xffffff});
+        
+        const group = new THREE.Group();
+        for (const point of points) {
+            const particle = new THREE.Sprite(spriteMaterial);
+            particle.position.set(point.x, point.y, point.z);
+            particle.scale.x = particle.scale.y = Math.random() * 4 + 2;
+            group.add(particle);
+        }
+        const number = group.children.length;
+        
+        const tween = new TWEEN.Tween({num: 0})
+            .to({num: number}, 1800)
+            .onUpdate(data => {
+                const n = Math.floor(data.num);
+                for (let index = 0; index < number; index++) {
+                    if (index === n) {
+                        try {
+                            index += 4;
+                            group.children[index].scale.set(3, 3, 1);
+                            group.children[index - 1].scale.set(2.5, 2.5, 1);
+                            group.children[index - 2].scale.set(2, 2, 1);
+                            group.children[index - 3].scale.set(1.5, 1.5, 1);
+                            group.children[index - 4].scale.set(1, 1, 1);
+                        } catch (e) {
+
+                        }
+                    } else {
+                        group.children[index].scale.set(0.01, 0.01, 0.01);
+                    }
+                }
+                
+            });
+        tween.repeat(Infinity);
+        tween.start();
+        this.scene.add(group);
+    }
+    
+    /**
+     * 正弦运动函数
+     * @param x
+     */
+    fsin(x) {
+        return 50 * Math.sin(0.8 * x * Math.PI / 180);
+    }
+    
+    /**
+     * 画出粒子系统线段
+     */
+    public drawParticleLine() {
+        const start = new THREE.Vector3(-60, -20, -10);
+        const end = new THREE.Vector3(20, 20, 20);
+        
+        const curve = new THREE.CatmullRomCurve3([
+            start,
+            end,
+        ]);
+        const points = curve.getPoints(30);
         const geometry = new THREE.Geometry();
         for (const point of points) {
             geometry.vertices.push(point);
         }
-        this.line = this.createParticleSystem(geometry);
         
+        this.line = this.createParticleSystem(geometry);
+        console.log('line', this.line);
         this.scene.add(this.line);
         
     }
@@ -98,13 +160,13 @@ export class LineComponent implements OnInit, AfterViewInit {
     public drawFlightLine() {
         const start = new THREE.Vector3(-20, -40, -10);
         const end = new THREE.Vector3(40, 40, 10);
-    
+        
         const curve = new THREE.CatmullRomCurve3([
             start,
             end,
         ]);
-    
-        const points = curve.getPoints( 30 );
+        
+        const points = curve.getPoints(30);
         const geometry = new THREE.Geometry();
         for (const point of points) {
             geometry.vertices.push(point);
@@ -117,9 +179,8 @@ export class LineComponent implements OnInit, AfterViewInit {
             vertexColors: true,
             color: 0xffffff,
             size: 1,
-            depthWrite: false
         });
-    
+        
         const flightPoints = new THREE.Points(geometry, fligPointsMaterial);
         const number = flightPoints.geometry.colors.length;
         this.tween = new TWEEN.Tween({num: 0})
@@ -127,7 +188,7 @@ export class LineComponent implements OnInit, AfterViewInit {
             .easing(TWEEN.Easing.Linear.None)
             .onUpdate(data => {
                 const n = Math.floor(data.num);
-
+                
                 for (let index = 0; index < flightPoints.geometry.colors.length; index++) {
                     if (index === n) {
                         try {
@@ -138,21 +199,21 @@ export class LineComponent implements OnInit, AfterViewInit {
                             flightPoints.geometry.colors[index + 4].set(new THREE.Color(0xff0000));
                             index += 4;
                         } catch (e) {
-
+                        
                         }
                     } else {
                         flightPoints.geometry.colors[index].set(new THREE.Color(0xffffff));
                     }
                 }
-
+                
                 flightPoints.geometry.colorsNeedUpdate = true;
             });
-    
+        
         this.tween.repeat(Infinity);
         this.tween.start();
         this.scene.add(flightPoints);
-    
-    
+        
+        
     }
     
     
@@ -181,15 +242,15 @@ export class LineComponent implements OnInit, AfterViewInit {
             new THREE.Vector3(p.x, p.y, p.z),
             new THREE.Vector3(endPoint.x, endPoint.y, endPoint.z),
         );
-        const points = curve.getPoints( 100 );
-        const geometry = new THREE.BufferGeometry().setFromPoints( points );
+        const points = curve.getPoints(100);
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
         const curveMaterial = new THREE.LineBasicMaterial({
             color: Math.random() * 0xffffff,
             linewidth: 20
         });
         // const curvedLine = this.createParticleSystem(geometry);
         const curvedLine = new THREE.Line(geometry, curveMaterial);
-    
+        
         // curvedLine.scale.setScalar(2);
         curvedLine.name = 'line-1';
         this.scene.add(curvedLine);
@@ -205,7 +266,7 @@ export class LineComponent implements OnInit, AfterViewInit {
     
     private animate() {
         TWEEN.update();
-
+        
     }
     
     /**
@@ -220,7 +281,7 @@ export class LineComponent implements OnInit, AfterViewInit {
         const circle = new THREE.Mesh(circleGeometry, circleMaterial);
         circle.name = 'line-1-circle';
         const line = this.scene.getObjectByName('line-1');
-    
+        
         const position = {
             x: line.geometry.attributes.position.array[this.i * 3],
             y: line.geometry.attributes.position.array[this.i * 3 + 1],
