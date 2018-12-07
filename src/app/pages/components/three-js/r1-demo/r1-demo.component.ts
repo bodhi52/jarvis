@@ -218,12 +218,100 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
             textR1.position.y - (textR1.textHeight / 2),
             textR1.position.z
         );
-        
+        // 不动的线
+        this.addBasicLine(endPoint);
         
         for (const name of this.pointArr) {
             const point = this.scene.getObjectByName(name).position;
-            this.drawFlightLine(new THREE.Vector3(point.x, point.y, point.z), endPoint);
+            // 普通飞线
+            // this.drawFlightLine(new THREE.Vector3(point.x, point.y, point.z), endPoint);
+            // 流星线
+            this.drawFlowStar(new THREE.Vector3(point.x, point.y, point.z), endPoint);
         }
+    }
+    
+    /**
+     * 基础画线
+     * @param end
+     */
+    addBasicLine(end: THREE.Vector3) {
+        
+        const curveMaterial = new THREE.LineBasicMaterial({color: 0xFFFF00, linewidth: 10});
+        for (const name of this.pointArr) {
+            const start = this.scene.getObjectByName(name).position;
+            const middle = new THREE.Vector3((start.x + end.x) / 2, end.y - 60, (start.z + end.z) / 2);
+            const curve = new THREE.CatmullRomCurve3([
+                start,
+                middle,
+                end,
+            ]);
+            const points = curve.getPoints( 50 );
+            const geometry = new THREE.BufferGeometry().setFromPoints( points );
+            
+            const curvedLine = new THREE.Line(geometry, curveMaterial);
+            this.scene.add(curvedLine);
+        }
+    }
+    
+    /**
+     * 画出流星效果
+     * @param start
+     * @param end
+     */
+    public drawFlowStar(start: THREE.Vector3, end: THREE.Vector3) {
+    
+        const middle = new THREE.Vector3((start.x + end.x) / 2, end.y - 60, (start.z + end.z) / 2);
+        const curve = new THREE.CatmullRomCurve3([
+            start,
+            middle,
+            end,
+        ]);
+        
+        const points = curve.getPoints(64);
+        
+        const spriteMaterial = new THREE.SpriteMaterial({
+            map: this.generaterSprite(),
+            color: 0xffffff
+        });
+        
+        const group = new THREE.Group();
+        for (const point of points) {
+            const particle = new THREE.Sprite(spriteMaterial);
+            particle.position.set(point.x, point.y, point.z);
+            particle.scale.x = particle.scale.y = 1;
+            group.add(particle);
+        }
+        const number = group.children.length;
+        
+        const tween = new TWEEN.Tween({num: 0})
+            .to({num: number}, 1800)
+            .onUpdate(data => {
+                const n = Math.floor(data.num);
+                for (let index = 0; index < number; index++) {
+                    if (index === n) {
+                        try {
+                            index += 8;
+                            group.children[index].scale.set(9, 9, 1);
+                            group.children[index - 1].scale.set(8, 8, 1);
+                            group.children[index - 2].scale.set(7, 7, 1);
+                            group.children[index - 3].scale.set(6, 6, 1);
+                            group.children[index - 4].scale.set(5, 5, 1);
+                            group.children[index - 5].scale.set(4, 4, 1);
+                            group.children[index - 6].scale.set(3, 3, 1);
+                            group.children[index - 7].scale.set(2, 2, 1);
+                            group.children[index - 8].scale.set(1, 1, 1);
+                        } catch (e) {
+                        
+                        }
+                    } else {
+                        group.children[index].scale.set(0.01, 0.01, 0.01);
+                    }
+                }
+                
+            });
+        tween.repeat(Infinity);
+        tween.start();
+        this.scene.add(group);
     }
     
     /**
@@ -287,7 +375,6 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
         
         tween.repeat(Infinity);
         tween.start();
-        console.log('flight', flightPoints);
         this.scene.add(flightPoints);
         
         
@@ -342,6 +429,35 @@ export class R1DemoComponent implements OnInit, AfterViewInit {
         
         canvas.remove();
         
+        return texture;
+    }
+    
+    /**
+     * 飞线的材质
+     */
+    private generaterSprite() {
+        const canvas = d3.select('body').append('canvas');
+        const context = canvas.node().getContext('2d');
+        canvas.node().width = 32;
+        canvas.node().height = 32;
+        const gradient = context.createRadialGradient(
+            canvas.node().width / 2,
+            canvas.node().height / 2,
+            0,
+            canvas.node().width / 2,
+            canvas.node().height / 2,
+            canvas.node().width / 2,
+        );
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 1');
+        gradient.addColorStop(0.2, 'rgba(0, 255, 255, 1');
+        gradient.addColorStop(0.4, 'rgba(0, 0, 64, 1');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 1');
+        
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, canvas.node().width, canvas.node().height);
+        const texture = new THREE.Texture(canvas.node());
+        canvas.remove();
+        texture.needsUpdate = true;
         return texture;
     }
     

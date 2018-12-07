@@ -329,8 +329,6 @@ export class LineComponent implements OnInit, AfterViewInit {
         canvas.remove();
         texture.needsUpdate = true;
         return texture;
-        
-        
     }
     
 }
