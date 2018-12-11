@@ -47,11 +47,11 @@ export class ThreeDimensionalSceneComponent implements OnInit, AfterViewInit {
     }
     
     ngAfterViewInit() {
-        this.gui = new DAT.GUI();
-        this.gui.add(this.controls, 'rotationSpeed', 0, 0.5);
-        this.gui.add(this.controls, 'bouncingSpeed', 0, 0.5);
+        // this.gui = new DAT.GUI();
+        // this.gui.add(this.controls, 'rotationSpeed', 0, 0.5);
+        // this.gui.add(this.controls, 'bouncingSpeed', 0, 0.5);
         this.init();
-        this.initStats();
+        // this.initStats();
         this.render();
 
     }
@@ -65,15 +65,14 @@ export class ThreeDimensionalSceneComponent implements OnInit, AfterViewInit {
         });
         this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
         this.renderer.shadowMap.enabled = true;
-        
-        this.axes();
-        this.plane();
-        this.addCube();
-        this.addSphere();
-        this.light();
-        
         this.camera.position.set(-50, 40, 30);
-        this.camera.lookAt(this.scene.position);
+        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+        //
+        this.axes();
+        // this.plane();
+        this.addCube();
+        // this.addSphere();
+        // this.light();
         this.renderer.render(this.scene, this.camera);
     }
     
@@ -93,7 +92,7 @@ export class ThreeDimensionalSceneComponent implements OnInit, AfterViewInit {
      * 坐标轴
      */
     axes() {
-        const axes = new THREE.AxesHelper(100);
+        const axes = new THREE.AxesHelper(20);
         this.scene.add(axes);
     }
     
@@ -117,11 +116,11 @@ export class ThreeDimensionalSceneComponent implements OnInit, AfterViewInit {
      */
     addCube() {
         const cubeGeometry = new THREE.CubeGeometry(4, 4, 4);
-        const cubeMaterial = new THREE.MeshLambertMaterial({
-            color: 0x333333,
+        const cubeMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
         });
         this.cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-        this.cube.position.set(-4, 3, 0);
+        this.cube.position.set(0, 0, 0);
         this.cube.castShadow = true;
         this.scene.add(this.cube);
     }
