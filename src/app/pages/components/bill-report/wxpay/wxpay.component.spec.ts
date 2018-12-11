@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BillRecordComponent } from './bill-record.component';
+import { WxpayComponent } from './wxpay.component';
 
-describe('BillRecordComponent', () => {
-  let component: BillRecordComponent;
-  let fixture: ComponentFixture<BillRecordComponent>;
+describe('WxpayComponent', () => {
+  let component: WxpayComponent;
+  let fixture: ComponentFixture<WxpayComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BillRecordComponent ]
+      declarations: [ WxpayComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BillRecordComponent);
+    fixture = TestBed.createComponent(WxpayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

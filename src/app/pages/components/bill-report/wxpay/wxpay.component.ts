@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+
 import * as EChart from 'echarts/lib/echarts';
 
 import 'echarts/lib/chart/bar';
@@ -8,12 +9,11 @@ import {ChartInterface} from '../../../../core/interface/echart.interface';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
-    selector: 'app-wx-record',
-    templateUrl: './wx-record.component.html',
-    styleUrls: ['./wx-record.component.less']
+    selector: 'app-wxpay',
+    templateUrl: './wxpay.component.html',
+    styleUrls: ['./wxpay.component.less']
 })
-export class WxRecordComponent implements OnInit {
-    
+export class WxpayComponent implements OnInit {
     chartData: { id: string, data: ChartInterface, total?: number, inTotal: number, outTotal: number, balance: 0, } = {
         id: 'c1',
         total: 0,
@@ -64,7 +64,7 @@ export class WxRecordComponent implements OnInit {
                 formatter: (item) => {
                     let res = '';
                     res += this.chartData.data.name[item['dataIndex']] + '<br/>';
-                    res += '时间' + item['name'] + '<br/>';
+                    res += '时间：' + item['name'] + '<br/>';
                     res += item['seriesName'] + '：' + item['value'].toFixed(2) + ' 元<br/>';
                     return res;
                 }
@@ -83,6 +83,5 @@ export class WxRecordComponent implements OnInit {
             }]
         });
     }
-    
     
 }

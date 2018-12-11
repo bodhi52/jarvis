@@ -30,6 +30,10 @@ const pagesRoutes: Routes = [
         loadChildren: './components/rxjs/rxjs.module#RxjsModule',
     },
     {
+        path: 'bill-report',
+        loadChildren: './components/bill-report/bill-report.module#BillReportModule',
+    },
+    {
         path: 'three',
         component: ThreeComponent,
         loadChildren: './components/three-js/three-js.module#ThreeJsModule',
