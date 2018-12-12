@@ -12,6 +12,7 @@ import { TextComponent } from './text/text.component';
 import { ParticleComponent } from './particle/particle.component';
 import { AviatorComponent } from './aviator/aviator.component';
 import { AirplaneComponent } from './airplane/airplane.component';
+import { ChinaMapComponent } from './china-map/china-map.component';
 
 const routes: Routes = [
     {
@@ -59,6 +60,10 @@ const routes: Routes = [
         component: AirplaneComponent,
     },
     {
+        path: 'china-map',
+        component: ChinaMapComponent,
+    },
+    {
         path: '',
         redirectTo: 'cube',
         pathMatch: 'full',
@@ -82,6 +87,7 @@ const routes: Routes = [
         ParticleComponent,
         AviatorComponent,
         AirplaneComponent,
+        ChinaMapComponent,
     ]
 })
 export class ThreeJsModule {
