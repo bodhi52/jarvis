@@ -19,6 +19,8 @@ export class EarthComponent implements OnInit, AfterViewInit {
     
     orbitControls: THREE.OrbitControls;
     
+    earth: THREE.Mesh;
+    
     clock: THREE.Clock;
     
     private get canvas(): HTMLCanvasElement {
@@ -38,15 +40,16 @@ export class EarthComponent implements OnInit, AfterViewInit {
     init() {
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(45, this.canvas.clientWidth / this.canvas.clientHeight, 0.1, 1000);
-    
+
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
-            antialias: true
+            antialias: true,
+            alpha: true,
         });
         this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
         this.renderer.shadowMap.enabled = true;
         this.renderer.render(this.scene, this.camera);
-    
+        //
         this.camera.position.set(-20, 30, 40);
         this.camera.lookAt(0, 0, 0);
         this.addLight();
@@ -65,9 +68,9 @@ export class EarthComponent implements OnInit, AfterViewInit {
     }
     
     addControl() {
-    
         this.orbitControls = new THREE.OrbitControls(this.camera);
         this.orbitControls.enableDamping = true;
+        this.orbitControls.autoRotateSpeed = 1;
         this.orbitControls.autoRotate = true;
         this.clock = new THREE.Clock();
     }
@@ -84,18 +87,19 @@ export class EarthComponent implements OnInit, AfterViewInit {
     }
     
     public createEarth() {
-        const planetTexture  = new THREE.TextureLoader().load( '/assets/img/plane/mars_1k_color.jpg' );
-        const normalTexture  = new THREE.TextureLoader().load( '/assets/img/plane/mars_1k_normal.jpg' );
+        const planetTexture  = new THREE.TextureLoader().load( '/assets/img/plane/Earth.png' );
+        const bumpTexture  = new THREE.TextureLoader().load( '/assets/img/plane/EarthNormal.png' );
         const planetMaterial = new THREE.MeshPhongMaterial({
             map: planetTexture,
-            bumpMap: normalTexture,
+            bumpMap: bumpTexture,
         });
-        const wireFrameMat = new THREE.MeshBasicMaterial({
+        const wireMaterial = new THREE.MeshBasicMaterial({
             wireframe: true,
         });
         const planetGeom = new THREE.SphereGeometry(20, 40, 40);
-        const planet = this.createMultiMaterialObject(planetGeom, [planetMaterial]);
-        this.scene.add(planet);
+        this.earth = this.createMultiMaterialObject(planetGeom, [planetMaterial]);
+        // const planet = new THREE.Mesh(planetGeom, planetMaterial);
+        this.scene.add(this.earth);
     }
     
     createMultiMaterialObject( geometry, materials ) {
