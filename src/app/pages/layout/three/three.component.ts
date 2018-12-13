@@ -61,7 +61,11 @@ export class ThreeComponent implements OnInit {
                     {
                         url: 'china-map',
                         text: '中国地图',
-                    }
+                    },
+                    {
+                        url: 'earth',
+                        text: '地球',
+                    },
                 ],
             },
             {
