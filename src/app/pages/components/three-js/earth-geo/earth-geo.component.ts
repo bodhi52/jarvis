@@ -153,7 +153,6 @@ export class EarthGeoComponent implements OnInit {
         const halfHeigh = this.canvas.clientHeight / 2;
         const halfWidth = this.canvas.clientWidth / 2;
         const worldDom = this.el.nativeElement.querySelector('#world');
-        // 查找北京这个点，然后换算平面坐标
         for (const city of this.citys) {
             const cityKey = 'citys-' + city.id;
             const cityMesh = this.earth.getObjectByName(cityKey);
