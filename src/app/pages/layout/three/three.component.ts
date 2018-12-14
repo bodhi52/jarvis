@@ -66,6 +66,10 @@ export class ThreeComponent implements OnInit {
                         url: 'earth',
                         text: '地球',
                     },
+                    {
+                        url: 'earth-geo',
+                        text: '地球 GEO'
+                    }
                 ],
             },
             {

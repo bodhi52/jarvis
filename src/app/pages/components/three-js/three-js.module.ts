@@ -14,6 +14,7 @@ import { AviatorComponent } from './aviator/aviator.component';
 import { AirplaneComponent } from './airplane/airplane.component';
 import { ChinaMapComponent } from './china-map/china-map.component';
 import { EarthComponent } from './earth/earth.component';
+import { EarthGeoComponent } from './earth-geo/earth-geo.component';
 
 const routes: Routes = [
     {
@@ -69,6 +70,10 @@ const routes: Routes = [
         component: EarthComponent,
     },
     {
+        path: 'earth-geo',
+        component: EarthGeoComponent,
+    },
+    {
         path: '',
         redirectTo: 'cube',
         pathMatch: 'full',
@@ -94,6 +99,7 @@ const routes: Routes = [
         AirplaneComponent,
         ChinaMapComponent,
         EarthComponent,
+        EarthGeoComponent,
     ]
 })
 export class ThreeJsModule {
