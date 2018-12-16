@@ -28,6 +28,9 @@ export class EarthGeoComponent implements OnInit {
     orbitControls: THREE.OrbitControls;
     
     clock: THREE.Clock;
+
+    halfHeigh: number;
+    halfWidth: number;
     
     citys = [
         {
@@ -74,7 +77,8 @@ export class EarthGeoComponent implements OnInit {
     init() {
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(45, this.canvas.clientWidth / this.canvas.clientHeight, 0.1, 1000);
-        
+        this.halfHeigh = this.canvas.clientHeight / 2;
+        this.halfWidth = this.canvas.clientWidth / 2;
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
             antialias: true,
@@ -86,11 +90,12 @@ export class EarthGeoComponent implements OnInit {
         //
         this.camera.position.set(-20, 30, 40);
         this.camera.lookAt(0, 0, 0);
+        this.camera.updateMatrixWorld();
+
         this.addLight();
         this.addControl();
         this.createEarth();
         this.axes();
-        this.addDiv();
     }
     
     /**
@@ -142,6 +147,8 @@ export class EarthGeoComponent implements OnInit {
         ]);
         
         this.addPoint();
+        this.addDiv();
+
         this.addLine(this.citys[1], this.citys[2]);
         this.scene.add(this.earth);
     
@@ -149,20 +156,19 @@ export class EarthGeoComponent implements OnInit {
     }
     
     addDiv() {
-        this.camera.updateMatrixWorld();
-        const halfHeigh = this.canvas.clientHeight / 2;
-        const halfWidth = this.canvas.clientWidth / 2;
+
         const worldDom = this.el.nativeElement.querySelector('#world');
         for (const city of this.citys) {
             const cityKey = 'citys-' + city.id;
             const cityMesh = this.earth.getObjectByName(cityKey);
-            const vector = cityMesh.position.project(this.camera);
+            const vector = cityMesh.position.clone().project(this.camera);
+            console.log(cityKey, JSON.stringify(vector));
             const dom: ElementRef = this.renderer2.createElement('div');
             this.renderer2.addClass(dom, 'point');
             this.renderer2.setAttribute(dom, 'id', cityKey);
 
-            this.renderer2.setStyle(dom, 'top', Math.round(- vector.y * halfHeigh + halfHeigh) + 'px');
-            this.renderer2.setStyle(dom, 'left', Math.round(vector.x * halfWidth + halfWidth) + 'px');
+            this.renderer2.setStyle(dom, 'top', Math.round((1 - vector.y) * this.halfHeigh) + 'px');
+            this.renderer2.setStyle(dom, 'left', Math.round((1 + vector.x) * this.halfWidth) + 'px');
             dom['innerText'] = city.name;
             this.renderer2.appendChild(worldDom, dom);
         }
@@ -196,6 +202,7 @@ export class EarthGeoComponent implements OnInit {
             circle.name = 'citys-' + item.id;
             this.earth.add(circle);
         }
+
         
     }
     
@@ -234,7 +241,6 @@ export class EarthGeoComponent implements OnInit {
         // Create the final object to add to the scene
         const earthLine = new THREE.Line(geometry, material);
         earthLine.name = 'line-1';
-        console.log('earthLine', earthLine);
         this.earth.add(earthLine);
     }
     
@@ -250,14 +256,12 @@ export class EarthGeoComponent implements OnInit {
             city2.lat,
             r
         );
+
         const delta = v1.angleTo(v2);
         const dr = (r * delta * delta * 0.3) / Math.PI;
         const p1 = this.getPosition(city1.lon, city1.lat, r + dr);
         const p2 = this.getPosition(city2.lon, city2.lat, r + dr);
-        console.log('p1', p1);
-        console.log('p2', p2);
-        console.log('dr', dr);
-        
+
         
         const lineVector3 = this.interVector3({
             v1: p1,
@@ -322,8 +326,21 @@ export class EarthGeoComponent implements OnInit {
         // this.earth.rotation.x += 0.001;
         // this.earth.rotation.y += 0.001;
         // this.earth.rotation.z += 0.001;
-        // const delta = this.clock.getDelta();
-        // this.orbitControls.update(delta);
+        const delta = this.clock.getDelta();
+        this.orbitControls.update(delta);
+        this.updateDiv();
+    }
+
+    public updateDiv() {
+        for (const city of this.citys) {
+            const cityKey = 'citys-' + city.id;
+            const cityMesh = this.earth.getObjectByName(cityKey);
+            const vector = cityMesh.position.clone().project(this.camera);
+            const dom: ElementRef = this.el.nativeElement.querySelector('#' + cityKey);
+
+            this.renderer2.setStyle(dom, 'top', Math.round((1 - vector.y) * this.halfHeigh) + 'px');
+            this.renderer2.setStyle(dom, 'left', Math.round((1 + vector.x) * this.halfWidth) + 'px');
+        }
     }
     
     getPosition(lng, lat, r): THREE.Vector3 {
