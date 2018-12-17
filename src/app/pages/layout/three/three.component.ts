@@ -53,6 +53,16 @@ export class ThreeComponent implements OnInit {
             },
             {
                 url: '',
+                text: '积木',
+                children: [
+                    {
+                        url: 'airplane',
+                        text: '飞机',
+                    },
+                ]
+            },
+            {
+                url: '',
                 text: '综合练习',
                 children: [
                     {
@@ -60,10 +70,6 @@ export class ThreeComponent implements OnInit {
                     },
                     {
                         url: 'aviator', text: '飞行员',
-                    },
-                    {
-                        url: 'airplane',
-                        text: '飞机',
                     },
                     {
                         url: 'china-map',

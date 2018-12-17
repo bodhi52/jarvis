@@ -1,19 +1,19 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CubeComponent} from './cube/cube.component';
+import {CubeComponent} from './basic/cube/cube.component';
 import {RouterModule, Routes} from '@angular/router';
-import {LineComponent} from './line/line.component';
-import {ThreeDimensionalSceneComponent} from './three-dimensional-scene/three-dimensional-scene.component';
-import {GeometryShapeComponent} from './geometry-shape/geometry-shape.component';
-import {SceneComponent} from './scene/scene.component';
+import {LineComponent} from './basic/line/line.component';
+import {ThreeDimensionalSceneComponent} from './basic/three-dimensional-scene/three-dimensional-scene.component';
+import {GeometryShapeComponent} from './basic/geometry-shape/geometry-shape.component';
+import {SceneComponent} from './basic/scene/scene.component';
 import {R1DemoComponent} from './demo/r1-demo/r1-demo.component';
-import { GeoComponent } from './geo/geo.component';
-import { TextComponent } from './text/text.component';
+import { GeoComponent } from './complex/geo/geo.component';
+import { TextComponent } from './basic/text/text.component';
 import { ParticleComponent } from './particle-system/particle/particle.component';
-import { AviatorComponent } from './aviator/aviator.component';
-import { AirplaneComponent } from './airplane/airplane.component';
-import { ChinaMapComponent } from './china-map/china-map.component';
-import { EarthComponent } from './earth/earth.component';
+import { AviatorComponent } from './complex/aviator/aviator.component';
+import { AirplaneComponent } from './block/airplane/airplane.component';
+import { ChinaMapComponent } from './complex/china-map/china-map.component';
+import { EarthComponent } from './complex/earth/earth.component';
 import { EarthGeoComponent } from './demo/earth-geo/earth-geo.component';
 
 const routes: Routes = [

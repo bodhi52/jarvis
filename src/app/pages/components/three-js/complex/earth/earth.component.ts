@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
-import THREE from '../three.js';
+import THREE from '../../three.js';
 
 @Component({
     selector: 'app-earth',
