@@ -390,9 +390,16 @@ export class EarthGeoComponent implements OnInit {
             const cityKey = 'citys-' + city.id;
             const cityMesh = this.earth.getObjectByName(cityKey);
             const vector = cityMesh.position.clone().project(this.camera);
+            
             const dom: ElementRef = this.el.nativeElement.querySelector('#' + cityKey);
             this.renderer2.setStyle(dom, 'top', Math.round((1 - vector.y) * this.halfHeigh) + 'px');
             this.renderer2.setStyle(dom, 'left', Math.round((1 + vector.x) * this.halfWidth) + 'px');
+            if (vector.z > 0.99822) {
+                this.renderer2.setStyle(dom, 'opacity', 0.2);
+            } else {
+                this.renderer2.setStyle(dom, 'opacity', 1);
+    
+            }
         }
     }
     
