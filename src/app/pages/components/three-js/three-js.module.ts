@@ -6,15 +6,15 @@ import {LineComponent} from './line/line.component';
 import {ThreeDimensionalSceneComponent} from './three-dimensional-scene/three-dimensional-scene.component';
 import {GeometryShapeComponent} from './geometry-shape/geometry-shape.component';
 import {SceneComponent} from './scene/scene.component';
-import {R1DemoComponent} from './r1-demo/r1-demo.component';
+import {R1DemoComponent} from './demo/r1-demo/r1-demo.component';
 import { GeoComponent } from './geo/geo.component';
 import { TextComponent } from './text/text.component';
-import { ParticleComponent } from './particle/particle.component';
+import { ParticleComponent } from './particle-system/particle/particle.component';
 import { AviatorComponent } from './aviator/aviator.component';
 import { AirplaneComponent } from './airplane/airplane.component';
 import { ChinaMapComponent } from './china-map/china-map.component';
 import { EarthComponent } from './earth/earth.component';
-import { EarthGeoComponent } from './earth-geo/earth-geo.component';
+import { EarthGeoComponent } from './demo/earth-geo/earth-geo.component';
 
 const routes: Routes = [
     {

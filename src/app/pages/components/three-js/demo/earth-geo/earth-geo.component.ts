@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
-import THREE from '../three.js';
+import THREE from '../../three.js';
 import * as TWEEN from '@tweenjs/tween.js';
 
 interface CityInterface {

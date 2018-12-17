@@ -19,7 +19,7 @@ export class ThreeComponent implements OnInit {
         this.menuList = [
             {
                 url: '',
-                text: 'Three JS 练习',
+                text: '基础练习',
                 children: [
                     {
                         url: 'geometry-shape', text: '几何形状'
@@ -39,10 +39,17 @@ export class ThreeComponent implements OnInit {
                     {
                         url: 'text', text: 'Text',
                     },
+                    
+                ],
+            },
+            {
+                url: '',
+                text: '粒子系统',
+                children: [
                     {
                         url: 'particle', text: '粒子',
                     },
-                ],
+                ]
             },
             {
                 url: '',
@@ -66,14 +73,21 @@ export class ThreeComponent implements OnInit {
                         url: 'earth',
                         text: '地球',
                     },
-                    {
-                        url: 'earth-geo',
-                        text: '地球 GEO'
-                    }
+                    
                 ],
             },
             {
-                url: 'r1-demo', text: 'r1demo',
+                url: '',
+                text: 'demo',
+                children: [
+                    {
+                        url: 'r1-demo', text: 'R1 首页',
+                    },
+                    {
+                        url: 'earth-geo',
+                        text: '地球 官网'
+                    }
+                ]
             }
         
         ];
