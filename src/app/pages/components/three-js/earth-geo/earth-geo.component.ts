@@ -1,11 +1,18 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import THREE from '../three.js';
+import * as TWEEN from '@tweenjs/tween.js';
 
 interface CityInterface {
     name: string;
     id: string;
     lat: number;   // 经纬度查询请到 http://www.gpsspg.com/maps.htm
     lon: number;
+}
+
+interface LineInterface {
+    from: CityInterface;
+    to: CityInterface;
+    active: boolean;
 }
 
 @Component({
@@ -28,7 +35,7 @@ export class EarthGeoComponent implements OnInit {
     orbitControls: THREE.OrbitControls;
     
     clock: THREE.Clock;
-
+    
     halfHeigh: number;
     halfWidth: number;
     
@@ -59,6 +66,19 @@ export class EarthGeoComponent implements OnInit {
         }
     ];
     
+    lineList: LineInterface[] = [];
+    
+    // 地球的配置参数
+    earthConfig = {
+        // 半径
+        r: 35,
+        line: {
+            point_num: 200,
+            color: 0xff0000,
+            width: 2,
+        }
+    };
+    
     
     private get canvas(): HTMLCanvasElement {
         return this.canvasRef.nativeElement;
@@ -71,7 +91,20 @@ export class EarthGeoComponent implements OnInit {
     }
     
     ngOnInit() {
+        this.createLineList();
         this.init();
+    }
+    
+    createLineList() {
+        for (let i = 0; i < this.citys.length; i++) {
+            for (let j = i + 1; j < this.citys.length; j++) {
+                this.lineList.push({
+                    from: this.citys[i],
+                    to: this.citys[j],
+                    active: false,
+                });
+            }
+        }
     }
     
     init() {
@@ -88,10 +121,10 @@ export class EarthGeoComponent implements OnInit {
         this.renderer.shadowMap.enabled = true;
         this.renderer.render(this.scene, this.camera);
         //
-        this.camera.position.set(-20, 30, 40);
+        this.camera.position.set(-40, 60, 80);
         this.camera.lookAt(0, 0, 0);
         this.camera.updateMatrixWorld();
-
+        
         this.addLight();
         this.addControl();
         this.createEarth();
@@ -106,17 +139,23 @@ export class EarthGeoComponent implements OnInit {
         this.scene.add(axes);
     }
     
+    /**
+     * 添加灯光
+     */
     public addLight() {
         // 均匀照亮场景中的物体，没有方向
         const ambiLight = new THREE.AmbientLight(0xeeeeee);
         this.scene.add(ambiLight);
         // 点光源
         const spotLight = new THREE.DirectionalLight(0xffffff);
-        spotLight.position.set(-20, 30, 40);
+        spotLight.position.set(-40, 60, 80);
         spotLight.intensity = 1.5;
         // this.scene.add(spotLight);
     }
     
+    /**
+     * 添加控制器
+     */
     addControl() {
         this.orbitControls = new THREE.OrbitControls(this.camera);
         this.orbitControls.enableDamping = true;
@@ -125,17 +164,19 @@ export class EarthGeoComponent implements OnInit {
         this.clock = new THREE.Clock();
     }
     
+    /**
+     * 添加地球
+     */
     public createEarth() {
         const planetTexture = new THREE.TextureLoader().load('/assets/img/plane/Earth.png');
         const bumpTexture = new THREE.TextureLoader().load('/assets/img/plane/EarthNormal.png');
-        const planetGeom = new THREE.SphereGeometry(20, 40, 40, Math.PI / 2);
+        const planetGeom = new THREE.SphereGeometry(this.earthConfig.r, 40, 40, Math.PI / 2);
         
         const planeMaterial = new THREE.MeshPhongMaterial({
             map: planetTexture,
             bumpMap: bumpTexture,
-            opacity: 0.8,
+            opacity: 0.95,
             transparent: true
-            // color: 0xffffff,
         });
         
         const wireMaterial = new THREE.MeshBasicMaterial({
@@ -148,15 +189,34 @@ export class EarthGeoComponent implements OnInit {
         
         this.addPoint();
         this.addDiv();
-
-        this.addLine(this.citys[1], this.citys[2]);
+        
         this.scene.add(this.earth);
-    
+        
         this.render();
     }
     
-    addDiv() {
-
+    /**
+     * 定点
+     */
+    private addPoint() {
+        const geometry = new THREE.CylinderGeometry(0.3, 0.3, 2, 3);
+        const circleMaterial = new THREE.MeshPhongMaterial({
+            color: 0xFF0000,
+        });
+        
+        for (const item of this.citys) {
+            const proPeking = this.getPosition(item.lon, item.lat, this.earthConfig.r);
+            const circle = new THREE.Mesh(geometry, circleMaterial);
+            circle.position.set(proPeking.x, proPeking.y, proPeking.z);
+            circle.name = 'citys-' + item.id;
+            this.earth.add(circle);
+        }
+    }
+    
+    /**
+     * 添加点的标记div
+     */
+    private addDiv() {
         const worldDom = this.el.nativeElement.querySelector('#world');
         for (const city of this.citys) {
             const cityKey = 'citys-' + city.id;
@@ -166,17 +226,17 @@ export class EarthGeoComponent implements OnInit {
             const dom: ElementRef = this.renderer2.createElement('div');
             this.renderer2.addClass(dom, 'point');
             this.renderer2.setAttribute(dom, 'id', cityKey);
-
+            
             this.renderer2.setStyle(dom, 'top', Math.round((1 - vector.y) * this.halfHeigh) + 'px');
             this.renderer2.setStyle(dom, 'left', Math.round((1 + vector.x) * this.halfWidth) + 'px');
             dom['innerText'] = city.name;
             this.renderer2.appendChild(worldDom, dom);
         }
         
-    
+        
     }
     
-    createMultiMaterialObject(geometry, materials) {
+    private createMultiMaterialObject(geometry, materials) {
         
         const group = new THREE.Group();
         
@@ -189,22 +249,6 @@ export class EarthGeoComponent implements OnInit {
         
     }
     
-    public addPoint() {
-        const geometry = new THREE.CylinderGeometry(0.1, 0.1, 2, 3);
-        const circleMaterial = new THREE.MeshPhongMaterial({
-            color: 0xFF0000,
-        });
-        
-        for (const item of this.citys) {
-            const proPeking = this.getPosition(item.lon, item.lat, 20);
-            const circle = new THREE.Mesh(geometry, circleMaterial);
-            circle.position.set(proPeking.x, proPeking.y, proPeking.z);
-            circle.name = 'citys-' + item.id;
-            this.earth.add(circle);
-        }
-
-        
-    }
     
     /**
      * 贴着地皮的线
@@ -212,15 +256,14 @@ export class EarthGeoComponent implements OnInit {
      * @param city2
      */
     addLine1(city1: CityInterface, city2: CityInterface) {
-        const r = 20;
         const v1 = this.getPosition(
             city1.lon,
             city1.lat,
-            r
+            this.earthConfig.r
         ), v2 = this.getPosition(
             city2.lon,
             city2.lat,
-            r
+            this.earthConfig.r
         );
         
         const line = {
@@ -244,24 +287,26 @@ export class EarthGeoComponent implements OnInit {
         this.earth.add(earthLine);
     }
     
-    addLine(city1: CityInterface, city2: CityInterface) {
-        const r = 20;
-    
+    /**
+     * line
+     * @param line
+     */
+    addLine(line: LineInterface) {
         const v1 = this.getPosition(
-            city1.lon,
-            city1.lat,
-            r,
+            line.from.lon,
+            line.from.lat,
+            this.earthConfig.r
         ), v2 = this.getPosition(
-            city2.lon,
-            city2.lat,
-            r
+            line.to.lon,
+            line.to.lat,
+            this.earthConfig.r
         );
-
+        
         const delta = v1.angleTo(v2);
-        const dr = (r * delta * delta * 0.3) / Math.PI;
-        const p1 = this.getPosition(city1.lon, city1.lat, r + dr);
-        const p2 = this.getPosition(city2.lon, city2.lat, r + dr);
-
+        const dr = (this.earthConfig.r * delta * delta * 0.3) / Math.PI;
+        const p1 = this.getPosition(line.from.lon, line.from.lat, this.earthConfig.r + dr);
+        const p2 = this.getPosition(line.to.lon, line.to.lat, this.earthConfig.r + dr);
+        
         
         const lineVector3 = this.interVector3({
             v1: p1,
@@ -276,17 +321,24 @@ export class EarthGeoComponent implements OnInit {
             lineVector3.vertices[3],
             v2
         );
-    
-        const points = curve.getPoints(100);
+        
+        const points = curve.getPoints(200);
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    
+        
         const material = new THREE.LineBasicMaterial({
-            color: new THREE.Color(0xff0000)
+            color: new THREE.Color(this.earthConfig.line.color),
+            linewidth: 2,
         });
-    
+        geometry.setDrawRange( 0, 2 );
         const earthLine = new THREE.Line(geometry, material);
-        earthLine.name = 'line-1';
-        console.log('earthLine', earthLine);
+        earthLine.name = 'line-' + line.from.id + '-to-' + line.to.id;
+        const tween = new TWEEN.Tween({num: 0})
+            .to({num: this.earthConfig.line.point_num}, 1000)
+            .onUpdate(data => {
+                const n = Math.floor(data.num);
+                geometry.setDrawRange( 0, n);
+            });
+        tween.start();
         this.earth.add(earthLine);
     }
     
@@ -326,18 +378,19 @@ export class EarthGeoComponent implements OnInit {
         // this.earth.rotation.x += 0.001;
         // this.earth.rotation.y += 0.001;
         // this.earth.rotation.z += 0.001;
+        TWEEN.update();
         const delta = this.clock.getDelta();
         this.orbitControls.update(delta);
         this.updateDiv();
     }
-
+    
     public updateDiv() {
         for (const city of this.citys) {
+           
             const cityKey = 'citys-' + city.id;
             const cityMesh = this.earth.getObjectByName(cityKey);
             const vector = cityMesh.position.clone().project(this.camera);
             const dom: ElementRef = this.el.nativeElement.querySelector('#' + cityKey);
-
             this.renderer2.setStyle(dom, 'top', Math.round((1 - vector.y) * this.halfHeigh) + 'px');
             this.renderer2.setStyle(dom, 'left', Math.round((1 + vector.x) * this.halfWidth) + 'px');
         }
@@ -347,5 +400,20 @@ export class EarthGeoComponent implements OnInit {
         const theta = (lng + 180) * (Math.PI / 180),
             phi = (90 - lat) * (Math.PI / 180);
         return (new THREE.Vector3()).setFromSpherical(new THREE.Spherical(r, phi, theta));
+    }
+    
+    
+    public addOrDeleteLine(line: LineInterface) {
+        if (line.active) {
+            // 删除线
+            const key = 'line-' + line.from.id + '-to-' + line.to.id;
+            const lineObj = this.earth.getObjectByName(key);
+            this.earth.remove(lineObj);
+            line.active = false;
+        } else {
+            // 添加线
+            this.addLine(line);
+            line.active = true;
+        }
     }
 }

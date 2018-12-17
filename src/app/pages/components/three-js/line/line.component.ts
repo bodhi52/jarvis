@@ -55,10 +55,10 @@ export class LineComponent implements OnInit, AfterViewInit {
         this.camera.position.set(0, 0, 100);
         this.camera.lookAt(0, 0, 0);
         this.axes();
-        this.drawFlightLine();
-        // this.drawLine();
-        this.drawParticleLine();
-        this.drawFlowStar();
+        // this.drawFlightLine();
+        this.drawLine();
+        // this.drawParticleLine();
+        // this.drawFlowStar();
         // this.circle();
         this.render();
     }
@@ -244,15 +244,24 @@ export class LineComponent implements OnInit, AfterViewInit {
         );
         const points = curve.getPoints(100);
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        geometry.setDrawRange( 0, 2 );
+    
         const curveMaterial = new THREE.LineBasicMaterial({
-            color: Math.random() * 0xffffff,
+            color: Math.random() * 0x00ffff,
             linewidth: 20
         });
-        // const curvedLine = this.createParticleSystem(geometry);
         const curvedLine = new THREE.Line(geometry, curveMaterial);
-        
-        // curvedLine.scale.setScalar(2);
+        console.log('curvedLine', curvedLine);
         curvedLine.name = 'line-1';
+        
+        const tween = new TWEEN.Tween({num: 0})
+            .to({num: 100}, 1800)
+            .onUpdate(data => {
+                const n = Math.floor(data.num);
+                geometry.setDrawRange( 0, n);
+            
+            });
+        tween.start();
         this.scene.add(curvedLine);
     }
     
@@ -266,6 +275,7 @@ export class LineComponent implements OnInit, AfterViewInit {
     
     private animate() {
         TWEEN.update();
+       
         
     }
     
