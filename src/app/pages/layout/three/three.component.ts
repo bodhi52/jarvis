@@ -59,6 +59,10 @@ export class ThreeComponent implements OnInit {
                         url: 'airplane',
                         text: '飞机',
                     },
+                    {
+                        url: 'horse',
+                        text: '马',
+                    }
                 ]
             },
             {
