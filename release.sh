@@ -28,5 +28,8 @@ cp -r $PROJ_DIR/angular.json '/data/wwwroot/jarvis/'
 cp -r $PROJ_DIR/tsconfig.json '/data/wwwroot/jarvis/'
 
 echo "---------------拷贝结束-----------------------"
+
+node -v
+
 npm run build
 echo "--打包结束-----------------------"
