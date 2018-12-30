@@ -1,4 +1,4 @@
-#!/bin/sh bash
+#!/bin/sh -l
 # 发布脚本，需要从jenkins中下载，然后复制到对应的项目中
 # 发布工程目录
 PROJ_DIR="$WORKSPACE"
