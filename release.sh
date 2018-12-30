@@ -1,4 +1,6 @@
-#!/bin/sh -l
+#!/bin/sh bash
+# 修改jenkins的环境变量为系统的/usr/local/bin
+export PATH=/usr/local/bin:$PATH
 # 发布脚本，需要从jenkins中下载，然后复制到对应的项目中
 # 发布工程目录
 PROJ_DIR="$WORKSPACE"
@@ -29,7 +31,7 @@ cp -r $PROJ_DIR/tsconfig.json '/data/wwwroot/jarvis/'
 
 echo "---------------拷贝结束-----------------------"
 
-/usr/local/bin/node -v
+node -v
 
-/usr/local/bin/npm run build
+npm run build
 echo "--打包结束-----------------------"
