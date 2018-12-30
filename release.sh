@@ -29,7 +29,7 @@ cp -r $PROJ_DIR/tsconfig.json '/data/wwwroot/jarvis/'
 
 echo "---------------拷贝结束-----------------------"
 
-node -v
+/usr/local/bin/node -v
 
-npm run build
+/usr/local/bin/npm run build
 echo "--打包结束-----------------------"
