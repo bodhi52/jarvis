@@ -22,7 +22,6 @@ export class TimerIntervalComponent implements OnInit, OnDestroy {
         // this.timer$ = timer(1000).subscribe(num => {
         //     console.log('timer num', num);
         // });
-        console.log('init');
         this.interval$ = interval(5000).subscribe(num => {
             console.log('interval num', num);
         });
