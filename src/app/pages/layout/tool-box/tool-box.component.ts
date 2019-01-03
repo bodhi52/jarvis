@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MenuInterface} from '../../../core/interface/menu.interface';
 import {NavigationEnd, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-tool-box',
@@ -20,18 +21,20 @@ export class ToolBoxComponent implements OnInit, OnDestroy {
     
     constructor(
         private router: Router,
+        private location: Location,
     ) {
-        // this.router$ = this.router.events()
+    }
+    
+    ngOnInit() {
         this.router$ = this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
                 console.log('event.url', event.url);
                 this.activeUrl(event.url);
             }
         });
-    }
-    
-    ngOnInit() {
-    
+        // 先手动执行一次
+        const url = this.location.path();
+        this.activeUrl(url);
     }
     
     ngOnDestroy() {
