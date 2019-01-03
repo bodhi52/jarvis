@@ -14,6 +14,8 @@ import {RxjsComponent} from './layout/rxjs/rxjs.component';
 import {SiderComponent} from './common/sider/sider.component';
 import {ThreeComponent} from './layout/three/three.component';
 import {IndexComponent} from './common/index/index.component';
+import {ToolBoxComponent} from './layout/tool-box/tool-box.component';
+import {FooterComponent} from './common/footer/footer.component';
 
 @NgModule({
     imports: [
@@ -28,11 +30,13 @@ import {IndexComponent} from './common/index/index.component';
     declarations: [
         IndexComponent,
         LoginComponent,
+        FooterComponent,
         SiderComponent,
         DefaultComponent,
         TrainingComponent,
         RxjsComponent,
         ThreeComponent,
+        ToolBoxComponent,
     ]
 })
 export class PagesModule {
