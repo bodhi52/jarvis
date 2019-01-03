@@ -37,6 +37,10 @@ export class IndexComponent implements OnInit {
                 url: 'three',
                 text: 'Three',
             },
+            {
+                url: 'tool-box',
+                text: 'tool box'
+            }
             
         ];
     }

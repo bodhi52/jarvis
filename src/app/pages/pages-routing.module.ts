@@ -8,6 +8,7 @@ import {RxjsModule} from './components/rxjs/rxjs.module';
 import {RxjsComponent} from './layout/rxjs/rxjs.component';
 import {ThreeComponent} from './layout/three/three.component';
 import {IndexComponent} from './common/index/index.component';
+import {ToolBoxComponent} from './layout/tool-box/tool-box.component';
 
 const pagesRoutes: Routes = [
     {
@@ -46,6 +47,11 @@ const pagesRoutes: Routes = [
         path: 'todo',
         component: DefaultComponent,
         loadChildren: './components/to-do/to-do.module#ToDoModule'
+    },
+    {
+        path: 'tool-box',
+        component: ToolBoxComponent,
+        loadChildren: './components/tool-box/tool-box.module#ToolBoxModule'
     },
     {
         path: '404',
