@@ -20,14 +20,17 @@ export class LoginComponent implements OnInit {
         private fb: FormBuilder,
         private msg: NzMessageService,
     ) {
+    }
+    
+    ngOnInit() {
+        this.init();
+    }
+    
+    init() {
         this.form = this.fb.group({
             name: [null, [Validators.required]],
             password: [null, [Validators.required]],
         });
-    }
-    
-    ngOnInit() {
-    
     }
     
     submit() {

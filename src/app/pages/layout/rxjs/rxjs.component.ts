@@ -29,6 +29,10 @@ export class RxjsComponent implements OnInit {
         {
             name: 'timer-interval',
             url: '/r/timer-interval',
+        },
+        {
+            name: 'subject',
+            url: '/r/subject',
         }
     ];
     

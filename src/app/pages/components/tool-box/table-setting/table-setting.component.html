@@ -3,7 +3,7 @@
     <nz-form-label [nzSpan]="6" nzFor="prefix">翻译前缀</nz-form-label>
     <nz-form-control [nzSpan]="6">
       <input nz-input name="prefix" id="prefix" [(ngModel)]="prefix">
-      <nz-form-extra>在翻译文件中的前缀</nz-form-extra>
+      <nz-form-extra>在翻译文件中的前缀，如果不填写前缀，将不生成翻译表头和表格宽度。:)</nz-form-extra>
     </nz-form-control>
   </nz-form-item >
 
@@ -43,7 +43,7 @@
     </div>
   </div>
 
-  <div class="result-area">
+  <div class="result-area" *ngIf="tableHeaderList && tableHeaderList.length">
     <h2>
       表头
       <a class="m-l-20" (click)="copy('tableHeader')">
@@ -55,7 +55,7 @@
     </div>
   </div>
 
-  <div class="result-area">
+  <div class="result-area" *ngIf="tableWidth">
     <h2>
       表格宽度（平均）
       <a class="m-l-20" (click)="copy('tableWidth')">
