@@ -1,0 +1,43 @@
+<form nz-form (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzFor="width">表格宽度数组</nz-form-label>
+    <nz-form-control [nzSpan]="10">
+      <input nz-input name="width" id="width" [(ngModel)]="width">
+      <nz-form-extra>单引号双引号无关系</nz-form-extra>
+    </nz-form-control>
+  </nz-form-item >
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzFor="suffix">宽度后缀（px or %)</nz-form-label>
+    <nz-form-control [nzSpan]="10">
+      <nz-select
+              name="suffix"
+              id="suffix"
+              [(ngModel)]="suffix"
+      >
+        <nz-option *ngFor="let item of suffixList" [nzLabel]="item" [nzValue]="item"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item >
+
+  <nz-form-item nz-row style="margin-bottom:8px;">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary">生成</button>
+      <button nz-button class="m-l-20" (click)="showExample()">示例</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<div class="result" *ngIf="showResult">
+  <div class="result-area">
+    <h2>翻译
+      <a class="m-l-20" (click)="copy('translate')">
+        <i nz-icon type="copy" theme="outline"></i>copy
+      </a>
+    </h2>
+    <div class="result-list">
+      <p *ngFor="let item of translateList">{{item}}</p>
+
+    </div>
+  </div>
+</div>

@@ -31,8 +31,10 @@ export class TableSettingComponent implements OnInit {
     submitForm() {
         const arr = this.tableItem.split('\n');
         this.getTranslate(arr);
-        this.getTableHeader(arr);
-        this.getTableWidth(arr);
+        if (this.prefix) {
+            this.getTableHeader(arr);
+            this.getTableWidth(arr);
+        }
         this.showResult = true;
     }
     

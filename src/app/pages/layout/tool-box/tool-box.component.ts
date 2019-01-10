@@ -15,6 +15,10 @@ export class ToolBoxComponent implements OnInit, OnDestroy {
             name: 'table setting',
             url: '/tool-box/table-setting',
         },
+        {
+            name: 'table width',
+            url: '/tool-box/table-width',
+        }
     ];
     
     router$: Subscription;
@@ -26,9 +30,12 @@ export class ToolBoxComponent implements OnInit, OnDestroy {
     }
     
     ngOnInit() {
+        this.init();
+    }
+    
+    init() {
         this.router$ = this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
-                console.log('event.url', event.url);
                 this.activeUrl(event.url);
             }
         });
