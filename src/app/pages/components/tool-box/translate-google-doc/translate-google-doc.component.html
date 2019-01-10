@@ -30,7 +30,7 @@
 </form>
 
 <div class="result" *ngIf="showResult">
-  <h3>总行数：{{tableList.length + 1}}，你需要在Google Doc中添加十七行，然后分别复制key和value黏贴到Google Doc。</h3>
+  <h3>总行数：{{tableList.length}}，你需要在Google Doc中添加{{tableList.length}}行，然后分别复制key和value黏贴到Google Doc。</h3>
   <nz-table #basicTable [nzData]="tableList">
     <thead>
     <tr>

@@ -29,6 +29,9 @@ export class TranslateGoogleDocComponent implements OnInit {
     }
     
     submitForm() {
+        this.translateKey = [];
+        this.translateValue = [];
+        this.tableList = [];
         this.showResult = false;
         try {
             const obj = JSON.parse('{' + this.tableItem + '}');
