@@ -8,6 +8,7 @@ import { DragDropComponent } from './drag-drop/drag-drop.component';
 import { SwitchMapComponent } from './switch-map/switch-map.component';
 import { CreateComponent } from './create/create.component';
 import { TimerIntervalComponent } from './timer-interval/timer-interval.component';
+import { SubjectComponent } from './subject/subject.component';
 
 const routes: Routes = [
     {
@@ -36,6 +37,10 @@ const routes: Routes = [
         component: TimerIntervalComponent,
     },
     {
+        path: 'subject',
+        component: SubjectComponent,
+    },
+    {
         path: '404',
         component: PageNoFoundComponent,
     },
@@ -53,6 +58,7 @@ const routes: Routes = [
         SwitchMapComponent,
         CreateComponent,
         TimerIntervalComponent,
+        SubjectComponent,
     ]
 })
 export class RxjsModule {

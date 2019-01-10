@@ -15,9 +15,13 @@ export class ToolBoxComponent implements OnInit, OnDestroy {
             name: 'table setting',
             url: '/tool-box/table-setting',
         },
+        // {
+        //     name: 'table width',
+        //     url: '/tool-box/table-width',
+        // },
         {
-            name: 'table width',
-            url: '/tool-box/table-width',
+            name: '翻译文件-谷歌文档',
+            url: '/tool-box/translate-google-doc',
         }
     ];
     

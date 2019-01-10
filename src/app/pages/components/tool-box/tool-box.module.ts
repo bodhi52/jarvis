@@ -5,6 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {FormsModule} from '@angular/forms';
 import { TableWidthComponent } from './table-width/table-width.component';
+import { TranslateGoogleDocComponent } from './translate-google-doc/translate-google-doc.component';
 
 const routes: Routes = [
     {
@@ -14,6 +15,10 @@ const routes: Routes = [
     {
         path: 'table-width',
         component: TableWidthComponent,
+    },
+    {
+        path: 'translate-google-doc',
+        component: TranslateGoogleDocComponent,
     },
     {
         path: '',
@@ -32,6 +37,7 @@ const routes: Routes = [
     declarations: [
         TableSettingComponent,
         TableWidthComponent,
+        TranslateGoogleDocComponent,
     ]
 })
 export class ToolBoxModule {
