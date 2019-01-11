@@ -87,18 +87,14 @@ export class TranslateGoogleDocComponent implements OnInit {
     }
     
     
-    copy(type: string) {
-        switch (type) {
-            case 'key':
-                // 将对应的数据填充到拷贝的div中
-                this.copyArea.nativeElement.innerText = this.translateKey.join('\n');
-                this.copyText();
-                break;
-            case 'value':
-                this.copyArea.nativeElement.innerText = this.translateValue.join('\n');
-                this.copyText();
-                break;
+    copy() {
+        const arr = [];
+        for (const i of this.tableList) {
+            arr.push(this.translateKey[i] + '&#9;' + this.translateValue[i]);
         }
+        // 将对应的数据填充到拷贝的div中
+        this.copyArea.nativeElement.innerHTML = '<pre>' + arr.join('\n') + '</pre>';
+        this.copyText();
     }
     
     /**
