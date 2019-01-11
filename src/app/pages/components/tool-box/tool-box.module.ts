@@ -6,6 +6,7 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {FormsModule} from '@angular/forms';
 import { TableWidthComponent } from './table-width/table-width.component';
 import { TranslateGoogleDocComponent } from './translate-google-doc/translate-google-doc.component';
+import { GoogleDocTranslateComponent } from './google-doc-translate/google-doc-translate.component';
 
 const routes: Routes = [
     {
@@ -19,6 +20,10 @@ const routes: Routes = [
     {
         path: 'translate-google-doc',
         component: TranslateGoogleDocComponent,
+    },
+    {
+        path: 'google-doc-translate',
+        component: GoogleDocTranslateComponent,
     },
     {
         path: '',
@@ -38,6 +43,7 @@ const routes: Routes = [
         TableSettingComponent,
         TableWidthComponent,
         TranslateGoogleDocComponent,
+        GoogleDocTranslateComponent,
     ]
 })
 export class ToolBoxModule {
