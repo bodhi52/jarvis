@@ -30,25 +30,30 @@
 </form>
 
 <div class="result" *ngIf="showResult">
-  <h3>总行数：{{tableList.length}}，你需要在Google Doc中添加{{tableList.length}}行，然后分别复制key和value黏贴到Google Doc。</h3>
+  <h3>总行数：{{tableList.length}}，你需要在Google Doc中添加{{tableList.length}}行，然后：</h3>
+  <ol>
+    <li>点击copy按钮复制文本 -->
+      <a class="m-l-20" (click)="copy()">
+        <i nz-icon type="copy" theme="outline"></i>copy
+      </a>
+    </li>
+    <li>随便打开个编辑器，粘贴复制的内容（目的是去除隐藏的html标签）</li>
+    <li>在编辑器中再次复制文本</li>
+    <li>粘贴到Google Doc中（自动匹配单元格）</li>
+  </ol>
   <nz-table #basicTable [nzData]="tableList">
     <thead>
     <tr>
       <th
               [nzWidth]="'50%'"
       >Key
-        <a class="m-l-20" (click)="copy('key')">
-          <i nz-icon type="copy" theme="outline"></i>copy
-        </a>
+
       </th>
       <th
 
               [nzWidth]="'50%'"
       >
         value
-        <a class="m-l-20" (click)="copy('value')">
-          <i nz-icon type="copy" theme="outline"></i>copy
-        </a>
       </th>
     </tr>
     </thead>
