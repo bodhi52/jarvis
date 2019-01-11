@@ -72,16 +72,19 @@ export class TranslateGoogleDocComponent implements OnInit {
         this.submitForm();
     }
     
-    objectToString(key, obj) {
+    objectToString(key = '', obj) {
+        if (key) {
+            key += '.';
+        }
         for (const i of Object.keys(obj)) {
             if (typeof obj[i] === 'string') {
                 // console.log(key + '.' + i + ': ' + obj[i]);
-                this.translateKey.push(key + '.' + i);
+                this.translateKey.push(key + i);
                 this.translateValue.push(obj[i]);
                 continue;
             }
             if (typeof obj[i] === 'object') {
-                this.objectToString(key + '.' + i, obj[i]);
+                this.objectToString(key + i, obj[i]);
             }
         }
     }
@@ -101,11 +104,13 @@ export class TranslateGoogleDocComponent implements OnInit {
      * 复制文本
      */
     copyText() {
-        const myEle = document.getElementById('copy-area');
+        // const myEle = document.getElementById('copy-area');
+        const myEle = document.getElementsByTagName('pre');
+        console.log('myEle', myEle[0]);
         const range = document.createRange();
         const selection = window.getSelection();
         
-        range.selectNodeContents(myEle);
+        range.selectNodeContents(myEle[0]);
         selection.removeAllRanges(); // 先移除掉所有的选择区域
         selection.addRange(range); // 添加元素的目标选择区域
         try {
