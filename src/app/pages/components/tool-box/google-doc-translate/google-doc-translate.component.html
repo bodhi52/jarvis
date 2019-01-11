@@ -1,0 +1,77 @@
+<form nz-form>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzFor="table-item">google Doc中的翻译</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <textarea
+              id="table-item"
+              name="table-item"
+              rows="8"
+              nz-input
+              nzAutosize
+              [(ngModel)]="tableItem"></textarea>
+      <nz-form-extra>直接从谷歌文档中复制就好</nz-form-extra>
+      <nz-form-extra class="warning">
+        特别注意的是，文档中有些单元格在编辑的时候可能换行了，需要手动删除掉，切记！<br/>
+        这里设置了不换行，如果你看到一行不是完整的，就手动清除掉换行~：）
+      </nz-form-extra>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item nz-row style="margin-bottom:8px;">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" (click)="submitForm()">生成</button>
+      <button nz-button class="m-l-20" (click)="showExample()">示例</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+
+<div class="result" *ngIf="showResult">
+  <h3>三步走战略：</h3>
+  <ol>
+    <li>点击copy按钮复制对应语言json文本
+    </li>
+    <li>格式化json（<a href="http://json.cn" target="_blank">json.cn</a>），复制真正需要的文本</li>
+    <li>在编辑器中再次复制文本，填入到翻译文件中</li>
+  </ol>
+  <nz-table #basicTable [nzData]="[1]">
+    <thead>
+    <tr>
+      <th
+              [nzWidth]="'33%'"
+      >中文
+        <a class="m-l-20" (click)="copy('en')">
+        <i nz-icon type="copy" theme="outline"></i>copy
+      </a>
+
+      </th>
+      <th
+
+              [nzWidth]="'33%'"
+      >
+        英文
+        <a class="m-l-20" (click)="copy('zh')">
+          <i nz-icon type="copy" theme="outline"></i>copy
+        </a>
+      </th>
+      <th
+
+              [nzWidth]="'33%'"
+      >
+        韩文
+        <a class="m-l-20" (click)="copy('ko')">
+          <i nz-icon type="copy" theme="outline"></i>copy
+        </a>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>{{en}}</td>
+      <td>{{zh}}</td>
+      <td>{{ko}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <div id="copy-area" #copyArea></div>
+</div>
