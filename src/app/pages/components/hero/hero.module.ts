@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HeroListComponent} from './hero-list/hero-list.component';
 import {RouterModule, Routes} from '@angular/router';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HeroDetailComponent} from './hero-detail/hero-detail.component';
 import {ModalModule} from '../../../modal/modal.module';
 import {MessagesComponent} from '../../../modal/messages/messages.component';
@@ -14,6 +14,7 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
 import {PageNoFoundComponent} from '../../common/page-no-found/page-no-found.component';
 import {ShareModule} from '../../share.module';
 import { AnimationsComponent } from './animations/animations.component';
+import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
 
 const routes: Routes = [
     {
@@ -38,6 +39,10 @@ const routes: Routes = [
         component: AnimationsComponent,
     },
     {
+        path: 'reactive-form',
+        component: ReactiveFormComponent,
+    },
+    {
         path: '404',
         component: PageNoFoundComponent,
     },
@@ -51,6 +56,7 @@ const routes: Routes = [
     imports: [
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule.forChild(routes),
         ModalModule,
         ShareModule,
@@ -64,6 +70,7 @@ const routes: Routes = [
         AddHeroComponent,
         HeroSearchComponent,
         AnimationsComponent,
+        ReactiveFormComponent,
     ],
     entryComponents: [MessagesComponent],
 })
