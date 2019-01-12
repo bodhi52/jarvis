@@ -27,6 +27,10 @@ export class TrainingComponent implements OnInit, OnDestroy {
             url: '/t/animations',
             icon: 'anticon-appstore',
             name: 'Animations',
+        },
+        {
+            url: '/t/reactive-form',
+            name: 'Reactive Form'
         }
     ];
     

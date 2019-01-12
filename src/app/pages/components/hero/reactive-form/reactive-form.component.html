@@ -1,0 +1,10 @@
+<form nz-form [formGroup]="validateForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzFor="code">GA Code</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input name="code" formControlName="code" id="code">
+    </nz-form-control>
+  </nz-form-item >
+</form>
+
+<button nz-button (click)="submit()" [nzType]="'primary'">Submit</button>
