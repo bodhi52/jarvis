@@ -26,10 +26,12 @@ export class ReactiveFormComponent implements OnInit {
      */
     onlyNumber(): ValidatorFn {
         return (control: AbstractControl): {[key: string]: any} | null => {
+            console.log('control', control.value);
             // value有值且如果值包含非数字，就需要替换
             if (control.value && !/^\d*$/.test(control.value)) {
                 control.setValue(control.value.replace(/[^0-9]/ig, ''), {
                     emitEvent: false,
+                    // emitModelToViewChange: false,
                     emitViewToModelChange: false,
                 });
             }

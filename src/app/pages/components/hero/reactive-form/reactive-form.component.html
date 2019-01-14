@@ -6,5 +6,12 @@
     </nz-form-control>
   </nz-form-item >
 </form>
-
 <button nz-button (click)="submit()" [nzType]="'primary'">Submit</button>
+
+<div style="margin: 40px;">
+  <ng-template #indicatorTemplate>
+    <i nz-icon type="loading" style="font-size: 24px;"></i>
+  </ng-template>
+  <nz-spin [nzIndicator]="indicatorTemplate" [nzTip]="'loading'">
+  </nz-spin>`
+</div>
