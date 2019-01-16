@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-reactive-form',
@@ -10,6 +11,15 @@ export class ReactiveFormComponent implements OnInit {
     
     validateForm: FormGroup;
     
+    formGroup: FormGroup;
+    
+    subscrb$: Subscription;
+    
+    @ViewChild('input') input: ElementRef;
+    
+    
+    isComposit: boolean = false;
+    
     constructor(
         private fb: FormBuilder,
     ) {
@@ -19,6 +29,20 @@ export class ReactiveFormComponent implements OnInit {
         this.validateForm = this.fb.group({
             code: [33, [Validators.required, this.onlyNumber(), Validators.maxLength(6)]],
         });
+        
+        this.formGroup = new FormGroup({
+            code: new FormControl(null, {
+                validators: [Validators.required, Validators.maxLength(4)],
+            }),
+        }, {
+            updateOn: 'blur',
+        });
+        
+        this.subscrb$ = this.formGroup.controls['code'].valueChanges.subscribe(res => {
+            console.log('change', res);
+        });
+        
+        
     }
     
     /**
@@ -40,6 +64,8 @@ export class ReactiveFormComponent implements OnInit {
     }
     
     submit() {
-        console.log(this.validateForm.getRawValue());
+        this.formGroup.updateValueAndValidity();
+        console.log('input', this.input.nativeElement.value);
+        console.log('formgroup', this.formGroup.getRawValue());
     }
 }

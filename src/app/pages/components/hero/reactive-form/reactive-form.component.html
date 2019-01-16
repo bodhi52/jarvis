@@ -1,17 +1,34 @@
 <form nz-form [formGroup]="validateForm">
   <nz-form-item>
-    <nz-form-label [nzSpan]="6" nzFor="code">GA Code</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzFor="gacode">GA Code</nz-form-label>
     <nz-form-control [nzSpan]="14">
-      <input nz-input name="code" formControlName="code" id="code">
+      <input nz-input name="code" formControlName="code" id="gacode">
     </nz-form-control>
   </nz-form-item >
 </form>
+
+<form nz-form [formGroup]="formGroup">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzFor="code">Code</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input
+             #input
+             name="code"
+             formControlName="code" id="code"
+             appLimitInput
+             [replace]="'en'"
+
+      >
+    </nz-form-control>
+  </nz-form-item >
+</form>
+
 <button nz-button (click)="submit()" [nzType]="'primary'">Submit</button>
 
-<div style="margin: 40px;">
+<div style="margin: 40px;" *ngIf="false">
   <ng-template #indicatorTemplate>
     <i nz-icon type="loading" style="font-size: 24px;"></i>
   </ng-template>
   <nz-spin [nzIndicator]="indicatorTemplate" [nzTip]="'loading'">
-  </nz-spin>`
+  </nz-spin>
 </div>
