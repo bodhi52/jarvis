@@ -17,6 +17,7 @@
              formControlName="code" id="code"
              appLimitInput
              [replace]="'en'"
+             [replaceFn]="replaceFn"
 
       >
     </nz-form-control>
@@ -32,3 +33,5 @@
   <nz-spin [nzIndicator]="indicatorTemplate" [nzTip]="'loading'">
   </nz-spin>
 </div>
+
+<p>code: {{formGroup.controls['code'].value}}}</p>

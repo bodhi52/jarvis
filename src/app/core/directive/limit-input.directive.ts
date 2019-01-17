@@ -19,6 +19,11 @@ export class LimitInputDirective implements ControlValueAccessor {
     
     isComposite: boolean = false;
     
+    /**
+     * 对复杂的业务传入方法
+     */
+    @Input() replaceFn: Function;
+    
     writeValue(value: any): void {
         this.render.setProperty(this.el.nativeElement, 'value', value);
     }
@@ -74,13 +79,18 @@ export class LimitInputDirective implements ControlValueAccessor {
     }
     
     private limitInput($event) {
-        if (!$event || this.isComposite) {
+        if (!$event || !$event.target.value || this.isComposite) {
             return;
         }
         const target = $event.target;
-        this._regexp = this.getRegexp(this.replace);
-    
-        this.el.nativeElement.value = target.value.replace(this._regexp, '');
+        if (this.replaceFn) {
+            this.replaceFn(this.el, $event);
+            return;
+        } else {
+            this._regexp = this.getRegexp(this.replace);
+            this.el.nativeElement.value = target.value.replace(this._regexp, '');
+        }
+       
     }
     
     private getRegexp(str) {

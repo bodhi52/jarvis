@@ -45,6 +45,16 @@ export class ReactiveFormComponent implements OnInit {
         
     }
     
+    replaceFn = (el: ElementRef, $event) => {
+        console.log('replaceFn');
+        const target = $event.target;
+        const regexp = /\d*\.?\d{0,8}/g;
+        const match = target.value.match(regexp);
+        console.log('target.value', target.value);
+        console.log('match', match);
+        el.nativeElement.value =  match ? match[0] : '';
+    }
+    
     /**
      * 只可以输入数字的验证器，除了数字之外，都不可输入
      */
