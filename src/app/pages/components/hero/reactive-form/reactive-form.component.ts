@@ -15,6 +15,10 @@ export class ReactiveFormComponent implements OnInit {
     
     subscrb$: Subscription;
     
+    isComposite: boolean = false;
+    
+    regexp: RegExp = /[^\d|\.]/ig;
+    
     @ViewChild('input') input: ElementRef;
     
     
@@ -27,12 +31,14 @@ export class ReactiveFormComponent implements OnInit {
     
     ngOnInit() {
         this.validateForm = this.fb.group({
-            code: [33, [Validators.required, this.onlyNumber(), Validators.maxLength(6)]],
+            code: [null, [Validators.required, this.onlyNumber(), Validators.minLength(2), Validators.maxLength(6)]],
+        }, {
+            updateOn: 'blur',
         });
         
         this.formGroup = new FormGroup({
             code: new FormControl(null, {
-                validators: [Validators.required, Validators.maxLength(4)],
+                validators: [Validators.required, Validators.minLength(2), Validators.maxLength(4)],
             }),
         }, {
             updateOn: 'blur',
@@ -45,13 +51,10 @@ export class ReactiveFormComponent implements OnInit {
         
     }
     
-    replaceFn = (el: ElementRef, $event) => {
+    replaceFn = (el: ElementRef) => {
         console.log('replaceFn');
-        const target = $event.target;
         const regexp = /\d*\.?\d{0,8}/g;
-        const match = target.value.match(regexp);
-        console.log('target.value', target.value);
-        console.log('match', match);
+        const match = el.nativeElement.value.match(regexp);
         el.nativeElement.value =  match ? match[0] : '';
     }
     
@@ -74,7 +77,6 @@ export class ReactiveFormComponent implements OnInit {
     }
     
     submit() {
-        this.formGroup.updateValueAndValidity();
         console.log('input', this.input.nativeElement.value);
         console.log('formgroup', this.formGroup.getRawValue());
     }

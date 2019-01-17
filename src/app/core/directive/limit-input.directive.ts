@@ -1,10 +1,10 @@
-import {Directive, ElementRef, HostListener, Input, Renderer2} from '@angular/core';
-import {ControlValueAccessor, NgControl} from '@angular/forms';
+import {Directive, ElementRef, HostListener, Input} from '@angular/core';
+import {NgControl} from '@angular/forms';
 
 @Directive({
     selector: '[appLimitInput]'
 })
-export class LimitInputDirective implements ControlValueAccessor {
+export class LimitInputDirective {
     
     
     /**
@@ -24,14 +24,9 @@ export class LimitInputDirective implements ControlValueAccessor {
      */
     @Input() replaceFn: Function;
     
-    writeValue(value: any): void {
-        this.render.setProperty(this.el.nativeElement, 'value', value);
-    }
-    
     constructor(
         private el: ElementRef,
         private control: NgControl,
-        private render: Renderer2,
     ) {
     }
     
@@ -45,50 +40,40 @@ export class LimitInputDirective implements ControlValueAccessor {
     /**
      * 选词输入结束（确定输入或取消输入）
      */
-    @HostListener('compositionend', ['$event']) onCompositionEnd($event) {
+    @HostListener('compositionend') onCompositionEnd() {
         this.isComposite = false;
-        this.limitInput($event);
+        this.limitInput();
         
     }
     
-    @HostListener('change', ['$event']) onChange($event) {
+    @HostListener('change') onChange() {
         this.control.control.setValue(this.el.nativeElement.value);
     }
     
     /**
      * 应对输入被格式化导致不接发change事件的问题。所以这里在blur的时候也进行重新赋值
-     * @param $event
      */
-    @HostListener('blur', ['$event']) onBlur($event) {
+    @HostListener('blur') onBlur() {
         this.control.control.setValue(this.el.nativeElement.value);
     }
     
     /**
      * 正常输入
      */
-    @HostListener('input', ['$event']) onInput($event) {
-        this.limitInput($event);
+    @HostListener('input') onInput() {
+        this.limitInput();
     }
     
-    registerOnChange(fn: (_: any) => void): void {
-        this.onChange = fn;
-    }
-    
-    registerOnTouched(fn: any): void {
-        this.onBlur = fn;
-    }
-    
-    private limitInput($event) {
-        if (!$event || !$event.target.value || this.isComposite) {
+    private limitInput() {
+        if (!this.el.nativeElement.value || this.isComposite) {
             return;
         }
-        const target = $event.target;
         if (this.replaceFn) {
-            this.replaceFn(this.el, $event);
+            this.replaceFn(this.el);
             return;
         } else {
             this._regexp = this.getRegexp(this.replace);
-            this.el.nativeElement.value = target.value.replace(this._regexp, '');
+            this.el.nativeElement.value = this.el.nativeElement.value.replace(this._regexp, '');
         }
        
     }
