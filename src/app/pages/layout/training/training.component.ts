@@ -31,6 +31,10 @@ export class TrainingComponent implements OnInit, OnDestroy {
         {
             url: '/t/reactive-form',
             name: 'Reactive Form'
+        },
+        {
+            url: '/t/element-ref',
+            name: 'ElementRef',
         }
     ];
     

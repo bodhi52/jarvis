@@ -3,22 +3,21 @@
     <nz-form-label [nzSpan]="6" nzFor="gacode">GA Code</nz-form-label>
     <nz-form-control [nzSpan]="14">
       <input nz-input name="code" formControlName="code" id="gacode">
+      <nz-form-explain *ngIf="validateForm.get('code').dirty && validateForm.get('code').errors">
+        errors
+      </nz-form-explain>
     </nz-form-control>
   </nz-form-item >
-</form>
 
-<form nz-form [formGroup]="formGroup">
   <nz-form-item>
-    <nz-form-label [nzSpan]="6" nzFor="code">Code</nz-form-label>
+    <nz-form-label [nzSpan]="6" nzFor="gaalterEgo">GA alterEgo</nz-form-label>
     <nz-form-control [nzSpan]="14">
-      <input nz-input
-             #input
-             name="code"
-             formControlName="code" id="code"
-             appLimitInput
-             [replaceFn]="replaceFn"
-      >
+      <input nz-input name="alterEgo" formControlName="alterEgo" id="gaalterEgo">
+      <nz-form-explain *ngIf="validateForm.hasError('identityRevealed') && validateForm.errors" [ngClass]="validateForm.valid">
+        identityRevealed
+      </nz-form-explain>
     </nz-form-control>
+
   </nz-form-item >
 </form>
 
@@ -31,5 +30,3 @@
   <nz-spin [nzIndicator]="indicatorTemplate" [nzTip]="'loading'">
   </nz-spin>
 </div>
-
-<p>code: {{formGroup.controls['code'].value}}}</p>

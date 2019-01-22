@@ -15,6 +15,7 @@ import {PageNoFoundComponent} from '../../common/page-no-found/page-no-found.com
 import {ShareModule} from '../../share.module';
 import { AnimationsComponent } from './animations/animations.component';
 import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
+import { ElementRefComponent } from './element-ref/element-ref.component';
 
 const routes: Routes = [
     {
@@ -31,7 +32,7 @@ const routes: Routes = [
         component: HeroListComponent,
     },
     {
-        path: 'detail/:id',
+        path: 'detail',
         component: HeroDetailComponent,
     },
     {
@@ -41,6 +42,10 @@ const routes: Routes = [
     {
         path: 'reactive-form',
         component: ReactiveFormComponent,
+    },
+    {
+        path: 'element-ref',
+        component: ElementRefComponent,
     },
     {
         path: '404',
@@ -71,6 +76,7 @@ const routes: Routes = [
         HeroSearchComponent,
         AnimationsComponent,
         ReactiveFormComponent,
+        ElementRefComponent,
     ],
     entryComponents: [MessagesComponent],
 })

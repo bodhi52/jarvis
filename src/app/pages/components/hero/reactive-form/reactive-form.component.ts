@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -31,53 +31,19 @@ export class ReactiveFormComponent implements OnInit {
     
     ngOnInit() {
         this.validateForm = this.fb.group({
-            code: [null, [Validators.required, this.onlyNumber(), Validators.minLength(2), Validators.maxLength(6)]],
+            code: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(6)]],
+            alterEgo: [null],
         }, {
-            updateOn: 'blur',
+            validator: this.testValidator
         });
-        
-        this.formGroup = new FormGroup({
-            code: new FormControl(null, {
-                validators: [Validators.required, Validators.minLength(2), Validators.maxLength(4)],
-            }),
-        }, {
-            updateOn: 'blur',
-        });
-        
-        this.subscrb$ = this.formGroup.controls['code'].valueChanges.subscribe(res => {
-            console.log('change', res);
-        });
-        
-        
     }
     
-    replaceFn = (el: ElementRef) => {
-        console.log('replaceFn');
-        const regexp = /\d*\.?\d{0,8}/g;
-        const match = el.nativeElement.value.match(regexp);
-        el.nativeElement.value =  match ? match[0] : '';
-    }
-    
-    /**
-     * 只可以输入数字的验证器，除了数字之外，都不可输入
-     */
-    onlyNumber(): ValidatorFn {
-        return (control: AbstractControl): {[key: string]: any} | null => {
-            console.log('control', control.value);
-            // value有值且如果值包含非数字，就需要替换
-            if (control.value && !/^\d*$/.test(control.value)) {
-                control.setValue(control.value.replace(/[^0-9]/ig, ''), {
-                    emitEvent: false,
-                    // emitModelToViewChange: false,
-                    emitViewToModelChange: false,
-                });
-            }
-            return null;
-        };
+    testValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+        const name = control.get('code');
+        const alterEgo = control.get('alterEgo');
+        return name && alterEgo && name.value === alterEgo.value ? {'identityRevealed': true} : null;
     }
     
     submit() {
-        console.log('input', this.input.nativeElement.value);
-        console.log('formgroup', this.formGroup.getRawValue());
     }
 }
