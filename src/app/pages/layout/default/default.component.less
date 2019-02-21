@@ -1,3 +1,27 @@
+.layout{
+  width: 1024px;
+  margin: 0 auto;
+  position: relative;
+  .left-slider{
+    width: 200px;
+    background: #fff;
+    margin-top: 10px;
+    position: absolute;
+    min-height: 600px;
+    left: 0;
+    top: 0;
+  }
+
+  .right-body{
+    background: #fff;
+    margin: 10px 0 0 205px;
+    border-right: 1px solid #e8e8e8;
+
+    .nav{
+      display: inline-block;
+    }
+  }
+}
 
 :host::ng-deep.ant-layout-header{
   background: #fff;
@@ -16,10 +40,3 @@
   border-top: 1px solid #e8e8e8;
 }
 
-.right-body{
-  background: #fff;
-  padding: 10px 0 0 250px;
-  .nav{
-    display: inline-block;
-  }
-}

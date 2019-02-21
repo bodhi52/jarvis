@@ -1,5 +1,4 @@
 .todo-form{
-  width: 500px;
   textarea{
     height: 80px;
     max-height: 80px;
@@ -29,9 +28,10 @@
     }
     .content{
       font-size: 16px;
+      display: flex;
+      justify-content: space-between;
     }
     .todo-footer{
-      display: inline-block;
       border-top: 1px solid #e8e8e8;
       margin-top: 10px;
       padding-top: 10px;
@@ -44,14 +44,19 @@
       .text{
         color: #888888;
       }
-      .done{
-        margin-right: 15px;
-      }
-      .delete{
-        i{
-          margin-right: 5px;
+      .operations{
+        margin-top: 10px;
+        color: #888888;
+        .done{
+          margin-right: 15px;
+        }
+        .delete{
+          i{
+            margin-right: 5px;
+          }
         }
       }
+
     }
   }
 }

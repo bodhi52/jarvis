@@ -8,9 +8,6 @@ import * as moment from 'moment';
     styleUrls: ['./to-do-list.component.less']
 })
 export class ToDoListComponent implements OnInit {
-    
-    @HostListener('mouseenter')
-    
     todoList: TodoInterface[] = [];
     
     inputValue: string;
@@ -23,7 +20,7 @@ export class ToDoListComponent implements OnInit {
     }
     
     createData() {
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 3; i++) {
             this.todoList.push({
                 id: i,
                 content: `测试todolist，这是第${i}条`,
