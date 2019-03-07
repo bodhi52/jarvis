@@ -36,7 +36,32 @@ export class HeroService {
      * 获得英雄列表
      */
     getHeroes() {
-        return this.apiUnit.get(this.apiUrl.api.hero.list);
+        // return this.apiUnit.get(this.apiUrl.api.hero.list);
+        return Observable.create(observer => {
+            const heroes: HeroInterface[] = [
+                {
+                    id: 1,
+                    name: 'Iron Man',
+                },
+                {
+                    id: 2,
+                    name: 'Captain America',
+                },
+                {
+                    id: 3,
+                    name: 'Hulk',
+                },
+                {
+                    id: 4,
+                    name: 'Thor',
+                },
+                {
+                    id: 5,
+                    name: 'Black Widow',
+                }
+            ];
+            observer.next({code: 0, data: heroes});
+        });
     }
     
     /**

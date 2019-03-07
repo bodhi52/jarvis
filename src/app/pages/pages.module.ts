@@ -7,7 +7,6 @@ import { ReactiveFormsModule} from '@angular/forms';
 import {LoginComponent} from './common/login/login.component';
 import {DefaultComponent} from './layout/default/default.component';
 import {RouterModule} from '@angular/router';
-import {TrainingComponent} from './layout/training/training.component';
 import {ModalModule} from '../modal/modal.module';
 import {ShareModule} from './share.module';
 import {RxjsComponent} from './layout/rxjs/rxjs.component';
@@ -33,7 +32,6 @@ import {FooterComponent} from './common/footer/footer.component';
         FooterComponent,
         SiderComponent,
         DefaultComponent,
-        TrainingComponent,
         RxjsComponent,
         ThreeComponent,
         ToolBoxComponent,
