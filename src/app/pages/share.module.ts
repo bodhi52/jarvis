@@ -4,6 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ModalModule} from '../modal/modal.module';
 import {PageNoFoundComponent} from './common/page-no-found/page-no-found.component';
 import {HighLightDirective} from '../core/directive/high-light.directive';
+import {LimitInputDirective} from '../core/directive/limit-input.directive';
 
 @NgModule({
     imports: [
@@ -14,9 +15,11 @@ import {HighLightDirective} from '../core/directive/high-light.directive';
     declarations: [
         PageNoFoundComponent,
         HighLightDirective,
+        LimitInputDirective,
     ],
     exports: [
         HighLightDirective,
+        LimitInputDirective,
     ]
 })
 export class ShareModule {

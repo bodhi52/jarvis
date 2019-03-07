@@ -2,8 +2,9 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './common/login/login.component';
 import {DefaultComponent} from './layout/default/default.component';
-import {TrainingComponent} from './layout/training/training.component';
+
 import {PageNoFoundComponent} from './common/page-no-found/page-no-found.component';
+
 import {RxjsModule} from './components/rxjs/rxjs.module';
 import {RxjsComponent} from './layout/rxjs/rxjs.component';
 import {ThreeComponent} from './layout/three/three.component';
@@ -19,11 +20,6 @@ const pagesRoutes: Routes = [
         path: 'd',
         component: DefaultComponent,
         loadChildren: './components/main/main.module#MainModule',
-    },
-    {
-        path: 't',
-        component: TrainingComponent,
-        loadChildren: './components/hero/hero.module#HeroModule',
     },
     {
         path: 'r',
