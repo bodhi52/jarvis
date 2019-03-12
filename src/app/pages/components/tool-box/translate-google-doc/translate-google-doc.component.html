@@ -1,68 +1,183 @@
-<form nz-form>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="6" nzFor="prefix">翻译前缀</nz-form-label>
-    <nz-form-control [nzSpan]="6">
-      <input nz-input name="prefix" id="prefix" [(ngModel)]="prefix">
-      <nz-form-extra>在翻译文件中的前缀。:)</nz-form-extra>
-    </nz-form-control>
-  </nz-form-item >
+<nz-tabset
+    (nzSelectChange)="changeTab($event)"
+>
+    <nz-tab nzTitle="基本版">
+        <form nz-form>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="prefix">翻译前缀</nz-form-label>
+                <nz-form-control [nzSpan]="6">
+                    <input nz-input name="prefix" [(ngModel)]="basic.prefix">
+                    <nz-form-extra>在翻译文件中的前缀。:)</nz-form-extra>
+                </nz-form-control>
+            </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSpan]="6" nzFor="table-item">翻译json</nz-form-label>
-    <nz-form-control [nzSpan]="6">
-      <textarea
-              id="table-item"
-              name="table-item"
-              rows="8"
-              nz-input
-              nzAutosize
-              [(ngModel)]="tableItem"></textarea>
-      <nz-form-extra>翻译文件中的json，不清楚可以查看下示例</nz-form-extra>
-    </nz-form-control>
-  </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="tran">翻译json</nz-form-label>
+                <nz-form-control [nzSpan]="6">
+                    <textarea
+                      name="tran"
+                      rows="8"
+                      nz-input
+                      nzAutosize
+                      [(ngModel)]="basic.tran"
+                    >
+                    </textarea>
+                    <nz-form-extra>翻译文件中的json，不清楚可以查看下示例</nz-form-extra>
+                </nz-form-control>
+            </nz-form-item>
 
-  <nz-form-item nz-row style="margin-bottom:8px;">
-    <nz-form-control [nzSpan]="14" [nzOffset]="6">
-      <button nz-button nzType="primary" (click)="submitForm()">生成</button>
-      <button nz-button class="m-l-20" (click)="showExample()">示例</button>
-    </nz-form-control>
-  </nz-form-item>
-</form>
+            <nz-form-item nz-row style="margin-bottom:8px;">
+                <nz-form-control [nzSpan]="14" [nzOffset]="6">
+                    <button nz-button nzType="primary" (click)="submitForm()">生成</button>
+                    <button nz-button class="m-l-20" (click)="showExample()">示例</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </nz-tab>
+
+    <nz-tab nzTitle="高级版">
+        <form nz-form>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="prefix">翻译前缀</nz-form-label>
+                <nz-form-control [nzSpan]="6">
+                    <input nz-input name="prefix" [(ngModel)]="prefix">
+                    <nz-form-extra>在翻译文件中的前缀。:)</nz-form-extra>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="isHighLevel">
+                <nz-form-label [nzSpan]="6" nzFor="table-item">韩文json</nz-form-label>
+                <nz-form-control [nzSpan]="6">
+                  <textarea
+                      name="table-item"
+                      rows="8"
+                      nz-input
+                      nzAutosize
+                      [(ngModel)]="koTran"></textarea>
+                    <nz-form-extra>翻译文件中的json，不清楚可以查看下示例</nz-form-extra>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item nz-row style="margin-bottom:8px;">
+                <nz-form-control [nzSpan]="14" [nzOffset]="6">
+                    <button nz-button nzType="primary" (click)="submitForm()">生成</button>
+                    <button nz-button class="m-l-20" (click)="showExample()">示例</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </nz-tab>
+</nz-tabset>
+
+
+
+<!--<form nz-form>-->
+    <!--<nz-form-item>-->
+        <!--<nz-form-label [nzSpan]="6" nzFor="prefix">翻译前缀</nz-form-label>-->
+        <!--<nz-form-control [nzSpan]="6">-->
+            <!--<input nz-input name="prefix" id="prefix" [(ngModel)]="prefix">-->
+            <!--<nz-form-extra>在翻译文件中的前缀。:)</nz-form-extra>-->
+        <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+
+    <!--<nz-form-item *ngIf="!isHighLevel">-->
+        <!--<nz-form-label [nzSpan]="6" nzFor="table-item">翻译json</nz-form-label>-->
+        <!--<nz-form-control [nzSpan]="6">-->
+      <!--<textarea-->
+          <!--name="table-item"-->
+          <!--rows="8"-->
+          <!--nz-input-->
+          <!--nzAutosize-->
+          <!--[(ngModel)]="tableItem"></textarea>-->
+            <!--<nz-form-extra>翻译文件中的json，不清楚可以查看下示例</nz-form-extra>-->
+        <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+
+    <!--<nz-form-item *ngIf="isHighLevel">-->
+        <!--<nz-form-label [nzSpan]="6" nzFor="table-item">英文json</nz-form-label>-->
+        <!--<nz-form-control [nzSpan]="6">-->
+      <!--<textarea-->
+          <!--name="table-item"-->
+          <!--rows="8"-->
+          <!--nz-input-->
+          <!--nzAutosize-->
+          <!--[(ngModel)]="enTran"></textarea>-->
+            <!--<nz-form-extra>翻译文件中的json，不清楚可以查看下示例</nz-form-extra>-->
+        <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+
+    <!--<nz-form-item *ngIf="isHighLevel">-->
+        <!--<nz-form-label [nzSpan]="6" nzFor="table-item">中文json</nz-form-label>-->
+        <!--<nz-form-control [nzSpan]="6">-->
+      <!--<textarea-->
+          <!--id="table-item"-->
+          <!--name="table-item"-->
+          <!--rows="8"-->
+          <!--nz-input-->
+          <!--nzAutosize-->
+          <!--[(ngModel)]="zhTran"></textarea>-->
+            <!--<nz-form-extra>翻译文件中的json，不清楚可以查看下示例</nz-form-extra>-->
+        <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+
+    <!--<nz-form-item *ngIf="isHighLevel">-->
+        <!--<nz-form-label [nzSpan]="6" nzFor="table-item">韩文json</nz-form-label>-->
+        <!--<nz-form-control [nzSpan]="6">-->
+      <!--<textarea-->
+          <!--name="table-item"-->
+          <!--rows="8"-->
+          <!--nz-input-->
+          <!--nzAutosize-->
+          <!--[(ngModel)]="koTran"></textarea>-->
+            <!--<nz-form-extra>翻译文件中的json，不清楚可以查看下示例</nz-form-extra>-->
+        <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+
+    <!--<nz-form-item nz-row style="margin-bottom:8px;">-->
+        <!--<nz-form-control [nzSpan]="14" [nzOffset]="6">-->
+            <!--<button nz-button nzType="primary" (click)="submitForm()">生成</button>-->
+            <!--<button nz-button nzType="primary" (click)="highLevel()">高级（包含中、英、韩）</button>-->
+            <!--<button nz-button class="m-l-20" (click)="showExample()">示例</button>-->
+        <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+<!--</form>-->
 
 <div class="result" *ngIf="showResult">
-  <h3>总行数：{{tableList.length}}，你需要在Google Doc中添加{{tableList.length}}行，然后：</h3>
-  <ol>
-    <li>点击copy按钮复制文本 -->
-      <a class="m-l-20" (click)="copy()">
-        <i nz-icon type="copy" theme="outline"></i>copy
-      </a>
-    </li>
-    <li>随便打开个编辑器，粘贴复制的内容（目的是去除隐藏的html标签）</li>
-    <li>在编辑器中再次复制文本</li>
-    <li>粘贴到Google Doc中（自动匹配单元格）</li>
-  </ol>
-  <nz-table #basicTable [nzData]="tableList">
-    <thead>
-    <tr>
-      <th
-              [nzWidth]="'50%'"
-      >Key
+    <div *ngFor="let item of enArr" class="item">
+        <span>{{basic.prefix}}.{{item.key}}</span><span>{{item.value}}</span>
+    </div>
 
-      </th>
-      <th
+    <!--<h3>总行数：{{tableList.length}}，你需要在Google Doc中添加{{tableList.length}}行，然后：</h3>-->
+    <!--<ol>-->
+        <!--<li>点击copy按钮复制文本 &ndash;&gt;-->
+            <!--<a class="m-l-20" (click)="copy()">-->
+                <!--<i nz-icon type="copy" theme="outline"></i>copy-->
+            <!--</a>-->
+        <!--</li>-->
+        <!--<li>随便打开个编辑器，粘贴复制的内容（目的是去除隐藏的html标签）</li>-->
+        <!--<li>在编辑器中再次复制文本</li>-->
+        <!--<li>粘贴到Google Doc中（自动匹配单元格）</li>-->
+    <!--</ol>-->
+    <!--<nz-table #basicTable [nzData]="tableList">-->
+        <!--<thead>-->
+        <!--<tr>-->
+            <!--<th-->
+                <!--[nzWidth]="'50%'"-->
+            <!--&gt;Key-->
 
-              [nzWidth]="'50%'"
-      >
-        value
-      </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let i of tableList">
-      <td>{{translateKey[i]}}</td>
-      <td>{{translateValue[i]}}</td>
-    </tr>
-    </tbody>
-  </nz-table>
-  <div id="copy-area" #copyArea></div>
+            <!--</th>-->
+            <!--<th-->
+
+                <!--[nzWidth]="'50%'"-->
+            <!--&gt;-->
+                <!--value-->
+            <!--</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr *ngFor="let i of tableList">-->
+            <!--<td>{{translateKey[i]}}</td>-->
+            <!--<td>{{translateValue[i]}}</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+    <!--</nz-table>-->
+    <div id="copy-area" #copyArea></div>
 </div>

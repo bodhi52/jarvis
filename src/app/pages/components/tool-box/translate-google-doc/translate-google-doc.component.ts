@@ -18,6 +18,19 @@ export class TranslateGoogleDocComponent implements OnInit {
     translateKey: string[] = [];
     translateValue: string[] = [];
     
+    isHighLevel: boolean = false;
+    
+    basic = {
+        prefix: null,
+        tran: null,
+    };
+    
+    zhTran: string;
+    enTran: string;
+    koTran: string;
+    
+    enArr: {key: string, value: string}[] = [];
+    
     showResult = false;
     
     constructor(
@@ -29,25 +42,28 @@ export class TranslateGoogleDocComponent implements OnInit {
     }
     
     submitForm() {
-        this.translateKey = [];
-        this.translateValue = [];
-        this.tableList = [];
-        this.showResult = false;
-        try {
-            const obj = JSON.parse('{' + this.tableItem + '}');
-            this.objectToString(this.prefix, obj);
-            this.showResult = true;
-            for (let i = 0, len = this.translateValue.length; i < len; i ++) {
-                this.tableList.push(i);
+        if (this.isHighLevel) {
+            // 先将三个
+        } else {
+            this.translateKey = [];
+            this.translateValue = [];
+            this.tableList = [];
+            this.showResult = false;
+            try {
+                this.strToArr(this.enArr, this.basic.tran, this.prefix);
+                this.showResult = true;
+                for (let i = 0, len = this.translateValue.length; i < len; i ++) {
+                    this.tableList.push(i);
+                }
+            } catch (e) {
+                this.msg.error('json格式错误。检查json（我会在外层加上{}，所以你只需关注你自己的json内容)');
             }
-        } catch (e) {
-            this.msg.error('json格式错误。检查json（我会在外层加上{}，所以你只需关注你自己的json内容)');
         }
+        
     }
     
     showExample() {
-        this.tableItem = `"ApiKey": {
-    "BusinessDescription": "Business description",
+        this.basic.tran = `"BusinessDescription": "Business description",
     "CreateNewAPI": "Create New API",
     "MyAPIkey": "My API key",
     "Created": "Created",
@@ -64,30 +80,38 @@ export class TranslateGoogleDocComponent implements OnInit {
         "Normal": "Normal",
         "Expired": "Expired",
         "Disable": "Banned"
-    }
-}
-    `;
-        
-        this.prefix = 'account.user.ApiKey';
+    }`;
+        this.basic.prefix = 'account.user';
         this.submitForm();
     }
     
-    objectToString(key = '', obj) {
+    changeTab($event) {
+        this.showResult = false;
+    }
+    
+    strToArr(arr, str, key = '') {
+        const obj = JSON.parse('{' + str + '}');
+        this.objectToString(arr, obj);
+    }
+    
+    objectToString(arr, obj, key = '') {
         if (key) {
             key += '.';
         }
         for (const i of Object.keys(obj)) {
             if (typeof obj[i] === 'string') {
-                // console.log(key + '.' + i + ': ' + obj[i]);
-                this.translateKey.push(key + i);
-                this.translateValue.push(obj[i]);
+                arr.push({
+                    key: key + i,
+                    value: obj[i],
+                });
                 continue;
             }
             if (typeof obj[i] === 'object') {
-                this.objectToString(key + i, obj[i]);
+                this.objectToString(arr, obj[i], key + i);
             }
         }
     }
+    
     
     
     copy() {
