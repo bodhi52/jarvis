@@ -7,6 +7,8 @@ import {FormsModule} from '@angular/forms';
 import { TableWidthComponent } from './table-width/table-width.component';
 import { TranslateGoogleDocComponent } from './translate-google-doc/translate-google-doc.component';
 import { GoogleDocTranslateComponent } from './google-doc-translate/google-doc-translate.component';
+import { HighLevelComponent } from './translate-google-doc/high-level/high-level.component';
+import { BasicLevelComponent } from './translate-google-doc/basic-level/basic-level.component';
 
 const routes: Routes = [
     {
@@ -44,6 +46,8 @@ const routes: Routes = [
         TableWidthComponent,
         TranslateGoogleDocComponent,
         GoogleDocTranslateComponent,
+        HighLevelComponent,
+        BasicLevelComponent,
     ]
 })
 export class ToolBoxModule {
