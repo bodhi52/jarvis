@@ -1,0 +1,28 @@
+<form nz-form>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="prefix">翻译前缀</nz-form-label>
+        <nz-form-control [nzSpan]="6">
+            <input nz-input name="prefix" [(ngModel)]="prefix">
+            <nz-form-extra>在翻译文件中的前缀。:)</nz-form-extra>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="table-item">韩文json</nz-form-label>
+        <nz-form-control [nzSpan]="6">
+                  <textarea
+                      name="table-item"
+                      rows="8"
+                      nz-input
+                      nzAutosize
+                      [(ngModel)]="koTran"></textarea>
+            <nz-form-extra>翻译文件中的json，不清楚可以查看下示例</nz-form-extra>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item nz-row style="margin-bottom:8px;">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+            <button nz-button nzType="primary" (click)="submitForm()">生成</button>
+            <button nz-button class="m-l-20" (click)="showExample()">示例</button>
+        </nz-form-control>
+    </nz-form-item>
+</form>
