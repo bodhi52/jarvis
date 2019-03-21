@@ -1,42 +1,47 @@
-<form nz-form>
-    <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="table-item">google Doc中的翻译</nz-form-label>
-        <nz-form-control [nzSpan]="12">
+<div class="google-doc-to-translate">
+
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="table-item">google Doc中的翻译</nz-form-label>
+            <nz-form-control [nzSpan]="12">
       <textarea
           id="table-item"
           name="table-item"
           rows="8"
           nz-input
           nzAutosize
-          [(ngModel)]="tableItem"></textarea>
-            <nz-form-extra>直接从谷歌文档中复制就好</nz-form-extra>
-            <nz-form-extra class="warning">
-                特别注意的是，文档中有些单元格在编辑的时候可能换行了，需要手动删除掉，切记！<br/>
-                这里设置了不换行，如果你看到一行不是完整的，就手动清除掉换行~：）
-            </nz-form-extra>
-        </nz-form-control>
-    </nz-form-item>
+          [(ngModel)]="googleDoc"></textarea>
+                <nz-form-extra>直接从谷歌文档中复制就好</nz-form-extra>
+                <nz-form-extra class="warning">
+                    特别注意的是，文档中有些单元格在编辑的时候可能换行了，需要手动删除掉，切记！<br/>
+                    这里设置了不换行，如果你看到一行不是完整的，就手动清除掉换行~：）
+                </nz-form-extra>
+            </nz-form-control>
+        </nz-form-item>
 
-    <nz-form-item nz-row style="margin-bottom:8px;">
-        <nz-form-control [nzSpan]="14" [nzOffset]="6">
-            <button nz-button nzType="primary" (click)="submitForm()">生成</button>
-            <button nz-button class="m-l-20" (click)="showExample()">示例</button>
-        </nz-form-control>
-    </nz-form-item>
-</form>
+        <nz-form-item nz-row style="margin-bottom:8px;">
+            <nz-form-control [nzSpan]="14" [nzOffset]="6">
+                <button nz-button nzType="primary" (click)="submitForm()">生成</button>
+                <button nz-button class="m-l-20" (click)="showExample()">示例</button>
+                <button nz-button class="m-l-20" (click)="reset()">重置</button>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
 
 
-<div class="result" *ngIf="showResult">
+    <div class="result" *ngIf="showResult">
 
-    <nz-collapse [nzBordered]="false">
-        <nz-collapse-panel [nzHeader]="'英文'">
-            <pre [innerHTML]="syntaxHighlight(en)"></pre>
-        </nz-collapse-panel>
-        <nz-collapse-panel [nzHeader]="'中文'">
-            <pre [innerHTML]="syntaxHighlight(zh)"></pre>
-        </nz-collapse-panel>
-        <nz-collapse-panel [nzHeader]="'韩文'">
-            <pre [innerHTML]="syntaxHighlight(ko)"></pre>
-        </nz-collapse-panel>
-    </nz-collapse>
+        <nz-collapse [nzBordered]="false">
+            <nz-collapse-panel [nzHeader]="'英文'">
+                <pre [innerHTML]="syntaxHighlight(en)"></pre>
+            </nz-collapse-panel>
+            <nz-collapse-panel [nzHeader]="'中文'">
+                <pre [innerHTML]="syntaxHighlight(zh)"></pre>
+            </nz-collapse-panel>
+            <nz-collapse-panel [nzHeader]="'韩文'">
+                <pre [innerHTML]="syntaxHighlight(ko)"></pre>
+            </nz-collapse-panel>
+        </nz-collapse>
+    </div>
+
 </div>

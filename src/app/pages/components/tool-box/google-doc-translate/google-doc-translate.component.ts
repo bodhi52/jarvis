@@ -9,7 +9,7 @@ import {NzMessageService} from 'ng-zorro-antd';
 export class GoogleDocTranslateComponent implements OnInit {
     
     @ViewChild('copyArea') copyArea: ElementRef;
-    tableItem: string;
+    googleDoc: string;
     
     en: object = null;
     ko: object = null;
@@ -25,8 +25,16 @@ export class GoogleDocTranslateComponent implements OnInit {
     ngOnInit() {
     }
     
+    reset() {
+        this.googleDoc = null;
+        this.en = null;
+        this.ko = null;
+        this.zh = null;
+        this.showResult = false;
+    }
+    
     submitForm() {
-        if (!this.tableItem) {
+        if (!this.googleDoc) {
             this.msg.error('请输入谷歌文档中的翻译文字');
             return;
         }
@@ -36,7 +44,7 @@ export class GoogleDocTranslateComponent implements OnInit {
     }
     
     showExample() {
-        this.tableItem = `account.user.ApiKey.BusinessDescription	Business description	业务说明：	비즈니스 디스크립션
+        this.googleDoc = `account.user.ApiKey.BusinessDescription	Business description	业务说明：	비즈니스 디스크립션
 account.user.ApiKey.Description	DCEX provides an API that can be used to help you achieve the power of your business such as Market Query, Automated trading, and more. To learn more about the full API services provided by DCEX, please refer to the DCEX API Documentation.	DCEX提供了可用于帮助您实现业务需求的各类强大功能的API。您可以通过DCEX API查询行情、完成自动交易等。要了解DCEX提供的完整的API服务，请参考DCEX API文档。	DCEX는 회원님의 시장 조사 및 자동 트레이딩과 같은 비즈니스에서 도움이 될 API를 제공합니다. DCEX에서 제공하는 전체 API 서비스에 대한 자세한 내용은 DCEX API 문서를 참조하십시오.
 account.user.ApiKey.CreateNewAPI	Create New API	创建新API	API 생성
 account.user.ApiKey.MyAPIkey	My API key	我的API Key	나의 API key
@@ -52,7 +60,7 @@ account.user.ApiKey.Normal	Normal	正常	정상`;
         const enObj: object = {};
         const koObj: object = {};
         const zhObj: object = {};
-        const arr = this.tableItem.split('\n');
+        const arr = this.googleDoc.split('\n');
         for (const i of arr) {
             const item = i.split('\t');
             // 第一个为key，需要继续解key

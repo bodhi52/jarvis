@@ -14,7 +14,6 @@ export class TranslateGoogleDocComponent implements OnInit {
     }
     
     ngOnInit() {
-        this.tab = 1;
     }
     
     

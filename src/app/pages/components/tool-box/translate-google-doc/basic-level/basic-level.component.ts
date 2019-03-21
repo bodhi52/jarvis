@@ -31,13 +31,23 @@ export class BasicLevelComponent implements OnInit, AfterViewInit {
         // this.showExample();
     }
     
+    /**
+     * 重置
+     */
+    reset() {
+        this.prefix = null;
+        this.tran = null;
+        this.showResult = false;
+        this.resultArr = [];
+    }
+    
     submitForm() {
         this.showResult = false;
         try {
             this.strToArr(this.resultArr, this.tran, this.prefix);
             this.showResult = true;
         } catch (e) {
-            this.msg.error('json格式错误。检查json（我会在外层加上{}，所以你只需关注你自己的json内容)');
+            this.msg.error('json格式错误，请检查json');
         }
         
     }
