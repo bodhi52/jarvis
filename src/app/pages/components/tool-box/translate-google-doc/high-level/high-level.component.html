@@ -70,7 +70,7 @@
         </div>
         <div class="result-list">
             <div *ngFor="let item of resultArr" class="item">
-                <span>{{prefix}}.{{item.key}}</span>
+                <span>{{prefix ? prefix + '.' : ''}}.{{item.key}}</span>
                 <span>{{item.en}}</span>
                 <span>{{item.zh}}</span>
                 <span>{{item.ko}}</span>

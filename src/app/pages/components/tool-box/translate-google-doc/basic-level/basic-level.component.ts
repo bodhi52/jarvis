@@ -53,7 +53,8 @@ export class BasicLevelComponent implements OnInit, AfterViewInit {
     }
     
     showExample() {
-        this.tran = `"BusinessDescription": "Business description",
+        this.tran = `{
+    "BusinessDescription": "Business description",
     "CreateNewAPI": "Create New API",
     "MyAPIkey": "My API key",
     "Created": "Created",
@@ -70,13 +71,14 @@ export class BasicLevelComponent implements OnInit, AfterViewInit {
         "Normal": "Normal",
         "Expired": "Expired",
         "Disable": "Banned"
-    }`;
+    }
+}`;
         this.prefix = 'account.user';
         this.submitForm();
     }
     
     strToArr(arr, str, key = '') {
-        const obj = JSON.parse('{' + str + '}');
+        const obj = JSON.parse(str);
         this.objectToString(arr, obj);
     }
     
