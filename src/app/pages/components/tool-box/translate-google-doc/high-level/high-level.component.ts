@@ -193,9 +193,9 @@ export class HighLevelComponent implements OnInit {
         for (const key of Object.keys(this.bigObj)) {
             this.resultArr.push({
                 key: key,
-                en: this.bigObj[key].en,
-                zh: this.bigObj[key].zh,
-                ko: this.bigObj[key].ko,
+                en: this.bigObj[key].en || '', // 不要生成undefined
+                zh: this.bigObj[key].zh || '', // 不要生成undefined
+                ko: this.bigObj[key].ko || '', // 不要生成undefined
             });
         }
     }
