@@ -9,8 +9,6 @@ import { TranslateGoogleDocComponent } from './translate-google-doc/translate-go
 import { GoogleDocTranslateComponent } from './google-doc-translate/google-doc-translate.component';
 import { HighLevelComponent } from './translate-google-doc/high-level/high-level.component';
 import { BasicLevelComponent } from './translate-google-doc/basic-level/basic-level.component';
-import { BasicComponent } from './google-doc-translate/basic/basic.component';
-import { HighComponent } from './google-doc-translate/high/high.component';
 
 const routes: Routes = [
     {
@@ -50,8 +48,6 @@ const routes: Routes = [
         GoogleDocTranslateComponent,
         HighLevelComponent,
         BasicLevelComponent,
-        BasicComponent,
-        HighComponent,
     ]
 })
 export class ToolBoxModule {
