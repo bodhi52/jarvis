@@ -36,10 +36,6 @@ const pagesRoutes: Routes = [
         loadChildren: './components/three-js/three-js.module#ThreeJsModule',
     },
     {
-        path: 'canvas',
-        loadChildren: './components/canvas/canvas.module#CanvasModule',
-    },
-    {
         path: 'todo',
         component: DefaultComponent,
         loadChildren: './components/to-do/to-do.module#ToDoModule'

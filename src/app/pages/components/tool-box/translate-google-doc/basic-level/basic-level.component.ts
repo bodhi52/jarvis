@@ -103,7 +103,7 @@ export class BasicLevelComponent implements OnInit, AfterViewInit {
     
     copy() {
         const arr = [];
-        const prefix = this.prefix ? this.prefix + '.' : null;
+        const prefix = this.prefix ? this.prefix + '.' : '';
         for (const i of this.resultArr) {
             arr.push(prefix + i.key + '&#9;' + i.value);
         }

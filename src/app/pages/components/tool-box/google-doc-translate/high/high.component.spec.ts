@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SinCosComponent } from './sin-cos.component';
+import { HighComponent } from './high.component';
 
-describe('SinCosComponent', () => {
-  let component: SinCosComponent;
-  let fixture: ComponentFixture<SinCosComponent>;
+describe('HighComponent', () => {
+  let component: HighComponent;
+  let fixture: ComponentFixture<HighComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SinCosComponent ]
+      declarations: [ HighComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SinCosComponent);
+    fixture = TestBed.createComponent(HighComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
