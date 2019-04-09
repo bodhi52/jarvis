@@ -1,16 +1,19 @@
 <div class="google-doc-to-translate">
-
-    <form nz-form>
+    <form nz-form
+          style="width: 800px;"
+    >
         <nz-form-item>
-            <nz-form-label [nzSpan]="6" nzFor="table-item">google Doc中的翻译</nz-form-label>
-            <nz-form-control [nzSpan]="12">
+            <nz-form-label nzFor="table-item">google Doc中的翻译</nz-form-label>
+            <nz-form-control>
       <textarea
           id="table-item"
           name="table-item"
           rows="8"
           nz-input
           nzAutosize
-          [(ngModel)]="googleDoc"></textarea>
+          [(ngModel)]="googleDoc"
+      >
+      </textarea>
                 <nz-form-extra>直接从谷歌文档中复制就好</nz-form-extra>
                 <nz-form-extra class="warning">
                     特别注意的是，文档中有些单元格在编辑的时候可能换行了，需要手动删除掉，切记！<br/>
@@ -20,16 +23,16 @@
         </nz-form-item>
 
         <nz-form-item nz-row style="margin-bottom:8px;">
-            <nz-form-control [nzSpan]="14" [nzOffset]="6">
-                <button nz-button nzType="primary" (click)="submitForm()">生成</button>
+            <nz-form-control>
+                <button nz-button nzType="primary" (click)="submitForm()">生成（基本版）</button>
+                <button nz-button nzType="primary" class="m-l-20" (click)="submitHighLevel()">生成（高级版 for node）</button>
                 <button nz-button class="m-l-20" (click)="showExample()">示例</button>
                 <button nz-button class="m-l-20" (click)="reset()">重置</button>
             </nz-form-control>
         </nz-form-item>
     </form>
 
-
-    <div class="result" *ngIf="showResult">
+    <div class="result" *ngIf="showResultBasic">
 
         <nz-collapse [nzBordered]="false">
             <nz-collapse-panel [nzHeader]="'英文'">
@@ -44,4 +47,17 @@
         </nz-collapse>
     </div>
 
+    <div class="result" *ngIf="showResultHigh">
+        <nz-collapse [nzBordered]="false">
+            <nz-collapse-panel [nzHeader]="'英文'">
+                <pre [innerHTML]="syntaxHighlight(en)"></pre>
+            </nz-collapse-panel>
+            <nz-collapse-panel [nzHeader]="'中文'">
+                <pre [innerHTML]="syntaxHighlight(zh)"></pre>
+            </nz-collapse-panel>
+            <nz-collapse-panel [nzHeader]="'韩文'">
+                <pre [innerHTML]="syntaxHighlight(ko)"></pre>
+            </nz-collapse-panel>
+        </nz-collapse>
+    </div>
 </div>

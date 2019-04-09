@@ -30,10 +30,6 @@ export class IndexComponent implements OnInit {
                 text: 'RxJS',
             },
             {
-                url: 'canvas',
-                text: 'Canvas',
-            },
-            {
                 url: 'three',
                 text: 'Three',
             },

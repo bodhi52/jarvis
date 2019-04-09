@@ -15,45 +15,46 @@ export class GoogleDocTranslateComponent implements OnInit {
     ko: object = null;
     zh: object = null;
     
-    showResult = false;
-    
+    showResultBasic = false;
+    showResultHigh = false;
     constructor(
         private msg: NzMessageService,
     ) {
     }
     
+    
     ngOnInit() {
     }
+    
     
     reset() {
         this.googleDoc = null;
         this.en = null;
         this.ko = null;
         this.zh = null;
-        this.showResult = false;
+        this.showResultBasic = false;
     }
     
     submitForm() {
+        this.showResultHigh = false;
         if (!this.googleDoc) {
             this.msg.error('请输入谷歌文档中的翻译文字');
             return;
         }
-        this.showResult = false;
+        this.showResultBasic = false;
         this.transformToJson();
-        this.showResult = true;
+        this.showResultBasic = true;
     }
     
     showExample() {
         this.googleDoc = `account.user.ApiKey.BusinessDescription	Business description	业务说明：	비즈니스 디스크립션
-account.user.ApiKey.Description	DCEX provides an API that can be used to help you achieve the power of your business such as Market Query, Automated trading, and more. To learn more about the full API services provided by DCEX, please refer to the DCEX API Documentation.	DCEX提供了可用于帮助您实现业务需求的各类强大功能的API。您可以通过DCEX API查询行情、完成自动交易等。要了解DCEX提供的完整的API服务，请参考DCEX API文档。	DCEX는 회원님의 시장 조사 및 자동 트레이딩과 같은 비즈니스에서 도움이 될 API를 제공합니다. DCEX에서 제공하는 전체 API 서비스에 대한 자세한 내용은 DCEX API 문서를 참조하십시오.
+account.user.ApiKey.Description	<a href='/test'>DCEX</a> provides an API that can be used to help you achieve the power of your business such as Market Query, Automated trading, and more. To learn more about the full API services provided by DCEX, please refer to the DCEX API Documentation.	DCEX提供了可用于帮助您实现业务需求的各类强大功能的API。您可以通过DCEX API查询行情、完成自动交易等。要了解DCEX提供的完整的API服务，请参考DCEX API文档。	DCEX는 회원님의 시장 조사 및 자동 트레이딩과 같은 비즈니스에서 도움이 될 API를 제공합니다. DCEX에서 제공하는 전체 API 서비스에 대한 자세한 내용은 DCEX API 문서를 참조하십시오.
 account.user.ApiKey.CreateNewAPI	Create New API	创建新API	API 생성
 account.user.ApiKey.MyAPIkey	My API key	我的API Key	나의 API key
 account.user.ApiKey.Created	Created	已创建 	생성 됨
 account.user.ApiKey.Notes	Notes	备注	메모
 account.user.ApiKey.Status	Status	状态	상태
 account.user.ApiKey.Normal	Normal	正常	정상`;
-        
-        this.submitForm();
     }
     
     transformToJson() {
@@ -98,7 +99,7 @@ account.user.ApiKey.Normal	Normal	正常	정상`;
             json = JSON.stringify(json, undefined, 2);
         }
         json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
-        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
             let cls = 'number';
             if (/^"/.test(match)) {
                 if (/:$/.test(match)) {
@@ -111,8 +112,28 @@ account.user.ApiKey.Normal	Normal	正常	정상`;
             } else if (/null/.test(match)) {
                 cls = 'null';
             }
-            return '<span class="' + cls + '">' + match + '</span>';
+            return '<span class="' + cls + '">' + match.replace(/[<>&"]/g, (c) => {
+                return {'<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;'}[c];
+            }) + '</span>';
         });
     }
+    
+    
+    submitHighLevel() {
+        this.showResultBasic = false;
+        this.en = {};
+        this.zh = {};
+        this.ko = {};
+        const arr = this.googleDoc.split('\n');
+        for (const i of arr) {
+            const item = i.split('\t');
+            // 第一个为key
+            this.en[item[0]] = item[1];
+            this.zh[item[0]] = item[2];
+            this.ko[item[0]] = item[3];
+        }
+        this.showResultHigh = true;
+    }
+   
     
 }

@@ -163,6 +163,7 @@ export class HighLevelComponent implements OnInit {
     }
     
     transferToBigObj() {
+        this.bigObj ={};
         if (this.enTran) {
             try {
                 const obj = JSON.parse(this.enTran);
@@ -190,6 +191,7 @@ export class HighLevelComponent implements OnInit {
     }
     
     getResultList() {
+        this.resultArr = [];
         for (const key of Object.keys(this.bigObj)) {
             this.resultArr.push({
                 key: key,
@@ -230,7 +232,17 @@ export class HighLevelComponent implements OnInit {
         const arr = [];
         const prefix = this.prefix ? this.prefix + '.' : null;
         for (const i of this.resultArr) {
-            arr.push(prefix + i.key + '&#9;' + i.en + '&#9;' + i.zh + '&#9;' + i.ko);
+            let item = prefix + i.key;
+            if (this.enTran) {
+                item += '&#9;' + i.en;
+            }
+            if (this.zhTran) {
+                item += '&#9;' + i.zh;
+            }
+            if (this.koTran) {
+                item += '&#9;' + i.ko;
+            }
+            arr.push(item);
         }
         // 将对应的数据填充到拷贝的div中
         this.copyArea.nativeElement.innerHTML = '<pre>' + arr.join('\n') + '</pre>';

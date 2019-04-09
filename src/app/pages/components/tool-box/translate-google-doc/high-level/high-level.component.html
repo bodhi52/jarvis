@@ -63,17 +63,17 @@
 
     <div class="result" *ngIf="showResult">
         <div class="explain">
-            直接<a class="m-l-20" (click)="copy('translate')">
+            直接<a class="m-l-20" (click)="copy()">
             <i nz-icon type="copy" theme="outline"></i>copy
         </a>
             key和翻译之间是以tab隔开的，可以直接复制到谷歌文档上。
         </div>
         <div class="result-list">
             <div *ngFor="let item of resultArr" class="item">
-                <span>{{prefix ? prefix + '.' : ''}}.{{item.key}}</span>
-                <span>{{item.en}}</span>
-                <span>{{item.zh}}</span>
-                <span>{{item.ko}}</span>
+                <span>{{prefix ? prefix + '.' : ''}}{{item.key}}</span>
+                <span *ngIf="enTran">{{item.en}}</span>
+                <span *ngIf="zhTran">{{item.zh}}</span>
+                <span *ngIf="koTran">{{item.ko}}</span>
             </div>
         </div>
         <div id="copy-area" #copyArea></div>
