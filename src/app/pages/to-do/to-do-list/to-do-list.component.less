@@ -1,57 +1,78 @@
-.todo-form{
-  textarea{
+.todo-form {
+  textarea {
     height: 80px;
     max-height: 80px;
     min-height: 80px;
     resize: none;
   }
-  .form-btn{
+
+  .form-btn {
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
   }
 }
 
-.todo-list{
+.todo-list {
   margin-top: 20px;
-  .todo-item{
+
+  .todo-item {
     padding: 10px;
-    margin-bottom: 15px;
     position: relative;
-    .tag{
+
+    .tag {
       width: 20px;
       height: 50px;
       position: absolute;
       left: 0;
-      top:-30px;
+      top: -30px;
       background: #33cc99;
     }
-    .content{
+
+    .content {
       font-size: 16px;
       display: flex;
       justify-content: space-between;
     }
-    .todo-footer{
+
+    .todo-footer {
       border-top: 1px solid #e8e8e8;
-      margin-top: 10px;
-      padding-top: 10px;
-      .created-at{
+      margin-top: 5px;
+      padding-top: 5px;
+      font-size: 12px;
+
+      .created-at {
         margin-right: 15px;
       }
-      .updated-at{
+
+      .updated-at {
         margin-right: 15px;
       }
-      .text{
+
+      .text {
         color: #888888;
       }
-      .operations{
+
+      .status {
+        .created {
+          color: #7777ff;
+        }
+
+        .completed {
+          color: #009966;
+        }
+      }
+
+      .operations {
         margin-top: 10px;
         color: #888888;
-        .done{
+
+        .done {
           margin-right: 15px;
         }
-        .delete{
-          i{
+
+        .delete {
+          i {
             margin-right: 5px;
           }
         }
