@@ -1,0 +1,23 @@
+<nz-layout class="layout">
+    <app-sider class="left-slider"></app-sider>
+    <nz-layout class="right-body">
+        <nz-header>
+            <div class="nav">
+                <ul nz-menu [nzMode]="'horizontal'">
+                    <li nz-menu-item
+                        *ngFor="let menu of menuList"
+                        [nzSelected]="menu.is_selected"
+                        [routerLink]="menu.url"
+                    >
+                        <i nz-icon type="{{menu.icon}}" theme="outline"></i>
+                        {{menu.name}}
+                    </li>
+                </ul>
+            </div>
+        </nz-header>
+        <nz-content class="content">
+            <router-outlet></router-outlet>
+        </nz-content>
+        <nz-footer>Footer</nz-footer>
+    </nz-layout>
+</nz-layout>

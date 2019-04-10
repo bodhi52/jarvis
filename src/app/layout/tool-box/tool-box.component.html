@@ -1,0 +1,21 @@
+<nz-layout class="layout">
+    <nz-header>
+        <div class="logo">
+            Tony Studio
+        </div>
+        <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+            <li nz-menu-item
+                *ngFor="let menu of menuList"
+                [nzSelected]="menu.is_selected"
+                (click)="goToUrl(menu.url)"
+            >{{menu.name}}
+            </li>
+        </ul>
+    </nz-header>
+    <nz-content class="content">
+        <div class="main-content">
+            <router-outlet></router-outlet>
+        </div>
+    </nz-content>
+    <app-footer></app-footer>
+</nz-layout>
