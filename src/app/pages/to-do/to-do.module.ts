@@ -8,14 +8,9 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
 
 const routes: Routes = [
     {
-        path: 'list',
+        path: '',
         component: ToDoListComponent,
     },
-    {
-        path: '',
-        redirectTo: 'list',
-        pathMatch: 'full',
-    }
 ];
 
 @NgModule({

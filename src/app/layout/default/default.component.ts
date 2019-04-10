@@ -13,13 +13,18 @@ export class DefaultComponent implements OnInit, OnDestroy {
     
     menuList: MenuInterface[] = [
         {
+            name: 'Dashboard',
+            url: '/d',
+            icon: 'dashboard',
+        },
+        {
             name: 'TODO',
             url: '/todo',
             icon: 'bars',
         },
         {
             name: 'Say Say',
-            url: '/saysay',
+            url: '/say-say',
             icon: 'message',
         },
         {
@@ -42,7 +47,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.router$ = this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
-                console.log('event', event.url);
+                console.log('event', event);
                 this.menuService.checkMenuSelected(event.url, this.menuList);
             }
         });

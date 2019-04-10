@@ -2,19 +2,36 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './pages/independence/login/login.component';
 import {PageNoFoundComponent} from './pages/independence/page-no-found/page-no-found.component';
-import {IndexComponent} from './pages/independence/index/index.component';
 import {ToolBoxComponent} from './layout/tool-box/tool-box.component';
 import {DefaultComponent} from './layout/default/default.component';
 
 const pagesRoutes: Routes = [
     {
-        path: 'login',
-        component: LoginComponent,
+        path: '',
+        component: DefaultComponent,
+        children: [
+            {
+                path: '',
+                redirectTo: 'd',
+                pathMatch: 'full',
+            },
+            {
+                path: 'd',
+                loadChildren: './pages/main/main.module#MainModule',
+            },
+            {
+                path: 'todo',
+                loadChildren: './pages/to-do/to-do.module#ToDoModule'
+            },
+            {
+                path: 'say-say',
+                loadChildren: './pages/say-say/say-say.module#SaySayModule',
+            }
+        ]
     },
     {
-        path: 'd',
-        component: DefaultComponent,
-        loadChildren: './pages/main/main.module#MainModule',
+        path: 'login',
+        component: LoginComponent,
     },
     {
         path: 'bill-report',
@@ -24,10 +41,7 @@ const pagesRoutes: Routes = [
         path: 'three',
         loadChildren: './pages/three-js/three-js.module#ThreeJsModule',
     },
-    {
-        path: 'todo',
-        loadChildren: './pages/to-do/to-do.module#ToDoModule'
-    },
+    
     {
         path: 'tool-box',
         component: ToolBoxComponent,
@@ -36,10 +50,6 @@ const pagesRoutes: Routes = [
     {
         path: '404',
         component: PageNoFoundComponent,
-    },
-    {
-        path: '',
-        component: IndexComponent,
     },
     {
         path: '**',
