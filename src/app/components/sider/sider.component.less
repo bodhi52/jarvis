@@ -1,5 +1,4 @@
 :host ::ng-deep .ant-layout-sider {
-  background: #fff;
   color: #fff;
   border-right: 1px solid #ccc;
   overflow: auto;
@@ -25,6 +24,39 @@
     font-weight: 600;
     line-height: 1.5em;
     text-align: center;
+    span{
+      &:nth-child(2n + 1){
+        color: #33cc99;
+      }
+      &:nth-child(2){
+        color: red;
+      }
+    }
+  }
+}
+.baby{
+  text-align: center;
+  img{
+    height: 150px;
+    margin: 0 auto;
+  }
+  p{
+    color: #333;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    span{
+      line-height: 28px;
+      font-weight: bold;
+      &:nth-child(1){
+        color: rgb(131, 175, 155);
+
+      }
+      &:nth-child(2){
+        padding-left: 10px;
+        color: rgb(250, 157, 200);
+      }
+    }
   }
 }
 .date-area{
@@ -40,14 +72,23 @@
   }
 }
 .desc{
-  color: #999;
-  padding: 0 20px;
+  padding: 0 15px;
+  font-size: 14px;
+  color: #666;
 }
 .info{
   color: #333;
   text-align: left;
   padding: 0 20px;
   i{
+    color: #33cc99;
     margin-right: 10px;
+  }
+  a{
+    color: #333;
+    &:hover{
+      color: #009966;
+      border-bottom: 1px solid #009966;
+    }
   }
 }

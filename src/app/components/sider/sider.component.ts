@@ -8,17 +8,18 @@ import * as moment from 'moment';
 })
 export class SiderComponent implements OnInit {
     
+    week: number = 0; // 周数
+    day: number = 0; // 天数
+    
     constructor() {
     }
     
     ngOnInit() {
-        this.getDate();
-    }
-    
-    /**
-     * 获得当前的日期时间
-     */
-    getDate() {
-        console.log(moment().toDate());
+        const begin = moment('2019-02-10');
+        const now = moment();
+        const days = Math.floor(Math.abs(moment.duration(begin.diff(now)).asDays()));
+        this.week = Math.floor(days / 7);
+        this.day = days % 7;
+        
     }
 }
