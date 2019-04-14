@@ -1,3 +1,44 @@
-<p>
-  say-list works!
-</p>
+<div class="say-say-list">
+
+    <div class="top-area" *ngIf="!showCreate">
+        <div class="scan">
+            <span>全部（36条）</span>
+            <ng-container *ngIf="currentTag">，当前标签：<span class="tag">#{{currentTag}}#</span></ng-container>
+            <span class="reload"><i nz-icon nzType="reload" nzTheme="outline"></i></span>
+        </div>
+        <button nz-button nzType="primary" (click)="saySome()">说点啥？</button>
+    </div>
+    <app-say-create
+        *ngIf="showCreate"
+        (event)="create($event)"
+    ></app-say-create>
+
+    <div class="list">
+        <ng-container *ngFor="let say of sayList">
+            <div class="item" >
+                <div class="left">
+                    <!-- 头像 -->
+                    <div class="face">
+                        <img alt="face" [src]="say.user_image" />
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="nick-name">{{say.user_name}}</div>
+                    <div class="content">
+                        <span class="tag" *ngFor="let tag of say.tags">#{{tag}}#&nbsp;</span>
+                        {{say.content}}
+                    </div>
+                    <div class="image">
+                        <div class="img" *ngFor="let img of say.images">
+                            <img alt="img" [src]="img" />
+                        </div>
+                    </div>
+                    <div class="created-time">{{say.created_at | createdTime}}</div>
+                </div>
+            </div>
+            <nz-divider></nz-divider>
+        </ng-container>
+    </div>
+    <div class="no-more" *ngIf="false">没有更多了... -_-</div>
+    <div class="load-more" (click)="loadMore()">加载更多...</div>
+</div>

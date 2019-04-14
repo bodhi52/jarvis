@@ -17,7 +17,7 @@
     <nz-divider></nz-divider>
     <div class="baby">
         <img alt="face" src="../../../assets/img/baby.svg"/>
-        <p><span>@小草莓</span><span>{{week}} W / {{day}} D</span></p>
+        <p><span>@小草莓</span><span>{{week}} W <ng-container *ngIf="day > 0"> / {{day}} D</ng-container></span></p>
     </div>
     <nz-divider></nz-divider>
     <div class="info">
