@@ -233,7 +233,7 @@ export class HighLevelComponent implements OnInit {
     
     copy() {
         const arr = [];
-        const prefix = this.prefix ? this.prefix + '.' : null;
+        const prefix = this.prefix ? this.prefix + '.' : '';
         for (const i of this.resultArr) {
             let item = prefix + i.key;
             if (this.enTran) {

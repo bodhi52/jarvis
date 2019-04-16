@@ -48,5 +48,6 @@
                 <span>{{prefix ? prefix + '.' : ''}}{{item.key}}</span><span>{{item.value}}</span>
             </div>
         </div>
+        <textarea id="copy-area" #copyArea [(ngModel)]="copyTextArea"></textarea>
     </div>
 </div>
