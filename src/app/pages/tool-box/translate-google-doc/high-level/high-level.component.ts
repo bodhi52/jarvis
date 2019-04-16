@@ -1,5 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NzMessageService} from 'ng-zorro-antd';
+import {timer} from 'rxjs';
 
 // 大对象的组成item
 interface TranslateItemInterface {
@@ -35,6 +36,8 @@ export class HighLevelComponent implements OnInit {
     // 使用一个大对象存储所出现的所有key，利用json里面key不可以重复的特性
     bigObj: object = {};
     
+    copyTextArea: string = '';
+    
     constructor(
         private msg: NzMessageService,
     ) {
@@ -64,7 +67,7 @@ export class HighLevelComponent implements OnInit {
             "login": "Login",
             "or": "or",
             "register": "Register",
-            "accountPH": "Email",
+            "accountPH": "<div>Email</div>",
             "emailErrorText": "Enter a correct email address",
             "passwordPH": "Password",
             "captcha": "Captcha",
@@ -163,7 +166,7 @@ export class HighLevelComponent implements OnInit {
     }
     
     transferToBigObj() {
-        this.bigObj ={};
+        this.bigObj = {};
         if (this.enTran) {
             try {
                 const obj = JSON.parse(this.enTran);
@@ -234,39 +237,31 @@ export class HighLevelComponent implements OnInit {
         for (const i of this.resultArr) {
             let item = prefix + i.key;
             if (this.enTran) {
-                item += '&#9;' + i.en;
+                item += '\t' + i.en;
             }
             if (this.zhTran) {
-                item += '&#9;' + i.zh;
+                item += '\t' + i.zh;
             }
             if (this.koTran) {
-                item += '&#9;' + i.ko;
+                item += '\t' + i.ko;
             }
             arr.push(item);
         }
         // 将对应的数据填充到拷贝的div中
-        this.copyArea.nativeElement.innerHTML = '<pre>' + arr.join('\n') + '</pre>';
-        this.copyText();
+        this.copyTextArea =  arr.join('\n');
+        timer(0).subscribe(() => this.copyText());
     }
     
     /**
      * 复制文本
      */
     copyText() {
-        // const myEle = document.getElementById('copy-area');
-        const myEle = document.getElementsByTagName('pre');
-        console.log('myEle', myEle[0]);
-        const range = document.createRange();
-        const selection = window.getSelection();
-        
-        range.selectNodeContents(myEle[0]);
-        selection.removeAllRanges(); // 先移除掉所有的选择区域
-        selection.addRange(range); // 添加元素的目标选择区域
+        const inputEl: HTMLTextAreaElement = this.copyArea.nativeElement;
+        inputEl.select();
         try {
             if (document.execCommand) {
                 // 复制选中的文字到剪贴板
                 document.execCommand('copy', false, null);
-                selection.removeAllRanges(); // 移除掉所有的选择区域
                 this.msg.success('复制成功');
                 
             }

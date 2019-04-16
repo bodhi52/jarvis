@@ -1,9 +1,11 @@
+<div class="bg"></div>
+
 <nz-layout class="layout">
     <nz-header>
-        <div class="logo">
-            Tony Studio
+        <div class="logo" (click)="goToUrl('/')">
+            <span>T</span>·<span>C</span>·<span>S</span>
         </div>
-        <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+        <ul nz-menu nzTheme="light" [nzMode]="'horizontal'" style="line-height: 64px;">
             <li nz-menu-item
                 *ngFor="let menu of menuList"
                 [nzSelected]="menu.is_selected"

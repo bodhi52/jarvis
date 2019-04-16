@@ -65,7 +65,7 @@ export class ToolBoxComponent implements OnInit, OnDestroy {
     }
     
     goToUrl(url) {
-        this.router.navigate([url]);
+        this.router.navigateByUrl(url);
     }
     
 }

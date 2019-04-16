@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NzMessageService} from 'ng-zorro-antd';
+import {timer} from 'rxjs';
 
 @Component({
     selector: 'app-basic-level',
@@ -18,6 +19,7 @@ export class BasicLevelComponent implements OnInit, AfterViewInit {
     
     resultArr: {key: string, value: string}[] = [];
     
+    copyTextArea: string = '';
     
     constructor(
         private msg: NzMessageService,
@@ -42,6 +44,7 @@ export class BasicLevelComponent implements OnInit, AfterViewInit {
     }
     
     submitForm() {
+        this.resultArr = [];
         this.showResult = false;
         try {
             this.strToArr(this.resultArr, this.tran, this.prefix);
@@ -54,7 +57,7 @@ export class BasicLevelComponent implements OnInit, AfterViewInit {
     
     showExample() {
         this.tran = `{
-    "BusinessDescription": "Business description",
+    "BusinessDescription": "<div>Business description</div>",
     "CreateNewAPI": "Create New API",
     "MyAPIkey": "My API key",
     "Created": "Created",
@@ -105,31 +108,25 @@ export class BasicLevelComponent implements OnInit, AfterViewInit {
         const arr = [];
         const prefix = this.prefix ? this.prefix + '.' : '';
         for (const i of this.resultArr) {
-            arr.push(prefix + i.key + '&#9;' + i.value);
+            arr.push(prefix + i.key + '\t' + i.value);
         }
-        // 将对应的数据填充到拷贝的div中
-        this.copyArea.nativeElement.innerHTML = '<pre>' + arr.join('\n') + '</pre>';
-        this.copyText();
+        // 将对应的数据填充到拷贝的textarea中
+        this.copyTextArea = arr.join('\n');
+        // 上面语句是给textArea赋值，所以复制的命令需要个延时
+        timer(0).subscribe(() => this.copyText());
     }
     
     /**
      * 复制文本
      */
     copyText() {
-        // const myEle = document.getElementById('copy-area');
-        const myEle = document.getElementsByTagName('pre');
-        console.log('myEle', myEle[0]);
-        const range = document.createRange();
-        const selection = window.getSelection();
+        const inputEl: HTMLTextAreaElement = this.copyArea.nativeElement;
+        inputEl.select();
         
-        range.selectNodeContents(myEle[0]);
-        selection.removeAllRanges(); // 先移除掉所有的选择区域
-        selection.addRange(range); // 添加元素的目标选择区域
         try {
             if (document.execCommand) {
                 // 复制选中的文字到剪贴板
                 document.execCommand('copy', false, null);
-                selection.removeAllRanges(); // 移除掉所有的选择区域
                 this.msg.success('复制成功');
                 
             }

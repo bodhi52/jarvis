@@ -76,6 +76,6 @@
                 <span *ngIf="koTran">{{item.ko}}</span>
             </div>
         </div>
-        <div id="copy-area" #copyArea></div>
+        <textarea id="copy-area" #copyArea [(ngModel)]="copyTextArea"></textarea>
     </div>
 </div>
