@@ -1,0 +1,95 @@
+:host ::ng-deep .ant-layout-sider {
+  color: #fff;
+  border-right: 1px solid #ccc;
+  overflow: auto;
+  width: 250px !important;
+  max-width: 250px !important;
+  height: 100vh;
+  left: 0;
+}
+
+.face-name{
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+  .face{
+    img{
+      height: 150px;
+    }
+  }
+  .name{
+    margin: 15px 0 0 0;
+    font-size: 28px;
+    color: #222;
+    font-weight: 600;
+    line-height: 1.5em;
+    text-align: center;
+    cursor: pointer;
+    span{
+      &:nth-child(2n + 1){
+        color: #33cc99;
+      }
+      &:nth-child(2){
+        color: red;
+      }
+    }
+  }
+}
+.baby{
+  text-align: center;
+  img{
+    height: 150px;
+    margin: 0 auto;
+  }
+  p{
+    color: #333;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    span{
+      line-height: 28px;
+      font-weight: bold;
+      &:nth-child(1){
+        color: rgb(131, 175, 155);
+
+      }
+      &:nth-child(2){
+        padding-left: 10px;
+        color: rgb(250, 157, 200);
+      }
+    }
+  }
+}
+.date-area{
+  min-height: 100px;
+  color: #999;
+  .date{
+    font-size: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: 1px solid #e8e8e8;
+    text-align: center;
+  }
+}
+.desc{
+  padding: 0 15px;
+  font-size: 14px;
+  color: #666;
+}
+.info{
+  color: #333;
+  text-align: left;
+  padding: 0 20px;
+  i{
+    color: #33cc99;
+    margin-right: 10px;
+  }
+  a{
+    color: #333;
+    &:hover{
+      color: #009966;
+      border-bottom: 1px solid #009966;
+    }
+  }
+}

@@ -1,0 +1,54 @@
+.bg{
+  background: red;
+  z-index: 0;
+  position: fixed;
+  background: url(../../../assets/img/iron-bg.jpg) no-repeat fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.layout{
+  width: 1024px;
+  margin: 0 auto;
+  position: relative;
+  background: transparent;
+  .left-slider{
+    width: 250px;
+    background: #fff;
+    margin-top: 10px;
+    position: absolute;
+    min-height: 600px;
+    left: 0;
+    top: 0;
+  }
+
+  .right-body{
+    background: #fff;
+    margin: 10px 0 0 255px;
+    border-right: 1px solid #e8e8e8;
+
+    .nav{
+      display: inline-block;
+    }
+  }
+}
+
+:host::ng-deep.ant-layout-header{
+  background: #fff;
+  padding: 0 20px !important;
+}
+
+:host ::ng-deep .ant-layout-content {
+  background: #fff;
+  min-height: 700px;
+  padding: 20px;
+}
+
+:host ::ng-deep .ant-layout-footer {
+  line-height: 1.5;
+  background: #fff;
+  border-top: 1px solid #e8e8e8;
+}
+

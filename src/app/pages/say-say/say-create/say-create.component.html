@@ -1,0 +1,25 @@
+<div class="create-content">
+    <form nz-form>
+        <textarea
+            nz-input
+            [ngModelOptions]="{standalone: true}"
+            [nzAutosize]="{minRows: 4, maxRows: 4 }"
+            [(ngModel)]="content"
+        ></textarea>
+<!--        扩展操作-->
+        <div class="handle">
+            <div class="extend">
+                <span class="add-tag" (click)="addTag()">#-添加标签</span>
+                <span class="add-img">添加图片</span>
+            </div>
+            <div class="operation">
+                <button nz-button nzType="default" (click)="cancel()">取消</button>
+                <button nz-button nzType="primary" (click)="submit()">发布</button>
+            </div>
+
+        </div>
+    </form>
+    <div class="image-area">
+
+    </div>
+</div>

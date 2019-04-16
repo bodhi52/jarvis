@@ -1,0 +1,81 @@
+<div class="high-level">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label nzFor="prefix">翻译前缀</nz-form-label>
+            <nz-form-control>
+                <input nz-input name="prefix" [(ngModel)]="prefix">
+                <nz-form-extra>在翻译文件中的前缀。:)</nz-form-extra>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="enTran">英文json</nz-form-label>
+            <nz-form-control>
+                  <textarea
+                      name="enTran"
+                      rows="8"
+                      nz-input
+                      nzAutosize
+                      [(ngModel)]="enTran"></textarea>
+            </nz-form-control>
+            <nz-form-extra>
+                翻译文件中的json（需要是完整的可解析json，可以放入<a target="_blank" href="http://json.cn">json.cn</a>中校对好格式
+            </nz-form-extra>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="zhTran">中文json</nz-form-label>
+            <nz-form-control>
+                  <textarea
+                      name="zhTran"
+                      rows="8"
+                      nz-input
+                      nzAutosize
+                      [(ngModel)]="zhTran"></textarea>
+            </nz-form-control>
+            <nz-form-extra>
+                翻译文件中的json（需要是完整的可解析json，可以放入<a target="_blank" href="http://json.cn">json.cn</a>中校对好格式
+            </nz-form-extra>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="koTran">韩文json</nz-form-label>
+            <nz-form-control>
+                  <textarea
+                      name="koTran"
+                      rows="8"
+                      nz-input
+                      nzAutosize
+                      [(ngModel)]="koTran"></textarea>
+            </nz-form-control>
+            <nz-form-extra>
+                翻译文件中的json（需要是完整的可解析json，可以放入<a target="_blank" href="http://json.cn">json.cn</a>中校对好格式
+            </nz-form-extra>
+        </nz-form-item>
+
+        <nz-form-item style="margin-bottom:8px;">
+            <nz-form-control>
+                <button nz-button nzType="primary" (click)="submitForm()">生成</button>
+                <button nz-button class="m-l-20" (click)="showExample()">示例</button>
+                <button nz-button class="m-l-20" (click)="reset()">重置</button>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+
+    <div class="result" *ngIf="showResult">
+        <div class="explain">
+            直接<a class="m-l-20" (click)="copy()">
+            <i nz-icon type="copy" theme="outline"></i>copy
+        </a>
+            key和翻译之间是以tab隔开的，可以直接复制到谷歌文档上。
+        </div>
+        <div class="result-list">
+            <div *ngFor="let item of resultArr" class="item">
+                <span>{{prefix ? prefix + '.' : ''}}{{item.key}}</span>
+                <span *ngIf="enTran">{{item.en}}</span>
+                <span *ngIf="zhTran">{{item.zh}}</span>
+                <span *ngIf="koTran">{{item.ko}}</span>
+            </div>
+        </div>
+        <textarea id="copy-area" #copyArea [(ngModel)]="copyTextArea"></textarea>
+    </div>
+</div>

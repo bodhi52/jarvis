@@ -1,9 +1,0 @@
-<ul nz-menu [nzMode]="'horizontal'">
-  <li nz-menu-item
-      *ngFor="let menu of menuList"
-      [nzSelected]="menu.is_selected"
-      (click)="goToUrl(menu.url)"
-  >{{menu.name}}</li>
-</ul>
-
-<router-outlet></router-outlet>
