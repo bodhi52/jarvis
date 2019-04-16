@@ -4,14 +4,19 @@ import {LoginComponent} from './pages/independence/login/login.component';
 import {PageNoFoundComponent} from './pages/independence/page-no-found/page-no-found.component';
 import {ToolBoxComponent} from './layout/tool-box/tool-box.component';
 import {DefaultComponent} from './layout/default/default.component';
+import {IndexComponent} from './pages/independence/index/index.component';
 
 const pagesRoutes: Routes = [
     {
         path: '',
+        component: IndexComponent,
+    },
+    {
+        path: 'jarvis',
         component: DefaultComponent,
         children: [
             {
-                path: '',
+                path: 'd',
                 redirectTo: 'd',
                 pathMatch: 'full',
             },

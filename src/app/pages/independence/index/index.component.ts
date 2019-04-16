@@ -18,8 +18,8 @@ export class IndexComponent implements OnInit {
     ngOnInit() {
         this.menuList = [
             {
-                url: 'd',
-                text: 'Dashboard',
+                url: '/jarvis',
+                text: 'Jarvis',
             },
             {
                 url: 'three',

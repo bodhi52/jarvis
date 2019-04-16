@@ -14,17 +14,17 @@ export class DefaultComponent implements OnInit, OnDestroy {
     menuList: MenuInterface[] = [
         {
             name: 'Dashboard',
-            url: '/d',
+            url: 'd',
             icon: 'dashboard',
         },
         {
             name: 'TODO',
-            url: '/todo',
+            url: 'todo',
             icon: 'bars',
         },
         {
             name: 'Say Say',
-            url: '/say-say',
+            url: 'say-say',
             icon: 'message',
         },
         {

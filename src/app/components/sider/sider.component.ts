@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-sider',
@@ -11,7 +12,9 @@ export class SiderComponent implements OnInit {
     week: number = 0; // 周数
     day: number = 0; // 天数
     
-    constructor() {
+    constructor(
+        private router: Router,
+    ) {
     }
     
     ngOnInit() {
@@ -21,5 +24,9 @@ export class SiderComponent implements OnInit {
         this.week = Math.floor(days / 7);
         this.day = days % 7;
         
+    }
+    
+    linkTo(url) {
+        this.router.navigateByUrl(url);
     }
 }
