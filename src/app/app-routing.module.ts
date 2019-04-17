@@ -5,6 +5,8 @@ import {PageNoFoundComponent} from './pages/independence/page-no-found/page-no-f
 import {ToolBoxComponent} from './layout/tool-box/tool-box.component';
 import {DefaultComponent} from './layout/default/default.component';
 import {IndexComponent} from './pages/independence/index/index.component';
+import {ThreeComponent} from './layout/three/three.component';
+import {CanvasComponent} from './layout/canvas/canvas.component';
 
 const pagesRoutes: Routes = [
     {
@@ -39,18 +41,23 @@ const pagesRoutes: Routes = [
         component: LoginComponent,
     },
     {
+        path: 'tool-box',
+        component: ToolBoxComponent,
+        loadChildren: './pages/tool-box/tool-box.module#ToolBoxModule'
+    },
+    {
+        path: 'canvas',
+        component: CanvasComponent,
+        loadChildren: './pages/canvas/canvas.module#CanvasModule',
+    },
+    {
         path: 'bill-report',
         loadChildren: './pages/bill-report/bill-report.module#BillReportModule',
     },
     {
         path: 'three',
+        component: ThreeComponent,
         loadChildren: './pages/three-js/three-js.module#ThreeJsModule',
-    },
-    
-    {
-        path: 'tool-box',
-        component: ToolBoxComponent,
-        loadChildren: './pages/tool-box/tool-box.module#ToolBoxModule'
     },
     {
         path: '404',

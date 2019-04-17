@@ -22,6 +22,10 @@ export class IndexComponent implements OnInit {
                 text: 'Jarvis',
             },
             {
+                url: '/canvas',
+                text: 'canvas',
+            },
+            {
                 url: 'three',
                 text: 'Three',
             },

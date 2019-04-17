@@ -6,12 +6,14 @@ import {DefaultComponent} from './default/default.component';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {RouterModule} from '@angular/router';
 import {ComponentsModule} from '../components/components.module';
+import { CanvasComponent } from './canvas/canvas.component';
 
 @NgModule({
     declarations: [
         ToolBoxComponent,
         ThreeComponent,
         DefaultComponent,
+        CanvasComponent,
     ],
     imports: [
         CommonModule,
