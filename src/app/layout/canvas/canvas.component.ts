@@ -12,8 +12,12 @@ import {Subscription} from 'rxjs';
 export class CanvasComponent implements OnInit, OnDestroy {
     menuList: MenuInterface[] = [
         {
-            url: 'sin-cos',
+            url: '/canvas/sin-cos',
             name: 'sin-cos'
+        },
+        {
+            url: '/canvas/line',
+            name: 'line',
         }
     ];
     

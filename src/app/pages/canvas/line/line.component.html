@@ -1,0 +1,58 @@
+<!--<div class="menu">-->
+<!--    <ul>-->
+<!--        <li>-->
+<!--            <a [ngClass]="{'active': role === RoleEnum.ONE}" (click)="role = RoleEnum.ONE"></a>-->
+<!--        </li>-->
+
+<!--        <li>-->
+<!--            <a [ngClass]="{'active': role === RoleEnum.TWO}" (click)="role = RoleEnum.TWO"></a>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</div>-->
+
+
+
+<div class="content">
+    <div class="left-menu">
+        <h3>画线规则</h3>
+        <ul nz-menu
+            [nzMode]="'inline'"
+        >
+            <li nz-menu-item
+                (click)="role = RoleEnum.ONE"
+                [nzSelected]="role === RoleEnum.ONE"
+            >
+                <span title>规则一：一起开始一起结束</span>
+            </li>
+            <li nz-menu-item
+                (click)="role = RoleEnum.TWO"
+                [nzSelected]="role === RoleEnum.TWO"
+            >
+                <span title>规则二：你方唱罢我登场</span>
+            </li>
+            <li nz-menu-item
+                (click)="role = RoleEnum.THREE"
+                [nzSelected]="role === RoleEnum.THREE"
+            >
+                <span title>规则三：中间一段运动</span>
+            </li>
+        </ul>
+    </div>
+    <div class="right-canvas">
+        <app-line-bezier-one
+            *ngIf="role === RoleEnum.ONE"
+            [lineConfig]="lineConfig"
+        ></app-line-bezier-one>
+
+
+        <app-line-bezier-two
+            *ngIf="role === RoleEnum.TWO"
+            [lineConfig]="lineConfig"
+        ></app-line-bezier-two>
+
+        <app-line-bezier-three
+            *ngIf="role === RoleEnum.THREE"
+            [lineConfig]="lineConfig"
+        ></app-line-bezier-three>
+    </div>
+</div>
