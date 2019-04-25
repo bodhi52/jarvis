@@ -134,8 +134,9 @@ export class BezierFourComponent implements OnInit, AfterViewInit {
                     line.cityAlpha = 0;
                     line.scale = 0;
                 } else {
-                    line.cursor += line.speed;
-                    line.cityAlpha =  1 -  (line.cursor - allPointNumber - showPointNumber) / showPointNumber;
+                    // 消失的时候加快速度
+                    line.cursor += line.speed * 1.3;
+                    line.cityAlpha =  (line.cursor - allPointNumber) /  showPointNumber / 2;
                     return;
                 }
             } else {
@@ -154,7 +155,7 @@ export class BezierFourComponent implements OnInit, AfterViewInit {
                 }
             } else if (cursor >= allPointNumber && cursor < allPointNumber + showPointNumber) {
                 // 当线触到点的时候渐变出现
-                line.cityAlpha = (line.cursor - allPointNumber) /  showPointNumber;
+                line.cityAlpha = (line.cursor - allPointNumber) /  showPointNumber / 2;
                 line.scale = line.cityAlpha;
                 for (let i = cursor - showPointNumber; i < allPointNumber; i++) {
                     Canvas.drawCycle(this.context, line.pointArr[i], 1, '#fff');
@@ -182,7 +183,8 @@ export class BezierFourComponent implements OnInit, AfterViewInit {
         Canvas.drawCycle(this.context, this.centerCity, 8);
         
         for (const lineObj of this.lineArr) {
-            Canvas.drawCycle(this.context, lineObj.line.end, 10 * (1 + lineObj.scale), this.cityColor(lineObj.cityAlpha));
+            const angle = lineObj.cityAlpha * Math.PI;
+            Canvas.drawCycle(this.context, lineObj.line.end, 10 * (1 + lineObj.scale), this.cityColor(Math.sin(angle)));
             Canvas.drawCycle(this.context, lineObj.line.end, 5);
         }
     }
