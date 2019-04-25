@@ -36,6 +36,12 @@
             >
                 <span title>规则三：中间一段运动</span>
             </li>
+            <li nz-menu-item
+                (click)="role = RoleEnum.THREE"
+                [nzSelected]="role === RoleEnum.FOUR"
+            >
+                <span title>规则四：不同线段不同点</span>
+            </li>
         </ul>
     </div>
     <div class="right-canvas">
@@ -54,5 +60,10 @@
             *ngIf="role === RoleEnum.THREE"
             [lineConfig]="lineConfig"
         ></app-line-bezier-three>
+
+        <app-line-bezier-four
+            *ngIf="role === RoleEnum.FOUR"
+            [lineConfig]="lineConfig"
+        ></app-line-bezier-four>
     </div>
 </div>

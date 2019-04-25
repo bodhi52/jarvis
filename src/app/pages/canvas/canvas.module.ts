@@ -7,6 +7,7 @@ import {BezierOneComponent} from './line/some-line/bezier-one.component';
 import {BezierTwoComponent} from './line/some-line/bezier-two.component';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import { BezierThreeComponent } from './line/some-line/bezier-three.component';
+import { BezierFourComponent } from './line/some-line/bezier-four.component';
 
 const router: Routes = [
     {
@@ -31,6 +32,7 @@ const router: Routes = [
         BezierOneComponent,
         BezierTwoComponent,
         BezierThreeComponent,
+        BezierFourComponent,
     ],
     imports: [
         CommonModule,

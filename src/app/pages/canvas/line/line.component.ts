@@ -4,6 +4,7 @@ enum RoleEnum {
     ONE, // 一起开始一起结束
     TWO,
     THREE,
+    FOUR,
 }
 
 @Component({
@@ -13,7 +14,7 @@ enum RoleEnum {
 })
 export class LineComponent implements OnInit {
 
-    role: number = RoleEnum.THREE;
+    role: number = RoleEnum.FOUR;
 
     RoleEnum = RoleEnum;
     lineConfig = {
