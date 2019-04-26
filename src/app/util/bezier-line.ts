@@ -25,8 +25,9 @@ export default class BezierLine {
         // 平方贝塞尔曲线的点
         this.middle = new Point(
             (this.start.x + this.end.x) / 2 - (this.start.y - this.end.y) * 0.4,
-            (this.start.y + this.end.y) / 2 - (this.end.x - this.start.x) * 0.4,
+            (this.start.y + this.end.y) / 2 - (this.end.x - this.start.x) * 0.8,
         );
+        // 直接计算好多项式，留后用
         const ax = this.start.x - 2 * this.middle.x + this.end.x;
         const ay = this.start.y - 2 * this.middle.y + this.end.y;
         const bx = 2 * this.middle.x - 2 * this.start.x;
@@ -51,8 +52,6 @@ export default class BezierLine {
     
     public getLength(t: number): number {
         
-        
-        
         const temp1 = Math.sqrt(this.C + t * (this.B + this.A * t));
         
         const temp2 = (2 * this.A * t * temp1 + this.B * (temp1 - Math.sqrt(this.C)));
@@ -70,7 +69,7 @@ export default class BezierLine {
     }
     
     /**
-     * 根据泛函数求得对应的t值
+     * 根据反函数求得对应的t值
      * @param t
      * @param l
      */
@@ -90,7 +89,6 @@ export default class BezierLine {
         
         return t2;
     }
-    
     
     private s(t) {
         return Math.sqrt(this.A * t * t + this.B * t + this.C);

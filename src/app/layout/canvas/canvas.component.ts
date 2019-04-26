@@ -18,6 +18,10 @@ export class CanvasComponent implements OnInit, OnDestroy {
         {
             url: '/canvas/line',
             name: 'line',
+        },
+        {
+            url: '/canvas/bezier',
+            name: '贝塞尔曲线',
         }
     ];
     
