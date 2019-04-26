@@ -13,7 +13,7 @@ export class CanvasComponent implements OnInit, OnDestroy {
     menuList: MenuInterface[] = [
         {
             url: '/canvas/sin-cos',
-            name: 'sin-cos'
+            name: 'sin-cos',
         },
         {
             url: '/canvas/line',
@@ -22,6 +22,16 @@ export class CanvasComponent implements OnInit, OnDestroy {
         {
             url: '/canvas/bezier',
             name: '贝塞尔曲线',
+            sub_menu: [
+                {
+                    url: '/canvas/bezier/basic',
+                    name: '基本贝塞尔曲线'
+                },
+                {
+                    url: '/canvas/bezier/segment',
+                    name: '分段贝塞尔曲线',
+                }
+            ]
         }
     ];
     

@@ -52,11 +52,12 @@ export class SinCosComponent implements OnInit, AfterViewInit {
     }
     
     ngOnInit() {
-        this.sinContext = this.canvasSinDom.nativeElement.getContext('2d');
-        this.cosContext = this.canvasCosDom.nativeElement.getContext('2d');
+    
     }
     
     ngAfterViewInit(): void {
+        this.sinContext = this.canvasSinDom.nativeElement.getContext('2d');
+        this.cosContext = this.canvasCosDom.nativeElement.getContext('2d');
         this.axisConfig.origin = new Point(240, this.canvasSinDom.nativeElement.height / 2);
         this.drawBg(this.cosContext);
         this.initSin();

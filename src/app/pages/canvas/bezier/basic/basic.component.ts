@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import Point from '../../../util/point';
-import Canvas from '../../../util/canvas';
-import BezierLine from '../../../util/bezier-line';
+import Point from '../../../../util/point';
+import Canvas from '../../../../util/canvas';
+import BezierLine from '../../../../util/bezier-line';
 
 @Component({
-    selector: 'app-bezier',
-    templateUrl: './bezier.component.html',
-    styleUrls: ['./bezier.component.less']
+    selector: 'app-basic',
+    templateUrl: './basic.component.html',
+    styleUrls: ['./basic.component.less']
 })
-export class BezierComponent implements OnInit, AfterViewInit {
+export class BasicComponent implements OnInit, AfterViewInit {
     
     @ViewChild('canvasOne') canvasOne: ElementRef;
     contextOne: CanvasRenderingContext2D;
@@ -18,6 +18,7 @@ export class BezierComponent implements OnInit, AfterViewInit {
     contextThree: CanvasRenderingContext2D;
     @ViewChild('canvasFour') canvasFour: ElementRef;
     contextFour: CanvasRenderingContext2D;
+    
     constructor() {
     }
     
@@ -28,11 +29,11 @@ export class BezierComponent implements OnInit, AfterViewInit {
         this.contextOne = this.canvasOne.nativeElement.getContext('2d');
         this.drawBg(this.contextOne, this.canvasOne.nativeElement);
         this.drawOneLevelBezier();
-    
+        
         this.contextTwo = this.canvasTwo.nativeElement.getContext('2d');
         this.drawBg(this.contextTwo, this.canvasTwo.nativeElement);
         this.drawTwoLevelBezier();
-    
+        
         this.contextThree = this.canvasThree.nativeElement.getContext('2d');
         this.drawBg(this.contextThree, this.canvasThree.nativeElement);
         this.drawThreeLevelBezier();
@@ -41,6 +42,7 @@ export class BezierComponent implements OnInit, AfterViewInit {
         this.drawBg(this.contextFour, this.canvasFour.nativeElement);
         this.drawUniformBezier();
     }
+    
     drawBg(context: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
         context.fillStyle = '#000';
         context.fillRect(0, 0, canvas.width, canvas.height);
@@ -64,7 +66,8 @@ export class BezierComponent implements OnInit, AfterViewInit {
     drawTwoLevelBezier() {
         const begin: Point = new Point(20, 280);
         const end: Point = new Point(680, 280);
-        const line: BezierLine = new BezierLine(begin, end);
+        const middle: Point = new Point(200, -200);
+        const line: BezierLine = new BezierLine(begin, end, middle);
         for (let i = 0; i < 100; i += 1) {
             const t = i / 100;
             const p = line.calculateBezierPointForQuadratic(t);
@@ -76,7 +79,8 @@ export class BezierComponent implements OnInit, AfterViewInit {
     drawUniformBezier() {
         const begin: Point = new Point(20, 280);
         const end: Point = new Point(680, 280);
-        const line = new BezierLine(begin, end);
+        const middle: Point = new Point(200, -200);
+        const line: BezierLine = new BezierLine(begin, end, middle);
         // 贝塞尔曲线的长度
         const len = Math.floor(line.getLength(1));
         // 分割份数为曲线的长度
@@ -108,5 +112,5 @@ export class BezierComponent implements OnInit, AfterViewInit {
         }
     }
     
-   
+    
 }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BezierComponent } from './bezier.component';
+import { SegmentComponent } from './segment.component';
 
-describe('BezierComponent', () => {
-  let component: BezierComponent;
-  let fixture: ComponentFixture<BezierComponent>;
+describe('SegmentComponent', () => {
+  let component: SegmentComponent;
+  let fixture: ComponentFixture<SegmentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BezierComponent ]
+      declarations: [ SegmentComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BezierComponent);
+    fixture = TestBed.createComponent(SegmentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

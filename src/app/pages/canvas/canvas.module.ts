@@ -8,7 +8,9 @@ import {BezierTwoComponent} from './line/some-line/bezier-two.component';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import { BezierThreeComponent } from './line/some-line/bezier-three.component';
 import { BezierFourComponent } from './line/some-line/bezier-four.component';
-import { BezierComponent } from './bezier/bezier.component';
+import {SegmentComponent} from './bezier/segment/segment.component';
+import {BasicComponent} from './bezier/basic/basic.component';
+import {BezierModule} from './bezier/bezier.module';
 
 const router: Routes = [
     {
@@ -21,7 +23,20 @@ const router: Routes = [
     },
     {
         path: 'bezier',
-        component: BezierComponent,
+        children: [
+            {
+                path: '',
+                redirectTo: 'basic',
+            },
+            {
+                path: 'basic',
+                component: BasicComponent,
+            },
+            {
+                path: 'segment',
+                component: SegmentComponent,
+            },
+        ]
     },
     {
         path: '',
@@ -38,12 +53,12 @@ const router: Routes = [
         BezierTwoComponent,
         BezierThreeComponent,
         BezierFourComponent,
-        BezierComponent,
     ],
     imports: [
         CommonModule,
         RouterModule.forChild(router),
         NgZorroAntdModule,
+        BezierModule,
     ]
 })
 export class CanvasModule {

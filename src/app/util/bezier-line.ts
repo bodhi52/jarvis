@@ -1,21 +1,34 @@
 import Point from './point';
+import point from './point';
 
 export default class BezierLine {
     
     middle: Point;
-    
     start: Point;
     end: Point;
     length: number;
     
-    private A: number;
-    private B: number;
-    private C: number;
+    private readonly A: number;
+    private readonly B: number;
+    private readonly C: number;
     
-    constructor(start: Point, end: Point) {
+    constructor(start: Point, end: Point, middle?: Point) {
         this.start = start;
         this.end = end;
-        this.getMiddlePoint();
+        if (middle) {
+            this.middle = middle;
+        } else {
+            this.getMiddlePoint();
+        }
+    
+        // 直接计算好多项式，留后用
+        const ax = this.start.x - 2 * this.middle.x + this.end.x;
+        const ay = this.start.y - 2 * this.middle.y + this.end.y;
+        const bx = 2 * this.middle.x - 2 * this.start.x;
+        const by = 2 * this.middle.y - 2 * this.start.y;
+        this.A = 4 * (ax * ax + ay * ay);
+        this.B = 4 * (ax * bx + ay * by);
+        this.C = bx * bx + by * by;
     }
     
     /**
@@ -25,16 +38,8 @@ export default class BezierLine {
         // 平方贝塞尔曲线的点
         this.middle = new Point(
             (this.start.x + this.end.x) / 2 - (this.start.y - this.end.y) * 0.4,
-            (this.start.y + this.end.y) / 2 - (this.end.x - this.start.x) * 0.8,
+            (this.start.y + this.end.y) / 2 - (this.end.x - this.start.x) * 0.4,
         );
-        // 直接计算好多项式，留后用
-        const ax = this.start.x - 2 * this.middle.x + this.end.x;
-        const ay = this.start.y - 2 * this.middle.y + this.end.y;
-        const bx = 2 * this.middle.x - 2 * this.start.x;
-        const by = 2 * this.middle.y - 2 * this.start.y;
-        this.A = 4 * (ax * ax + ay * ay);
-        this.B = 4 * (ax * bx + ay * by);
-        this.C = bx * bx + by * by;
     }
     
     /**
