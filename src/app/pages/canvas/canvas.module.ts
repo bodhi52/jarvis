@@ -11,6 +11,7 @@ import { BezierFourComponent } from './line/some-line/bezier-four.component';
 import {SegmentComponent} from './bezier/segment/segment.component';
 import {BasicComponent} from './bezier/basic/basic.component';
 import {BezierModule} from './bezier/bezier.module';
+import {BezierComponent} from './bezier/bezier.component';
 
 const router: Routes = [
     {
@@ -23,6 +24,7 @@ const router: Routes = [
     },
     {
         path: 'bezier',
+        component: BezierComponent,
         children: [
             {
                 path: '',

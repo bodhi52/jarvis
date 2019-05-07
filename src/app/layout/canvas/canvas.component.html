@@ -5,30 +5,18 @@
         <div class="logo" (click)="goToUrl('/')">
             <span>T</span>·<span>C</span>·<span>S</span>
         </div>
-        <ul nz-menu nzTheme="light" [nzMode]="'horizontal'" style="line-height: 64px;">
-            <ng-container *ngFor="let menu of menuList">
+        <ul nz-menu
+            nzTheme="light"
+            [nzMode]="'horizontal'"
+            style="line-height: 64px;"
+        >
                 <li nz-menu-item
-                    *ngIf="!menu.sub_menu"
+                    *ngFor="let menu of menuList"
                     [nzSelected]="menu.is_selected"
                     (click)="goToUrl(menu.url)"
                 >
                     {{menu.name}}
                 </li>
-                <li nz-submenu
-                    *ngIf="menu.sub_menu"
-                >
-                    <span title>{{menu.name}}</span>
-                    <ul>
-                        <li nz-menu-item
-                            *ngFor="let item of menu.sub_menu"
-                            [nzSelected]="item.is_selected"
-                            (click)="goToUrl(item.url)"
-                        >
-                            {{item.name}}
-                        </li>
-                    </ul>
-                </li>
-            </ng-container>
         </ul>
     </nz-header>
     <nz-content class="content">

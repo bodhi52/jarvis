@@ -1,0 +1,19 @@
+<div class="left">
+    <ul nz-menu
+        nzTheme="light"
+        [nzMode]="'inline'"
+        style="line-height: 64px;"
+    >
+        <li nz-menu-item
+            *ngFor="let menu of menuList"
+            [nzSelected]="menu.is_selected"
+            (click)="goToUrl(menu.url)"
+        >
+            {{menu.name}}
+        </li>
+    </ul>
+</div>
+<div class="right">
+    <router-outlet></router-outlet>
+
+</div>

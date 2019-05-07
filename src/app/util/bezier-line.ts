@@ -33,12 +33,13 @@ export default class BezierLine {
     
     /**
      * 获得平方贝塞尔曲线的控制点
+     * @param curvature 曲率
      */
-    private getMiddlePoint() {
+    private getMiddlePoint(curvature: number = 0.4) {
         // 平方贝塞尔曲线的点
         this.middle = new Point(
-            (this.start.x + this.end.x) / 2 - (this.start.y - this.end.y) * 0.4,
-            (this.start.y + this.end.y) / 2 - (this.end.x - this.start.x) * 0.4,
+            (this.start.x + this.end.x) / 2 - (this.start.y - this.end.y) * curvature,
+            (this.start.y + this.end.y) / 2 - (this.end.x - this.start.x) * curvature,
         );
     }
     
