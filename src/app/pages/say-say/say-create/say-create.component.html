@@ -14,7 +14,7 @@
             </div>
             <div class="operation">
                 <button nz-button nzType="default" (click)="cancel()">取消</button>
-                <button nz-button nzType="primary" (click)="submit()">发布</button>
+                <button nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">发布</button>
             </div>
 
         </div>

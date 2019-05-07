@@ -1,4 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {SaySayService} from '../../../core/service/say-say.service';
+import {ErrorCodeEnum} from '../../../core/enum/error-code.enum';
+import {NzMessageService} from 'ng-zorro-antd';
 
 @Component({
     selector: 'app-say-create',
@@ -10,7 +13,12 @@ export class SayCreateComponent implements OnInit {
     
     content: string = '';
     
-    constructor() {
+    isLoading: boolean = false;
+    
+    constructor(
+        private sayApi: SaySayService,
+        private msg: NzMessageService,
+    ) {
     }
     
     ngOnInit() {
@@ -21,7 +29,19 @@ export class SayCreateComponent implements OnInit {
     }
     
     submit() {
-        this.event.emit({type: 'success'});
+        if (!this.content) {
+            return;
+        }
+        this.isLoading = true;
+        this.sayApi.create({
+            content: this.content,
+        }).subscribe(res => {
+            this.isLoading = false;
+            if (res.code === ErrorCodeEnum.SUCCESS) {
+                this.msg.success('添加成功');
+                this.event.emit({type: 'success'});
+            }
+        });
     }
     
     cancel() {

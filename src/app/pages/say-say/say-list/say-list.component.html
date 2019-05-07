@@ -4,7 +4,7 @@
         <div class="scan">
             <span>全部（36条）</span>
             <ng-container *ngIf="currentTag">，当前标签：<span class="tag">#{{currentTag}}#</span></ng-container>
-            <span class="reload"><i nz-icon nzType="reload" nzTheme="outline"></i></span>
+            <span class="reload" (click)="reload()"><i nz-icon nzType="reload" nzTheme="outline"></i></span>
         </div>
         <button nz-button nzType="primary" (click)="saySome()">说点啥？</button>
     </div>

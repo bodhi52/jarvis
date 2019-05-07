@@ -3,7 +3,7 @@ export interface SaySayInterface {
     // 说说的内容
     content: string;
     // 标签
-    tags: string[];
+    tags?: string[];
     // images
     images?: string[];
     // 创建时间
