@@ -8,5 +8,4 @@ export interface PaginatorInterface {
 export interface PaginatorApiInterface {
     offset: number;
     limit: number;
-    total: number;
 }

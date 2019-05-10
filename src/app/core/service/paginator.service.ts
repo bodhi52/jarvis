@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {PaginatorApiInterface, PaginatorInterface} from '../interface/paginator.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -14,14 +13,7 @@ export class PaginatorService {
     
     }
     
-    /*-----Methods Part-----*/
-    
-    // 调接口前初始化接口翻页所需数据
-    paginatorToApi(data: PaginatorInterface): PaginatorApiInterface {
-        return {
-            offset: (data.currentPage - 1) * data.pageSize,
-            limit: data.pageSize,
-            total: 0
-        };
+    static isHaveNextPage(total: number, page: number, limit: number = 10): boolean {
+        return total > page * limit;
     }
 }

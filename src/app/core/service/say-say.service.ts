@@ -19,8 +19,11 @@ export class SaySayService {
     /**
      * 列表
      */
-    list(): Observable<ResponseInterface<{list: SaySayInterface[], count: number}>> {
-        return this.apiUntil.get(this.apiUrl.api.SaySay.list.url);
+    list(params: {
+        page: number,
+        limit: number,
+    }): Observable<ResponseInterface<{list: SaySayInterface[], count: number}>> {
+        return this.apiUntil.get(this.apiUrl.api.SaySay.list.url, params);
     }
     
     /**

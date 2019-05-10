@@ -39,6 +39,6 @@
             <nz-divider></nz-divider>
         </ng-container>
     </div>
-    <div class="no-more" *ngIf="false">没有更多了... -_-</div>
-    <div class="load-more" (click)="loadMore()">加载更多...</div>
+    <div class="no-more" *ngIf="!isHaveMore">没有更多了... -_-</div>
+    <div class="load-more" *ngIf="isHaveMore" (click)="loadMore()">加载更多...</div>
 </div>
