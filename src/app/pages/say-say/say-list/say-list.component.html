@@ -19,19 +19,19 @@
                 <div class="left">
                     <!-- 头像 -->
                     <div class="face">
-                        <img alt="face" [src]="say.user_image" />
+                        <img alt="face" [src]="say.user_info.face" />
                     </div>
                 </div>
                 <div class="right">
-                    <div class="nick-name">{{say.user_name}}</div>
+                    <div class="nick-name">{{say.user_info.name}}</div>
                     <div class="content">
-                        <span class="tag" *ngFor="let tag of say.tags">#{{tag}}#&nbsp;</span>
+                        <span class="tag" *ngFor="let tag of say.tags">{{tag}}&nbsp;</span>
                         {{say.content}}
                     </div>
                     <div class="image">
-                        <div class="img" *ngFor="let img of say.images">
-                            <img alt="img" [src]="img" />
-                        </div>
+<!--                        <div class="img" *ngFor="let img of say.images">-->
+<!--                            <img alt="img" [src]="img" />-->
+<!--                        </div>-->
                     </div>
                     <div class="created-time">{{say.created_at | createdTime}}</div>
                 </div>

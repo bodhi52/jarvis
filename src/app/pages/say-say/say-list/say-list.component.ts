@@ -9,7 +9,7 @@ import {ErrorCodeEnum} from '../../../core/enum/error-code.enum';
     styleUrls: ['./say-list.component.less']
 })
 export class SayListComponent implements OnInit {
-
+    
     currentTag: string = '';
     
     showCreate: boolean = false;
@@ -28,27 +28,41 @@ export class SayListComponent implements OnInit {
     getSayList() {
         this.sayApi.list().subscribe(res => {
             if (res.code === ErrorCodeEnum.SUCCESS) {
-                if (res.data && res.data.length) {
-                    res.data.forEach(item => {
-                       this.sayList.push({
-                           id: item.id,
-                           content: item.content,
-                           created_at: item.created_at,
-                           user_id: '33',
-                           user_name: 'tony',
-                           user_image: '../../../../assets/img/iron-man.svg',
-                       });
+                if (res.data.list) {
+                    res.data.list.forEach(item => {
+                        const {content, tags} = this.getTagFromContent(item.content);
+                        item.content = content;
+                        this.sayList.push({
+                            ...item,
+                            tags,
+                        });
                     });
                 }
             }
+            console.log(this.sayList);
         });
+    }
+    
+    private getTagFromContent(content): { tags: string[], content: string } {
+        const regex = /(##[^(##)]*##)/g;
+        
+        let tags = content.match(regex);
+        if (tags && tags.length) {
+            tags = tags.map(item => item.replace(/##/g, '#'));
+        }
+        console.log('tags', tags);
+        content = content.replace(regex, '');
+        return {
+            tags,
+            content,
+        };
     }
     
     saySome() {
         this.showCreate = true;
     }
     
-    create(event: {type: 'cancel' | 'success'}) {
+    create(event: { type: 'cancel' | 'success' }) {
         this.showCreate = false;
         if (event.type === 'success') {
             this.sayList = [];

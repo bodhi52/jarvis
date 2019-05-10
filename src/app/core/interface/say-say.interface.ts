@@ -1,14 +1,18 @@
 export interface SaySayInterface {
     id: number;
-    // 说说的内容
+    user_id: number;
     content: string;
+    status: number;
     // 标签
     tags?: string[];
     // images
     images?: string[];
     // 创建时间
     created_at: string;
-    user_id: string;
-    user_name: string;
-    user_image: string;
+    updated_at: string;
+    user_info: {
+        name: string;
+        email: string;
+        face: string;
+    };
 }

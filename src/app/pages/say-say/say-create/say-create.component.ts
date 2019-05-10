@@ -25,7 +25,7 @@ export class SayCreateComponent implements OnInit {
     }
     
     addTag() {
-        this.content += '#输入标签名称#';
+        this.content += '##输入标签名称##';
     }
     
     submit() {

@@ -3,6 +3,7 @@ import {ApiUntilService} from '../api/api-until.service';
 import {ApiUrlService} from '../api/api-url.service';
 import {Observable} from 'rxjs';
 import {ResponseInterface} from '../interface/Http.interface';
+import {SaySayInterface} from '../interface/say-say.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -18,7 +19,7 @@ export class SaySayService {
     /**
      * 列表
      */
-    list(): Observable<ResponseInterface> {
+    list(): Observable<ResponseInterface<{list: SaySayInterface[], count: number}>> {
         return this.apiUntil.get(this.apiUrl.api.SaySay.list.url);
     }
     
@@ -26,7 +27,7 @@ export class SaySayService {
      * 创建
      * @param params
      */
-    create(params):  Observable<ResponseInterface>  {
+    create(params):  Observable<ResponseInterface<{}>>  {
         return this.apiUntil.post(this.apiUrl.api.SaySay.create.url, params);
     }
 }
